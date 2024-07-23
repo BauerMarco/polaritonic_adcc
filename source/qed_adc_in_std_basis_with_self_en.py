@@ -16,50 +16,14 @@
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
 
-#import psi4
-#import adcc
-#import hilbert
 import numpy as np
 from adcc.OneParticleOperator import product_trace
 from adcc.adc_pp import state2state_transition_dm
-import scipy.linalg as sp
+#import scipy.linalg as sp
 
-#adcc.set_n_threads(4)
-
-# Run SCF in Psi4 
-#mol = psi4.geometry("""
-#    H 0 0 0
-#    F 0 0 0.917 
-#    symmetry c1
-#    units au
-#""")
-#psi4.set_num_threads(adcc.get_n_threads())
-#psi4.core.be_quiet()
-#psi4.set_options({'basis': "6-31g",
-#                  'scf_type': 'pk'})
-#psi4.set_module_options('hilbert', {'n_photon_states': 1,
-#                  'cavity_frequency': '[0.0, 0.0, 0.75]',
-#                  'cavity_coupling_strength': '[0.0, 0.0, 0.05]'})
-#scf_e, wfn = psi4.energy('hf', return_wfn=True)
-
-# Run an qed-adc1 calculation:
-#coupling = [0.0, 0.0, 0.05]
-#frequency = [0.0, 0.0, 0.75]
-#imag_freq = [0.0, 0.0, 0.0]#-0.5j
-#state = adcc.adc2(wfn, n_singlets=5)
-
-#print(state.excitation_energy)
-
-def first_order_qed_matrix(state, coupling, frequency):
+def first_order_qed_matrix(state, coupl, frequency):
     freq = np.linalg.norm(np.real(frequency))
     imag_freq = np.linalg.norm(np.imag(frequency))
-
-    # scale coupling strength
-    #coupl = np.array([c * np.sqrt(2 * f) for c, f in zip(coupl, freq)])
-    coupl = np.array(coupling) * np.sqrt(2 * freq)
-
-    # not sure, whether these should be evaluated in first or second order, but I think second order
-    # should be the consistent choice for this approach
 
     # we also need mp2 dipole moment for ground state contribution of squared term
     mp2_dip = state.ground_state.dipole_moment(state.property_method.level) - state.ground_state.dipole_moment(level=1)
@@ -93,11 +57,14 @@ def first_order_qed_matrix(state, coupling, frequency):
     mp2_dip = np.array([np.dot(mp2_dip, coupl)])
 
     # prepare actual dipole terms of cavity Hamiltonian
-    dip_square_s2s = np.zeros_like(s2s_block)         #0.5 * s2s_block ** 2
-    dip_square_tdm = np.zeros_like(tdm_block)         #0.5 * tdm_block ** 2
+    #dip_square_s2s = np.zeros_like(s2s_block)         #0.5 * s2s_block ** 2
+    #dip_square_tdm = np.zeros_like(tdm_block)         #0.5 * tdm_block ** 2
+    dip_square_s2s = 0.5 * s2s_block ** 2
+    dip_square_tdm = 0.5 * tdm_block ** 2
     dip_s2s = np.sqrt(0.5 * freq) * s2s_block
     dip_tdm = np.sqrt(0.5 * freq) * tdm_block
-    mp2_dip_square = np.zeros_like(mp2_dip)     #0.5 * mp2_dip ** 2
+    #mp2_dip_square = np.zeros_like(mp2_dip)     #0.5 * mp2_dip ** 2
+    mp2_dip_square = 0.5 * mp2_dip ** 2
     mp2_dip_off_diag = np.sqrt(0.5 * freq) * mp2_dip
 
     # build actual matrix blocks

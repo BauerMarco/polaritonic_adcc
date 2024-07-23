@@ -42,11 +42,16 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=False,
     if method.startswith("cvs"):
         warnings.warn("CVS ADC excitations generally do not obey the dipole approximation,"
                       "and therefore should not be used at all with polaritonic_adcc")
+    # TODO: Here we always multiply with sqrt(2 * omega), since this
+    # eases up the Hamiltonian and is required if you provide a hilbert
+    # package QED-HF input. This can differ between QED-HF implementations,
+    # e.g. the psi4numpy QED-RHF helper does not do that. Therefore, this
+    # factor needs to be adjusted depending on the input.
+    coupl_adapted = np.array(coupl) * np.sqrt(2 * np.linalg.norm(np.real(freq)))
     # Determining the correct computation from the given input parameters
     if qed_hf:
         #print("double check whether **adcc_args can be given here, or if explicit arguments are required")
-        qed_refstate = refstate(data_or_matrix, coupl=coupl,
-                             freq=np.linalg.norm(np.real(freq)), **adcc_args)
+        qed_refstate = refstate(data_or_matrix, coupl=coupl_adapted, **adcc_args)
         qed_groundstate = qed_mp(qed_refstate, np.linalg.norm(np.real(freq)), qed_hf=qed_hf)#, **adcc_args)
     if type(qed_coupl_level) == int and qed_hf:
         # the following wont work...best would be building qed_npadc_exstates from the exstates result of adcc
@@ -55,7 +60,7 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=False,
         #diag = diagonalize(matrix)
         exstates = adcc.run_adc(qed_groundstate, method=method, **adcc_args)
         qed_exstates = qed_npadc_exstates(exstates, qed_coupl_level)
-        qed_matrix_class = qed_matrix_from_diag_adc(qed_exstates, coupl, freq)
+        qed_matrix_class = qed_matrix_from_diag_adc(qed_exstates, coupl_adapted, freq)
     if not qed_coupl_level and qed_hf:
         # full qed at given adc level
         if method not in ["adc1", "adc2"]:
@@ -75,7 +80,7 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=False,
         # adc at given level without adapted ERIs and 1st order qed coupling
         # this is the equivalent to using field free states
         exstates = adcc.run_adc(data_or_matrix, method=method, **adcc_args)
-        qed_matrix = first_order_qed_matrix(exstates, coupl, freq)
+        qed_matrix = first_order_qed_matrix(exstates, coupl_adapted, freq)
         exstates.qed_matrix = qed_matrix
     else:
         raise NotImplementedError(f"the given combination of qed_coupl_level = "

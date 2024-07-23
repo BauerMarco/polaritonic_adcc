@@ -23,7 +23,7 @@ from backends import import_qed_scf_result
 __all__ = ["refstate"]
 
 class refstate(adcc.ReferenceState):
-    def __init__(self, hfdata, coupl=None, freq=None, core_orbitals=None, frozen_core=None,
+    def __init__(self, hfdata, coupl=None, core_orbitals=None, frozen_core=None,
                          frozen_virtual=None, symmetry_check_on_import=False,
                          import_all_below_n_orbs=10, **adcc_args):
         if not isinstance(hfdata, libadcc.HartreeFockSolution_i):
@@ -32,7 +32,7 @@ class refstate(adcc.ReferenceState):
                          frozen_virtual=frozen_virtual, symmetry_check_on_import=symmetry_check_on_import,
                          import_all_below_n_orbs=import_all_below_n_orbs)#, **adcc_args)
         self.coupl = coupl
-        self.freq = freq
+        #self.freq = freq
 
     def __getattr__(self, attr):
         b = adcc.block
@@ -51,20 +51,12 @@ class refstate(adcc.ReferenceState):
         """
         Return qed coupling strength times dipole operator
         """
-        # TODO: Here we always multiply with sqrt(2 * omega), since this
-        # eases up the Hamiltonian and is required if you provide a hilbert
-        # package QED-HF input. This can differ between QED-HF implementations,
-        # e.g. the psi4numpy QED-RHF helper does not do that. Therefore, this
-        # factor needs to be adjusted depending on the input, but since the
-        # hilbert package is currently the best in terms of performance, at
-        # least to my knowledge, the factor should be included here.
         dips = self.operators.electric_dipole
         #couplings = self.coupling
         #freqs = self.frequency
         total_dip = adcc.OneParticleOperator(self.mospaces, is_symmetric=True)
         for coupling, dip in zip(self.coupl, dips):
             total_dip += coupling * dip
-        total_dip *= np.sqrt(2 * self.freq)
         total_dip.evaluate()
         return total_dip[block]
 

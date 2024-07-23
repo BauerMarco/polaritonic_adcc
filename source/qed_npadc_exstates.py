@@ -41,7 +41,7 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
         self.method = exstates.method
 
     #@cached_property
-    #@adcc.Excitation.mark_excitation_property()  # does this require ao?
+    #@adcc.Excitation.mark_excitation_property()
     @timed_member_call(timer="_property_timer")
     def transition_dipole_moments_qed(self):
         """
@@ -54,8 +54,7 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
         dipole_integrals = self.operators.electric_dipole
 
         def tdm(i, prop_level):
-            #self.ground_state.tdm_contribution = prop_level
-            return transition_dm(self.method, self.ground_state,
+            return transition_dm(prop_level, self.ground_state,
                                     self.excitation_vector[i])
 
         prop_level = "adc" + str(self.qed_coupl_level - 1)
@@ -69,7 +68,7 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
         #            "if reference_state contains 'approx' attribute")
 
     #@cached_property
-    #@adcc.Excitation.mark_excitation_property()  # does this require ao?
+    #@adcc.Excitation.mark_excitation_property()
     @timed_member_call(timer="_property_timer")
     def s2s_dipole_moments_qed(self):
         """
@@ -109,7 +108,7 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
         #            "if reference_state contains 'approx' attribute")
 
     #@cached_property
-    #@adcc.Excitation.mark_excitation_property()  # does this require ao?
+    #@adcc.Excitation.mark_excitation_property()
     @timed_member_call(timer="_property_timer")
     def qed_second_order_ph_ph_couplings(self):
         """

@@ -24,7 +24,7 @@ class qed_matrix_from_diag_adc:
         self.s2s = exstates.s2s_dipole_moments_qed()
         self.tdm = exstates.transition_dipole_moments_qed()
         self.h1 = exstates.qed_second_order_ph_ph_couplings()
-        self.coupl = np.array(coupl)
+        self.coupl = coupl
         self.freq = np.linalg.norm(np.real(freq))
         self.full_freq = np.linalg.norm(np.real(freq)) +\
             np.linalg.norm(np.imag(freq)) * 1j
@@ -35,7 +35,7 @@ class qed_matrix_from_diag_adc:
         ret = np.array([[self.coupl.dot(s2s)
                         for s2s in s2s_block]
                         for s2s_block in s2s_tensor])
-        ret *= - np.sqrt(self.freq / 2) * np.sqrt(2 * self.freq)
+        ret *= - np.sqrt(self.freq / 2) #* np.sqrt(2 * self.freq)
         return ret
 
     def first_order_coupling(self):
@@ -46,7 +46,7 @@ class qed_matrix_from_diag_adc:
 
         for i, tdm in enumerate(self.tdm):
             tdm_block[i] = self.coupl.dot(tdm)
-        tdm_block *= np.sqrt(2 * self.freq)
+        #tdm_block *= np.sqrt(2 * self.freq)
 
         s2s_block = self.loop_helper(self.s2s["qed_adc1_off_diag"])
 
@@ -85,7 +85,7 @@ class qed_matrix_from_diag_adc:
 
         for i, tdm in enumerate(self.tdm):
             qed_adc2_tdm_vec[i] = self.coupl.dot(tdm)
-        qed_adc2_tdm_vec *= - np.sqrt(self.freq / 2) * np.sqrt(2 * self.freq)
+        qed_adc2_tdm_vec *= - np.sqrt(self.freq / 2) #* np.sqrt(2 * self.freq)
 
         # s2s_dipole parts of the ph_ph blocks
 
