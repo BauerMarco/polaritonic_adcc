@@ -27,7 +27,7 @@ class qed_mp(adcc.LazyMp):
         self.get_qed_total_dip.oo = hf.get_qed_total_dip(b.oo)
         self.get_qed_total_dip.ov = hf.get_qed_total_dip(b.ov)
         self.get_qed_total_dip.vv = hf.get_qed_total_dip(b.vv)
-        self.omega = omega
+        self.omega = float(omega)
         self.qed_hf = qed_hf
 
 

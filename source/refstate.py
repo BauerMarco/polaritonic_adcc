@@ -20,19 +20,19 @@ import numpy as np
 import libadcc
 from backends import import_qed_scf_result
 
-__all__ = ["refstate"]
+#__all__ = ["refstate"]
 
 class refstate(adcc.ReferenceState):
-    def __init__(self, hfdata, coupl=None, core_orbitals=None, frozen_core=None,
+    def __init__(self, hfdata, qed_hf, coupl, core_orbitals=None, frozen_core=None,
                          frozen_virtual=None, symmetry_check_on_import=False,
-                         import_all_below_n_orbs=10, **adcc_args):
+                         import_all_below_n_orbs=10):
         if not isinstance(hfdata, libadcc.HartreeFockSolution_i):
             hfdata = import_qed_scf_result(hfdata)
         super().__init__(hfdata, core_orbitals=core_orbitals, frozen_core=frozen_core,
                          frozen_virtual=frozen_virtual, symmetry_check_on_import=symmetry_check_on_import,
-                         import_all_below_n_orbs=import_all_below_n_orbs)#, **adcc_args)
+                         import_all_below_n_orbs=import_all_below_n_orbs)
         self.coupl = coupl
-        #self.freq = freq
+        self.qed_hf = qed_hf
 
     def __getattr__(self, attr):
         b = adcc.block
@@ -41,8 +41,6 @@ class refstate(adcc.ReferenceState):
             return self.fock(b.__getattr__(attr[1:]))
         elif attr.startswith("get_qed_total_dip"):
             return self.get_qed_total_dip(b.__getattr__(attr))
-        #elif attr.startswith("get_qed_omega"):
-        #    return self.get_qed_omega
         else:
             return self.eri(b.__getattr__(attr))
         
