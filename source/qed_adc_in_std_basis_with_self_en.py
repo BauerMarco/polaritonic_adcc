@@ -33,8 +33,6 @@ def first_order_qed_matrix(state, coupl, frequency):
 
     # build s2s block, but only z coordinate
     dipole_integrals = state.operators.electric_dipole
-    print("note, that only the z coordinate of the "
-            "dipole integrals is calculated")
     n_states = len(state.excitation_energy)
 
     def s2s_density(i, f):
@@ -57,13 +55,15 @@ def first_order_qed_matrix(state, coupl, frequency):
     mp2_dip = np.array([np.dot(mp2_dip, coupl)])
 
     # prepare actual dipole terms of cavity Hamiltonian
-    #dip_square_s2s = np.zeros_like(s2s_block)         #0.5 * s2s_block ** 2
-    #dip_square_tdm = np.zeros_like(tdm_block)         #0.5 * tdm_block ** 2
+    # if you wish to neglect the squared dipole contribution, use the terms,
+    # which are currently commented out
+    #dip_square_s2s = np.zeros_like(s2s_block)
+    #dip_square_tdm = np.zeros_like(tdm_block)
     dip_square_s2s = 0.5 * s2s_block ** 2
     dip_square_tdm = 0.5 * tdm_block ** 2
     dip_s2s = np.sqrt(0.5 * freq) * s2s_block
     dip_tdm = np.sqrt(0.5 * freq) * tdm_block
-    #mp2_dip_square = np.zeros_like(mp2_dip)     #0.5 * mp2_dip ** 2
+    #mp2_dip_square = np.zeros_like(mp2_dip)
     mp2_dip_square = 0.5 * mp2_dip ** 2
     mp2_dip_off_diag = np.sqrt(0.5 * freq) * mp2_dip
 
@@ -72,9 +72,9 @@ def first_order_qed_matrix(state, coupl, frequency):
     freq += imag_freq
     gs_gs_block = mp2_dip_square
     elec_block = np.diag(state.excitation_energy) + dip_square_s2s
-    gs_gs_1 = np.array([freq + mp2_dip_square])
+    #gs_gs_1 = np.array([freq + mp2_dip_square])
     phot_block = np.diag(state.excitation_energy + freq) + dip_square_s2s
-    gs_gs_2 = np.array([2 * freq + mp2_dip_square])
+    #gs_gs_2 = np.array([2 * freq + mp2_dip_square])
     phot2_block = np.diag(state.excitation_energy + 2 * freq) + dip_square_s2s
     gs_coupl_01 = dip_tdm
     gs_coupl_12 = np.sqrt(2) * dip_tdm
@@ -98,10 +98,9 @@ def first_order_qed_matrix(state, coupl, frequency):
 
     # diagonalize
     #if any(np.iscomplex(frequency)):
-    #    eigvals, eigvecs = sp.eig(matrix)
+    #    return sp.eig(matrix)
     #else:
-    #    eigvals, eigvecs = sp.eigh(matrix)
+    #    return sp.eigh(matrix)
 
-    #print(eigvals)
-    return matrix#, eigvals, eigvecs
+    return matrix
 

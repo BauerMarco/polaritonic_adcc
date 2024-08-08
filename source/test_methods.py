@@ -39,11 +39,12 @@ from scipy.linalg import eigh
 # it out for now.
 
 testcases = ["hf_sto-3g", "h2o_sto-3g", "pyrrole_sto-3g"]
-methods = ["adc1", "adc2"]
-methods_reduced = ["adc1"]
+testcases_reduced = ["h2o_sto-3g", "pyrrole_sto-3g"]
+adc1 = ["adc1"]
+adc2 = ["adc2"]
 
 
-@expand_test_templates(list(itertools.product(testcases, methods)))
+@expand_test_templates(list(itertools.product(testcases, adc1 + adc2)))
 class qed_test_qedhf(unittest.TestCase):
     def get_qed_adc(self, case, method, full):
         wfn = get_psi4_wfn(case)  # for larger test suites this should be cached
@@ -78,23 +79,23 @@ class qed_test_qedhf(unittest.TestCase):
         assert_allclose(eigvals, full_ref, atol=1e-6)
 
 
-@expand_test_templates(list(itertools.product(testcases, methods_reduced)))
-class qed_test_hf(unittest.TestCase):
-    def get_qed_adc(self, case, method, full):
+@expand_test_templates(list(itertools.product(testcases_reduced, adc1 + adc2)))
+class qed_test_approx_hf(unittest.TestCase):
+    def get_qed_adc(self, case, method):
         wfn = get_psi4_wfn(case)  # for larger test suites this should be cached
         if "pyrrole" in case:
             freq = [0., 0., 0.3]
         else:
             freq = [0., 0., 0.5]
-        if full:
-            level = False
-        else:
-            level = int(method[-1])
+        #if full:
+        #    level = False
+        #else:
+        #    level = int(method[-1])
         return run_qed_adc(wfn, method=method, coupl=[0., 0., 0.1], freq=freq,
-                             qed_hf=False, qed_coupl_level=level, n_singlets=5, conv_tol=1e-7)
+                             qed_hf=False, qed_coupl_level=1, n_singlets=5, conv_tol=1e-7)
 
     def template_approx_hf(self, case, method):
-        approx = self.get_qed_adc(case, method, False)
+        approx = self.get_qed_adc(case, method)
         eigvals = eigh(approx.qed_matrix)[0]
 
         ref_name = f"{case}_{method}_approx_hf"
@@ -103,8 +104,23 @@ class qed_test_hf(unittest.TestCase):
         assert_allclose(eigvals, approx_ref, atol=1e-6, rtol=1e-2)
 
 
+@expand_test_templates(list(itertools.product(testcases, adc1)))
+class qed_test_full_hf(unittest.TestCase):
+    def get_qed_adc(self, case, method):
+        wfn = get_psi4_wfn(case)  # for larger test suites this should be cached
+        if "pyrrole" in case:
+            freq = [0., 0., 0.3]
+        else:
+            freq = [0., 0., 0.5]
+        #if full:
+        #    level = False
+        #else:
+        #    level = int(method[-1])
+        return run_qed_adc(wfn, method=method, coupl=[0., 0., 0.1], freq=freq,
+                             qed_hf=False, qed_coupl_level=False, n_singlets=5, conv_tol=1e-7)
+
     def template_full_hf(self, case, method):
-        full = self.get_qed_adc(case, method, True)
+        full = self.get_qed_adc(case, method)
         eigvals = full.excitation_energy
 
         ref_name = f"{case}_{method}_full_hf"

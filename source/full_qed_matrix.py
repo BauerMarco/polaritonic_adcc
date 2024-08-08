@@ -24,7 +24,8 @@
 import adcc
 from qed_matrix_working_equations import qed_block
 import numpy as np
-import warnings
+#import warnings
+from qed_mp import qed_mp
 
 class qed_matrix_full(adcc.AdcMatrix):
     def __init__(self, method, hf_or_mp, block_orders=None, intermediates=None,
@@ -48,10 +49,8 @@ class qed_matrix_full(adcc.AdcMatrix):
         #if isinstance(hf_or_mp, (libadcc.ReferenceState,
         #                         libadcc.HartreeFockSolution_i)):
         #    hf_or_mp = LazyMp(hf_or_mp)
-        #if not isinstance(hf_or_mp, LazyMp):
-        #    raise TypeError("hf_or_mp is not a valid object. It needs to be "
-        #                    "either a LazyMp, a ReferenceState or a "
-        #                    "HartreeFockSolution_i.")
+        if not isinstance(hf_or_mp, qed_mp):
+            raise TypeError("hf_or_mp is not a qed_mp object.")
 
         if not isinstance(method, adcc.AdcMethod):
             method = adcc.AdcMethod(method)
@@ -88,7 +87,7 @@ class qed_matrix_full(adcc.AdcMatrix):
 
         # Determine orders of PT in the blocks
         if block_orders is None:
-            block_orders = self.default_block_orders[method.base_method.name]
+            block_orders = self.default_block_orders[method.base_method.name].copy()
             #if self.reference_state.is_qed and not self.reference_state.approx:
             block_orders["ph_gs"] = block_orders["ph_ph"]
         else:

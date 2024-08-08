@@ -27,10 +27,7 @@ from adcc import block as b
 from adcc.functions import direct_sum, einsum, zeros_like
 from adcc.Intermediates import Intermediates, register_as_intermediate
 from adcc.AmplitudeVector import AmplitudeVector
-#from adcc.ReferenceState import ReferenceState
 from libadcc import set_lt_scalar
-#from libadcc import set_from_ndarray
-import numpy as np
 
 #__all__ = ["block"]
 
@@ -113,7 +110,6 @@ def block_ph_gs_0_phot(hf, mp, intermediates):
     def apply(ampl):
         return AmplitudeVector(gs1=mp.omega * ampl.gs1)
     return AdcBlock(apply, AmplitudeVector(gs1=set_lt_scalar(mp.omega)))
-    #return AdcBlock(apply, AmplitudeVector(gs1=set_from_ndarray(np.array([mp.omega]))))
 
 
 def block_ph_gs_0_phot2(hf, mp, intermediates):
@@ -121,7 +117,6 @@ def block_ph_gs_0_phot2(hf, mp, intermediates):
     def apply(ampl):
         return AmplitudeVector(gs2=2 * mp.omega * ampl.gs2)
     return AdcBlock(apply, AmplitudeVector(gs2=set_lt_scalar(2 * mp.omega)))
-    #return AdcBlock(apply, AmplitudeVector(gs2=set_from_ndarray(np.array([2 * mp.omega]))))
 
 
 block_ph_gs_0_couple = block_ph_gs_0_phot_couple =\
