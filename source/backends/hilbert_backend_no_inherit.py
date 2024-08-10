@@ -31,7 +31,8 @@ from adcc.backends.EriBuilder import EriBuilder
 from adcc.exceptions import InvalidReference
 from adcc.ExcitedStates import EnergyCorrection
 
-
+# this class is mostly the same as in adcc, because it can't be inherited
+# see polaritonic_adcc.source.backends.hilbert_backend for more information
 class Psi4OperatorIntegralProvider:
     def __init__(self, wfn):
         self.wfn = wfn

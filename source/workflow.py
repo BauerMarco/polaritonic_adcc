@@ -32,7 +32,7 @@ from full_qed_matrix import qed_matrix_full
 #                                        diagonalise_adcmatrix)
 from libadcc import set_lt_scalar
 
-__all__ = ["run_qed_adc"]
+#__all__ = ["run_qed_adc"]
 
 def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True,
                 qed_coupl_level=1, n_states=None, kind="any", conv_tol=None,

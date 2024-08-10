@@ -18,8 +18,6 @@
 from adcc.opt_einsum_integration import register_with_opt_einsum
 from workflow import run_qed_adc
 
-__all__ = ["run_qed_adc"]
-
 __license__ = "GPL v3"
 __email__ = "marcba1@web.de"
 
