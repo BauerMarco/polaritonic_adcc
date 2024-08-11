@@ -15,29 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-
-#from adcc.AdcMatrix import AdcMatrix
-#from adcc.timings import Timer
-#from adcc.AdcMethod import AdcMethod
-#from adcc.AmplitudeVector import AmplitudeVector
-#from adcc.Intermediates import Intermediates
 import adcc
 from qed_matrix_working_equations import qed_block
 import numpy as np
-#import warnings
 from qed_mp import qed_mp
 
 class qed_matrix_full(adcc.AdcMatrix):
     def __init__(self, method, hf_or_mp, block_orders=None, intermediates=None,
                  diagonal_precomputed=None):
         """
-        Initialise an ADC matrix.
+        Initialise an polaritonic ADC matrix.
         Parameters
         ----------
         method : str or AdcMethod
             Method to use.
-        hf_or_mp : adcc.ReferenceState or adcc.LazyMp
-            HF reference or MP ground state
+        hf_or_mp : polaritonic_adcc.qed_mp
+            HF reference or QED MP ground state
         block_orders : optional
             The order of perturbation theory to employ for each matrix block.
             If not set, defaults according to the selected ADC method are chosen.
@@ -46,9 +39,6 @@ class qed_matrix_full(adcc.AdcMatrix):
         diagonal_precomputed: adcc.AmplitudeVector
             Allows to pass a pre-computed diagonal, for internal use only.
         """
-        #if isinstance(hf_or_mp, (libadcc.ReferenceState,
-        #                         libadcc.HartreeFockSolution_i)):
-        #    hf_or_mp = LazyMp(hf_or_mp)
         if not isinstance(hf_or_mp, qed_mp):
             raise TypeError("hf_or_mp is not a qed_mp object.")
 
@@ -73,14 +63,6 @@ class qed_matrix_full(adcc.AdcMatrix):
         self.extra_terms = []
         self.return_diag_as = "full"
 
-        #if self.reference_state.is_qed:
-        #    if method.base_method.name in ["adc2x", "adc3"] or self.is_core_valence_separated:  # noqa: E501
-        #        raise NotImplementedError("Neither adc2x and adc3 nor cvs methods "
-        #                                  "are implemented for QED-ADC")
-        #    elif method.base_method.name == "adc2" and not self.reference_state.qed_hf:  # noqa: E501
-        #        raise NotImplementedError("QED-ADC(2) is only available for a "
-        #                                  "QED-HF reference")
-
         self.intermediates = intermediates
         if self.intermediates is None:
             self.intermediates = adcc.Intermediates.Intermediates(self.ground_state)
@@ -88,7 +70,6 @@ class qed_matrix_full(adcc.AdcMatrix):
         # Determine orders of PT in the blocks
         if block_orders is None:
             block_orders = self.default_block_orders[method.base_method.name].copy()
-            #if self.reference_state.is_qed and not self.reference_state.approx:
             block_orders["ph_gs"] = block_orders["ph_ph"]
         else:
             tmp_orders = self.default_block_orders[method.base_method.name].copy()
@@ -137,22 +118,12 @@ class qed_matrix_full(adcc.AdcMatrix):
 
         with self.timer.record("build"):
             variant = None
-            #if method.is_core_valence_separated:
-            #    variant = "cvs"
-            # Build full QED-matrix
-            #if self.reference_state.is_qed and not self.reference_state.approx:
             blocks = {
                 bl + "_" + key: get_pp_blocks(key)[bl]
                 for bl, order in block_orders.items()
                 if order is not None
                 for key in self.qed_dispatch_dict
             }
-            #else:  # Build "standard" ADC-matrix
-            #    blocks = {
-            #        bl: get_pp_blocks("elec")[bl]
-            #        for bl, order in block_orders.items()
-            #        if order is not None
-            #    }
 
             if diagonal_precomputed:
                 self.__diagonal = diagonal_precomputed
@@ -162,12 +133,11 @@ class qed_matrix_full(adcc.AdcMatrix):
                 self.__diagonal.evaluate()
             self.__init_qed_space_data(self.__diagonal)
 
-            # TODO Rename to self.block in 0.16.0
             self.blocks_ph = {bl: blocks[bl].apply for bl in blocks}
 
 
     def __init_qed_space_data(self, diagonal):
-        """Update the cached data regarding the spaces of the ADC matrix"""
+        """Update the cached data regarding the spaces of the QED ADC matrix"""
         self.axis_spaces = {}
         self.axis_lengths = {}
         for block in diagonal.blocks_ph:

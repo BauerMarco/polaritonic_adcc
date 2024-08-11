@@ -22,4 +22,3 @@ __license__ = "GPL v3"
 __email__ = "marcba1@web.de"
 
 register_with_opt_einsum()
-

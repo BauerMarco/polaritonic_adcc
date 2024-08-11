@@ -20,6 +20,7 @@ import adcc
 
 
 def calc(mol_str, basis):
+    """Build the wfn object for the three supported test molecules using psi4"""
     if mol_str == "pyrrole":
         mol = psi4.geometry(f"""
             0 1
@@ -76,6 +77,7 @@ def calc(mol_str, basis):
 
 
 def get_psi4_wfn(testcase):
+    """Dispatch and pipeline to calc"""
     mol_str, basis = testcase.split("_")
     return calc(mol_str, basis)
 

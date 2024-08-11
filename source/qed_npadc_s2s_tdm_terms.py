@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-
 from adcc import block as b
 from adcc.LazyMp import LazyMp
 #from adcc.AdcMethod import AdcMethod
@@ -23,9 +22,6 @@ from adcc.functions import einsum
 #from adcc.Intermediates import Intermediates
 from adcc.AmplitudeVector import AmplitudeVector
 from adcc.OneParticleOperator import OneParticleOperator
-
-#from adcc.util import check_doubles_amplitudes, check_singles_amplitudes
-
 
 def s2s_tdm_adc0(mp, amplitude_l, amplitude_r):#, intermediates):
     #check_singles_amplitudes([b.o, b.v], amplitude_l, amplitude_r)
@@ -142,8 +138,9 @@ DISPATCH = {"adc0": s2s_tdm_adc0,
 def qed_npadc_s2s_tdm_terms(key, ground_state, amplitude_from,
                               amplitude_to):#, intermediates=None):
     """
-    Compute the state to state transition density matrix
-    state in the MO basis using the intermediate-states representation.
+    Compute the state to state transition density matrix and related
+    intermediates required for the QED matrix in the truncated state
+    space in the MO basis using the intermediate-states representation.
 
     Parameters
     ----------

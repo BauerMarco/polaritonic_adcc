@@ -20,6 +20,7 @@ import os
 import yaml
 
 def read_yaml_data(fname):
+    """Build numpy array from dumped test data"""
     thisdir = os.path.dirname(__file__)
     yaml_file = os.path.join(thisdir, fname)
     with open(yaml_file, "r") as f:

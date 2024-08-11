@@ -1,25 +1,20 @@
-#!/usr/bin/env python3
-## vi: tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-## ---------------------------------------------------------------------
-##
-## Copyright (C) 2020 by the adcc authors
-##
-## This file is part of adcc.
-##
-## adcc is free software: you can redistribute it and/or modify
-## it under the terms of the GNU General Public License as published
-## by the Free Software Foundation, either version 3 of the License, or
-## (at your option) any later version.
-##
-## adcc is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with adcc. If not, see <http://www.gnu.org/licenses/>.
-##
-## ---------------------------------------------------------------------
+# (C) Copyright 2023 Marco Bauer
+# 
+# This file is part of polaritonic_adcc.
+# 
+# polaritonic_adcc is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# polaritonic_adcc is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
+#
 from math import sqrt
 from collections import namedtuple
 
@@ -29,37 +24,28 @@ from adcc.Intermediates import Intermediates, register_as_intermediate
 from adcc.AmplitudeVector import AmplitudeVector
 from libadcc import set_lt_scalar
 
-#__all__ = ["block"]
-
-# TODO One thing one could still do to improve timings is implement a "fast einsum"
-#      that does not call opt_einsum, but directly dispatches to libadcc. This could
-#      lower the call overhead in the applies for the cases where we have only a
-#      trivial einsum to do. For the moment I'm not convinced that is worth the
-#      effort ... I suppose it only makes a difference for the cheaper ADC variants
-#      (ADC(0), ADC(1), CVS-ADC(0-2)-x), but then on the other hand they are not
-#      really so much our focus.
-
-
-#
 # Dispatch routine
-#
 """
 `apply` is a function mapping an AmplitudeVector to the contribution of this
 block to the result of applying the ADC matrix. `diagonal` is an `AmplitudeVector`
-containing the expression to the diagonal of the ADC matrix from this block.
+containing the expression to the diagonal of the QED ADC matrix from this block.
 """
 AdcBlock = namedtuple("AdcBlock", ["apply", "diagonal"])
 
 
 def qed_block(ground_state, spaces, order, variant=None, intermediates=None):
     """
-    Gets ground state, potentially intermediates, spaces (ph, pphh and so on)
-    and the perturbation theory order for the block,
-    variant is "cvs" or sth like that.
+    Dispatcher for the individual QED ADC matrix subblocks.
 
-    It is assumed largely, that CVS is equivalent to mp.has_core_occupied_space,
-    while one would probably want in the long run that one can have an "o2" space,
-    but not do CVS.
+    For QED-ADC (up to double photon dispersion) we build the matrix as follows:
+    [[elec,              phot_couple,         phot_couple_edge ],
+     [elec_couple,       phot,                phot_couple_inner],
+     [elec_couple_edge,  elec_couple_inner,   phot2            ]]
+    where each block is a "standard" ADC matrix itself, including the groundstate
+    and the groundstate couplings. However, the gs_ph and gs_gs blocks are merged
+    into the ph_ph and ph_gs blocks, respectively, since we calculate matrix vector
+    products anyway. Note, that the purely electronic groundstate never appears, since
+    it is always zero.
     """
     if isinstance(variant, str):
         variant = [variant]
@@ -69,33 +55,12 @@ def qed_block(ground_state, spaces, order, variant=None, intermediates=None):
     if intermediates is None:
         intermediates = Intermediates(ground_state)
 
-    if ground_state.has_core_occupied_space and "cvs" not in variant:
-        raise ValueError("Cannot run a general (non-core-valence approximated) "
-                         "ADC method on top of a ground state with a "
-                         "core-valence separation.")
-    if not ground_state.has_core_occupied_space and "cvs" in variant:
-        raise ValueError("Cannot run a core-valence approximated ADC method on "
-                         "top of a ground state without a "
-                         "core-valence separation.")
-
     fn = "_".join(["block"] + variant + spaces + [str(order)])
 
     if fn not in globals():
         raise ValueError("Could not dispatch: "
                          f"spaces={spaces} order={order} variant=variant")
     return globals()[fn](reference_state, ground_state, intermediates)
-
-
-# For QED-ADC (up to double photon dispersion) we build the matrix as follows:
-# elec              phot_couple         phot_couple_edge
-# elec_couple       phot                phot_couple_inner
-# elec_couple_edge  elec_couple_inner   phot2
-# where each block is a "standard" ADC matrix itself, including the groundstate
-# and the groundstate couplings. However, the gs_ph and gs_gs blocks are merged
-# into the ph_ph and ph_gs blocks, respectively, since we calculate matrix vector
-# products anyway. Note, that the purely electronic groundstate never appears, since
-# it is always zero.
-
 
 #
 # 0th order gs blocks

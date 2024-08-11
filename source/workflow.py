@@ -26,10 +26,6 @@ from refstate import refstate
 from qed_npadc_exstates import qed_npadc_exstates
 from qed_mp import qed_mp
 from full_qed_matrix import qed_matrix_full
-#from solver_functions_from_adcc import (validate_state_parameters,
-#                                        estimate_n_guesses,
-#                                        obtain_guesses_by_inspection,
-#                                        diagonalise_adcmatrix)
 from libadcc import set_lt_scalar
 
 #__all__ = ["run_qed_adc"]
@@ -41,6 +37,160 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True,
                 frozen_core=None, frozen_virtual=None, method=None,
                 n_singlets=None, n_triplets=None, n_spin_flip=None,
                 environment=None, **solverargs):
+    """Run an ADC calculation.
+
+    Main entry point to run an ADC calculation. The reference to build the ADC
+    calculation upon is supplied using the `data_or_matrix` argument.
+    `adcc` is pretty flexible here. Possible options include:
+
+        a. Hartree-Fock data from a host program, e.g. a molsturm SCF
+           state, a pyscf SCF object or any class implementing the
+           :py:class:`adcc.HartreeFockProvider` interface. From this data all
+           objects mentioned in (b) to (d) will be implicitly created and will
+           become available in the returned state.
+        b. A :py:class:`polaritonic_adcc.refstate` object
+        c. A :py:class:`polaritonic_adcc.qed_mp` object
+        d. A :py:class:`polaritonic_adcc.qed_matrix_full` object
+
+    Parameters
+    ----------
+    data_or_matrix
+        Data containing the SCF reference
+    n_states : int, optional
+    kind : str, optional
+    n_singlets : int, optional
+    n_triplets : int, optional
+    n_spin_flip : int, optional
+        Specify the number and kind of states to be computed. Possible values
+        for kind are "singlet", "triplet", "spin_flip" and "any", which is
+        the default. For unrestricted references clamping spin-pure
+        singlets/triplets is currently not possible and kind has to remain as
+        "any". For restricted references `kind="singlets"` or `kind="triplets"`
+        may be employed to enforce a particular excited states manifold.
+        Specifying `n_singlets` is equivalent to setting `kind="singlet"` and
+        `n_states=5`. Similarly for `n_triplets` and `n_spin_flip`.
+        `n_spin_flip` is only valid for unrestricted references.
+
+    conv_tol : float, optional
+        Convergence tolerance to employ in the iterative solver for obtaining
+        the ADC vectors (default: `1e-6` or 10 * SCF tolerance,
+        whatever is larger)
+
+    eigensolver : str, optional
+        The eigensolver algorithm to use.
+
+    n_guesses : int, optional
+        Total number of guesses to compute. By default only guesses derived from
+        the singles block of the ADC matrix are employed. See
+        `n_guesses_doubles` for alternatives. If no number is given here
+        `n_guesses = min(4, 2 * number of excited states to compute)`
+        or a smaller number if the number of excitation is estimated to be less
+        than the outcome of above formula.
+
+    n_guesses_doubles : int, optional
+        Number of guesses to derive from the doubles block. By default none
+        unless n_guesses as explicitly given or automatically determined is
+        larger than the number of singles guesses, which can be possibly found.
+
+    guesses : list, optional
+        Provide the guess vectors to be employed for the ADC run. Takes
+        preference over `n_guesses` and `n_guesses_doubles`, such that these
+        parameters are ignored.
+
+    output : stream, optional
+        Python stream to which output will be written. If `None` all output
+        is disabled.
+
+    core_orbitals : int or list or tuple, optional
+        The orbitals to be put into the core-occupied space. For ways to
+        define the core orbitals see the description in
+        :py:class:`adcc.ReferenceState`.
+        Required if core-valence separation is applied and the input data is
+        given as data from the host program (i.e. option (a) discussed above)
+
+    frozen_core : int or list or tuple, optional
+        The orbitals to select as frozen core orbitals (i.e. inactive occupied
+        orbitals for both the MP and ADC methods performed). For ways to define
+        these see the description in :py:class:`adcc.ReferenceState`.
+
+    frozen_virtual : int or list or tuple, optional
+        The orbitals to select as frozen virtual orbitals (i.e. inactive
+        virtuals for both the MP and ADC methods performed). For ways to define
+        these see the description in :py:class:`adcc.ReferenceState`.
+
+    environment : bool or list or dict, optional
+        The keywords to specify how coupling to an environment model,
+        e.g. PE, is treated. For details see :ref:`environment`.
+    
+    coupl : list or tuple or numpy array of length 3, optional
+        x, y, z coupling vector to the cavity photon. Use the definition
+        1 / sqrt(2 * freq * eps_0 * eps_r * V)!
+
+    freq : list or tuple or numpy array or int, optional
+        Energy of the cavity photon.
+
+    qed_hf : bool, optional
+        Specify, whether a standard or polaritonic SCF result is provided.
+
+    qed_coupl_level : bool or int, optional
+        Specify, whether to calculate the full matrix (False), or provide
+        the perturbative level to which polaritonic coupling shall be included
+        into a truncated state space approach (1 or 2).
+
+    Other parameters
+    ----------------
+    max_subspace : int, optional
+        Maximal subspace size
+    max_iter : int, optional
+        Maximal number of iterations
+
+    Returns
+    -------
+    ExcitedStates
+        An :class:`adcc.ExcitedStates` object or
+        :class:`polaritonic_adcc.qed_npadc_exstates` object, which inherits
+        from the previous object, containing the
+        :class:`polaritonic_adcc.full_qed_matrix`, the
+        :class:`polaritonic_adcc.qed_mp` ground state and the
+        :class:`polaritonic_adcc.refstate` as well as computed eigenpairs.
+
+    Examples
+    --------
+
+    Run an ADC(3) calculation on top of a non-polaritonic `pyscf`
+    RHF reference of hydrogen flouride, building the qed matrix
+    in a truncated state basis.
+
+    >>> from pyscf import gto, scf
+    ... mol = gto.mole.M(atom="H 0 0 0; F 0 0 1.1", basis="sto-3g")
+    ... mf = scf.RHF(mol)
+    ... mf.conv_tol_grad = 1e-8
+    ... mf.kernel()
+    ...
+    ... state = run_qed_adc(mf, method="adc3", n_singlets=3, freq=[0., 0., 0.5],
+                            coupl=[0., 0., 0.1], qed_hf=True)
+
+    Run an ADC(2) calculation of O2 with a polaritonic `psi4` reference,
+    building the full polaritonic matrix.
+
+    >>> import hilbert
+    ... mol = psi4.geometry(f'''
+    ...     0 1
+    ...     O 0.0 0.0 0.0
+    ...     O 0.0 0.0 1.2
+    ...     units angstrom
+    ...     symmtery c1
+    ...     no_reorient
+    ... ''')
+    ... psi4.core.be_quiet()
+    ... psi4.set_options({'basis': 'sto-3g', 'scf_type': 'df',
+                          'e_convergence': 1e-10})
+    ... psi4.set_module_options('hilbert': {'cavity_frequency': [0.0, 0.0, 0.4],
+                                            'cavity_coupling_strength': [0.0, 0.0, 0.1]})
+    ... scf_e, wfn = psi4.energy('scf', return_wfn=True)
+    ... state = run_qed_adc(mf, n_singlets=3, freq=[0., 0., 0.4], coupl=[0., 0., 0.1],
+                            qed_coupl_level=False)
+    """
     print(type(data_or_matrix))
     # Validation of given parameters
     if method == "adc0":
@@ -144,6 +294,7 @@ def diagonalizer(matrix, n_states, kind, guesses=None, n_guesses=None,
         n_guesses_doubles=None, conv_tol=None, output=sys.stdout,
         eigensolver="davidson", n_triplets=None, n_singlets=None,
         n_spin_flip=None, **solverargs):
+    """Diagonalize the provided full polaritonic matrix."""
     
     n_states, kind = adcc.validate_state_parameters(
         matrix.reference_state, n_states=n_states, n_singlets=n_singlets,

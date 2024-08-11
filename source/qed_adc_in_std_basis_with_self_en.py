@@ -15,13 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-
 import numpy as np
 from adcc.OneParticleOperator import product_trace
 from adcc.adc_pp import state2state_transition_dm
 #import scipy.linalg as sp
 
 def first_order_qed_matrix(state, coupl, frequency):
+    """Build polaritonic matrix in a truncated state space on a standard SCF."""
     freq = np.linalg.norm(np.real(frequency))
     imag_freq = np.linalg.norm(np.imag(frequency))
 
@@ -72,9 +72,7 @@ def first_order_qed_matrix(state, coupl, frequency):
     freq += imag_freq
     gs_gs_block = mp2_dip_square
     elec_block = np.diag(state.excitation_energy) + dip_square_s2s
-    #gs_gs_1 = np.array([freq + mp2_dip_square])
     phot_block = np.diag(state.excitation_energy + freq) + dip_square_s2s
-    #gs_gs_2 = np.array([2 * freq + mp2_dip_square])
     phot2_block = np.diag(state.excitation_energy + 2 * freq) + dip_square_s2s
     gs_coupl_01 = dip_tdm
     gs_coupl_12 = np.sqrt(2) * dip_tdm

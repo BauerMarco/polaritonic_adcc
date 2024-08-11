@@ -22,6 +22,7 @@ einsum = adcc.functions.einsum
 
 class qed_mp(adcc.LazyMp):
     def __init__(self, hf, omega, qed_hf=True):
+        """Lazily evaluated (non-)polaritonic MP object"""
         super().__init__(hf)
         self.get_qed_total_dip = adcc.OneParticleOperator(self.mospaces, is_symmetric=True)  # noqa: E501
         self.get_qed_total_dip.oo = hf.get_qed_total_dip(b.oo)
@@ -93,6 +94,7 @@ class qed_mp(adcc.LazyMp):
 
 
     def qed_energy_correction(self, level=2):
+        """Determines the polaritonic correction to the MP energy."""
         if level >= 3:
             raise NotImplementedError("polaritonic MP energy is not implemented for third order")
         if self.has_core_occupied_space:
@@ -129,7 +131,7 @@ class qed_mp(adcc.LazyMp):
     def qed_energy(self, level=2):
         """
         Obtain the total energy (SCF energy plus all corrections)
-        at a particular level of perturbation theory.
+        at a particular level of perturbation theory for QED MP.
         """
 
         # Accumulator for all energy terms

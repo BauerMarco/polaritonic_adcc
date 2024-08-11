@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-
-#import adcc
 import numpy as np
 from qed_npadc_s2s_tdm_terms import qed_npadc_s2s_tdm_terms
 from adcc.timings import timed_member_call
@@ -25,13 +23,11 @@ from adcc.OneParticleOperator import product_trace
 from adcc import block as b
 from adcc.functions import einsum
 
-#b = adcc.block
-#einsum = adcc.functions.einsum
 
-class qed_npadc_exstates:#(adcc.ExcitedStates):
+class qed_npadc_exstates:
+    """Output object for the truncated state space methods"""
     def __init__(self, exstates, qed_coupl_level=1, **kw_args):
         self.qed_coupl_level = qed_coupl_level
-        #super().__init__(data, **kw_args)
         self.matrix = exstates.matrix
         self.ground_state = self.matrix.ground_state
         self.reference_state = self.matrix.ground_state.reference_state
@@ -40,8 +36,6 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
         self.excitation_energy = exstates.excitation_energy
         self.method = exstates.method
 
-    #@cached_property
-    #@adcc.Excitation.mark_excitation_property()
     @timed_member_call(timer="_property_timer")
     def transition_dipole_moments_qed(self):
         """
@@ -49,8 +43,6 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
         to build the QED-matrix in the basis of the diagonal
         purely electric subblock
         """
-        #if self.reference_state.approx:
-
         dipole_integrals = self.operators.electric_dipole
 
         def tdm(i, prop_level):
@@ -63,12 +55,7 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
                 for comp in dipole_integrals]
             for i in np.arange(len(self.excitation_energy))
         ])
-        #else:
-        #    return ("transition_dipole_moments_qed are only calculated,"
-        #            "if reference_state contains 'approx' attribute")
 
-    #@cached_property
-    #@adcc.Excitation.mark_excitation_property()
     @timed_member_call(timer="_property_timer")
     def s2s_dipole_moments_qed(self):
         """
@@ -76,14 +63,12 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
         to build the QED-matrix in the basis of the diagonal
         purely electric subblock
         """
-        #if self.reference_state.approx:
         dipole_integrals = self.operators.electric_dipole
         print("note, that only the z coordinate of the "
                 "dipole integrals is calculated")
         n_states = len(self.excitation_energy)
 
         def s2s(i, f, name):
-            #self.ground_state.s2s_contribution = s2s_contribution
             vec = self.excitation_vector
             return qed_npadc_s2s_tdm_terms(name, self.ground_state,
                                                 vec[i], vec[f])
@@ -103,12 +88,7 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
             for key in keys:
                 block_dict[key] = final_block(key)
         return block_dict
-        #else:
-        #    return ("s2s_dipole_moments_qed are only calculated,"
-        #            "if reference_state contains 'approx' attribute")
 
-    #@cached_property
-    #@adcc.Excitation.mark_excitation_property()
     @timed_member_call(timer="_property_timer")
     def qed_second_order_ph_ph_couplings(self):
         """
@@ -152,5 +132,4 @@ class qed_npadc_exstates:#(adcc.ExcitedStates):
 
             return block_dict
         else:
-            return 0 #("qed_second_order_ph_ph_couplings are only calculated,"
-                    #"if reference_state contains 'approx' attribute")
+            return 0

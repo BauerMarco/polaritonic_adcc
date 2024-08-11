@@ -16,7 +16,6 @@
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
 import adcc
-import numpy as np
 import libadcc
 from backends import import_qed_scf_result
 
@@ -24,8 +23,115 @@ from backends import import_qed_scf_result
 
 class refstate(adcc.ReferenceState):
     def __init__(self, hfdata, qed_hf, coupl, core_orbitals=None, frozen_core=None,
-                         frozen_virtual=None, symmetry_check_on_import=False,
-                         import_all_below_n_orbs=10):
+                 frozen_virtual=None, symmetry_check_on_import=False,
+                 import_all_below_n_orbs=10):
+        """
+        Lazily evaluated (non-)polaritonic HF object
+
+        Orbital subspace selection: In order to specify `frozen_core`,
+        `core_orbitals` and `frozen_virtual`, adcc allows a range of
+        specifications including
+
+           a. A number: Just put this number of alpha orbitals and this
+              number of beta orbitals into the respective space. For frozen
+              core and core orbitals these are counted from below, for
+              frozen virtual orbitals, these are counted from above. If both
+              frozen core and core orbitals are specified like this, the
+              lowest-energy, occupied orbitals will be put into frozen core.
+           b. A range: The orbital indices given by this range will be put
+              into the orbital subspace.
+           c. An explicit list of orbital indices to be placed into the
+              subspace.
+           d. A pair of (a) to (c): If the orbital selection for alpha and
+              beta orbitals should differ, a pair of ranges, or a pair of
+              index lists or a pair of numbers can be specified.
+
+        Parameters
+        ----------
+        hfdata
+            Object with Hartree-Fock data (e.g. a molsturm scf state, a pyscf
+            SCF object or any class implementing the
+            :py:class:`adcc.HartreeFockProvider` interface or in fact any python
+            object representing a pointer to a C++ object derived off
+            the :cpp:class:`adcc::HartreeFockSolution_i`.
+        
+        qed_hf : bool
+            Specify, whether the hfdata object is a polaritonic or standard
+            SCF reference.
+        
+        coupl : list or tuple or numpy array of length 3
+            x, y, z vector containing the coupling strengths to the cavity photon.
+
+        core_orbitals : int or list or tuple, optional
+            The orbitals to be put into the core-occupied space. For ways to
+            define the core orbitals see the description above. Note, that you
+            don't want to make use of them for a polaritonic calculation,
+            as they are usually connected to core-valence separated calculations,
+            which break the dipole approximation! It you want to read more on this
+            see the paper linked in the polaritonic_adcc documentation.
+
+        frozen_core : int or list or tuple, optional
+            The orbitals to be put into the frozen core space. For ways to
+            define the core orbitals see the description above. For an automatic
+            selection of the frozen core space one may also specify
+            ``frozen_core=True``.
+
+        frozen_virtuals : int or list or tuple, optional
+            The orbitals to be put into the frozen virtual space. For ways to
+            define the core orbitals see the description above.
+
+        symmetry_check_on_import : bool, optional
+            Should symmetry of the imported objects be checked explicitly during
+            the import process. This massively slows down the import and has a
+            dramatic impact on memory usage. Thus one should enable this only
+            for debugging (e.g. for testing import routines from the host
+            programs). Do not enable this unless you know what you are doing.
+
+        import_all_below_n_orbs : int, optional
+            For small problem sizes lazy make less sense, since the memory
+            requirement for storing the ERI tensor is neglibile and thus the
+            flexiblity gained by having the full tensor in memory is
+            advantageous. Below the number of orbitals specified by this
+            parameter, the class will thus automatically import all ERI tensor
+            and Fock matrix blocks.
+
+        Examples
+        --------
+        To start a calculation with the 2 lowest alpha and beta orbitals
+        in the core occupied space, construct the class as
+
+        >>> ReferenceState(hfdata, core_orbitals=2)
+
+        or
+
+        >>> ReferenceState(hfdata, core_orbitals=range(2))
+
+        or
+
+        >>> ReferenceState(hfdata, core_orbitals=[0, 1])
+
+        or
+
+        >>> ReferenceState(hfdata, core_orbitals=([0, 1], [0, 1]))
+
+        There is no restriction to choose the core occupied orbitals
+        from the bottom end of the occupied orbitals. For example
+        to select the 2nd and 3rd orbital setup the class as
+
+        >>> ReferenceState(hfdata, core_orbitals=range(1, 3))
+
+        or
+
+        >>> ReferenceState(hfdata, core_orbitals=[1, 2])
+
+        If different orbitals should be placed in the alpha and
+        beta orbitals, this can be achievd like so
+
+        >>> ReferenceState(hfdata, core_orbitals=([1, 2], [0, 1]))
+
+        which would place the 2nd and 3rd alpha and the 1st and second
+        beta orbital into the core space.
+        """
         if not isinstance(hfdata, libadcc.HartreeFockSolution_i):
             hfdata = import_qed_scf_result(hfdata)
         super().__init__(hfdata, core_orbitals=core_orbitals, frozen_core=frozen_core,
@@ -47,7 +153,7 @@ class refstate(adcc.ReferenceState):
     @adcc.misc.cached_member_function
     def get_qed_total_dip(self, block):
         """
-        Return qed coupling strength times dipole operator
+        Return the scalar product between coupl and the dipole operator
         """
         dips = self.operators.electric_dipole
         #couplings = self.coupling
@@ -57,15 +163,6 @@ class refstate(adcc.ReferenceState):
             total_dip += coupling * dip
         total_dip.evaluate()
         return total_dip[block]
-
-    #@cached_member_function
-    #def get_qed_omega(self):
-    #    """
-    #    Return the cavity frequency
-    #    """
-    #    if self.is_qed:
-    #        freqs = self.frequency
-    #        return np.linalg.norm(freqs)
 
     #@adcc.misc.cached_member_function
     def qed_D_object(self, block):
@@ -101,8 +198,11 @@ class refstate(adcc.ReferenceState):
 
     @adcc.misc.cached_member_function
     def eri(self, block):
+        """
+        Return the electron repulsion integrals, to which the polaritonic
+        two partilce correction is added, which obeys the same symmetry.
+        """
         b = adcc.block
-        #from .functions import einsum
         einsum = adcc.functions.einsum
         # Since there is no TwoParticleOperator object,
         # we initialize it like this

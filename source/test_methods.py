@@ -46,6 +46,7 @@ adc2 = ["adc2"]
 
 @expand_test_templates(list(itertools.product(testcases, adc1 + adc2)))
 class qed_test_qedhf(unittest.TestCase):
+    """Setup method testing with polaritonic SCF"""
     def get_qed_adc(self, case, method, full):
         wfn = get_psi4_wfn(case)  # for larger test suites this should be cached
         if "pyrrole" in case:
@@ -60,6 +61,7 @@ class qed_test_qedhf(unittest.TestCase):
                              qed_hf=True, qed_coupl_level=level, n_singlets=5, conv_tol=1e-7)
 
     def template_approx_qedhf(self, case, method):
+        """Test approx method with polaritonic SCF"""
         approx = self.get_qed_adc(case, method, False)
         eigvals = eigh(approx.qed_matrix)[0]
 
@@ -70,6 +72,7 @@ class qed_test_qedhf(unittest.TestCase):
 
 
     def template_full_qedhf(self, case, method):
+        """Test full method with polaritonic SCF"""
         full = self.get_qed_adc(case, method, True)
         eigvals = full.excitation_energy
 
@@ -81,6 +84,7 @@ class qed_test_qedhf(unittest.TestCase):
 
 @expand_test_templates(list(itertools.product(testcases_reduced, adc1 + adc2)))
 class qed_test_approx_hf(unittest.TestCase):
+    """Setup method testing with standard SCF for the approx method"""
     def get_qed_adc(self, case, method):
         wfn = get_psi4_wfn(case)  # for larger test suites this should be cached
         if "pyrrole" in case:
@@ -95,6 +99,7 @@ class qed_test_approx_hf(unittest.TestCase):
                              qed_hf=False, qed_coupl_level=1, n_singlets=5, conv_tol=1e-7)
 
     def template_approx_hf(self, case, method):
+        """Test approx method with standard SCF"""
         approx = self.get_qed_adc(case, method)
         eigvals = eigh(approx.qed_matrix)[0]
 
@@ -106,6 +111,7 @@ class qed_test_approx_hf(unittest.TestCase):
 
 @expand_test_templates(list(itertools.product(testcases, adc1)))
 class qed_test_full_hf(unittest.TestCase):
+    """Setup method testing with standard SCF for the approx method"""
     def get_qed_adc(self, case, method):
         wfn = get_psi4_wfn(case)  # for larger test suites this should be cached
         if "pyrrole" in case:
@@ -120,6 +126,7 @@ class qed_test_full_hf(unittest.TestCase):
                              qed_hf=False, qed_coupl_level=False, n_singlets=5, conv_tol=1e-7)
 
     def template_full_hf(self, case, method):
+        """Test full method with standard SCF"""
         full = self.get_qed_adc(case, method)
         eigvals = full.excitation_energy
 

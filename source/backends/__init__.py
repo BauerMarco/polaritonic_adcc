@@ -27,6 +27,10 @@ from .hilbert_backend_no_inherit import hilbert_scf_import
 #__all__ = ["import_qed_scf_result"]
 
 def import_qed_scf_result(scf):
+    """
+    Import (non-)polaritonic SCF result and choose routine based on
+    the object, which shall be read in.
+    """
     hilbert = False
     try:
         import psi4

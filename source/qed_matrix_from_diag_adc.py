@@ -16,10 +16,9 @@
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
 import numpy as np
-#import scipy.linalg as sp
-
 
 class qed_matrix_from_diag_adc:
+    """Build polaritonic matrix in a truncated state space on a polaritonic SCF."""
     def __init__(self, exstates, coupl, freq):
         self.s2s = exstates.s2s_dipole_moments_qed()
         self.tdm = exstates.transition_dipole_moments_qed()
@@ -39,6 +38,7 @@ class qed_matrix_from_diag_adc:
         return ret
 
     def first_order_coupling(self):
+        """Return first order polaritonically coupled matrix."""
 
         # build the blocks of the matrix
 
@@ -78,6 +78,7 @@ class qed_matrix_from_diag_adc:
         return matrix
 
     def second_order_coupling(self):
+        """Return second order polaritonically coupled matrix."""
 
         # tdm part
 

@@ -1,25 +1,20 @@
-#!/usr/bin/env python3
-## vi: tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-## ---------------------------------------------------------------------
-##
-## Copyright (C) 2019 by the adcc authors
-##
-## This file is part of adcc.
-##
-## adcc is free software: you can redistribute it and/or modify
-## it under the terms of the GNU General Public License as published
-## by the Free Software Foundation, either version 3 of the License, or
-## (at your option) any later version.
-##
-## adcc is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with adcc. If not, see <http://www.gnu.org/licenses/>.
-##
-## ---------------------------------------------------------------------
+# (C) Copyright 2023 Marco Bauer
+# 
+# This file is part of polaritonic_adcc.
+# 
+# polaritonic_adcc is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# polaritonic_adcc is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
+#
 import numpy as np
 
 from libadcc import HartreeFockProvider
@@ -32,8 +27,13 @@ from adcc.exceptions import InvalidReference
 from adcc.ExcitedStates import EnergyCorrection
 
 # this class is mostly the same as in adcc, because it can't be inherited
-# see polaritonic_adcc.source.backends.hilbert_backend for more information
+# and even if it could be, the psi4.core.Wavefunction object provided would
+# not be accepted.
 class Psi4OperatorIntegralProvider:
+    """
+    Provide the operator integrals from psi4 as required for adcc
+    and therefore also polaritonic_adcc.
+    """
     def __init__(self, wfn):
         self.wfn = wfn
         self.backend = "psi4"
@@ -77,6 +77,7 @@ class Psi4OperatorIntegralProvider:
 
 
 class Psi4EriBuilder(EriBuilder):
+    """Build electron repulsion integrals from psi4 reference."""
     def __init__(self, wfn, n_orbs, n_orbs_alpha, n_alpha, n_beta, restricted):
         self.wfn = wfn
         self.mints = psi4.core.MintsHelper(self.wfn)
@@ -96,10 +97,13 @@ class Psi4EriBuilder(EriBuilder):
         return np.asarray(self.mints.mo_eri(*coeffs))
 
 
-class Psi4HFProvider(HartreeFockProvider):
+class HilbertHFProvider(HartreeFockProvider):
     """
-        This implementation is only valid
-        if no orbital reordering is required.
+    Pipeline the hilbert wfn object into an adcc and therefore
+    polaritonic_adcc supported format.
+
+    Note, that this implementation is only valid
+    if no orbital reordering is required!
     """
     def __init__(self, wfn):
         # Do not forget the next line,
@@ -251,6 +255,7 @@ class Psi4HFProvider(HartreeFockProvider):
 
 
 def hilbert_scf_import(wfn):
+    """Import hilbert SCF result"""
     if not isinstance(wfn, (psi4.core.HF, psi4.core.Wavefunction)):
         raise InvalidReference(
             "Only psi4.core.HF and its subtypes are supported references in "
@@ -281,49 +286,5 @@ def hilbert_scf_import(wfn):
 
     # Psi4 throws an exception if SCF is not converged, so there is no need
     # to assert that here.
-    provider = Psi4HFProvider(wfn)
+    provider = HilbertHFProvider(wfn)
     return provider
-
-
-def run_hf(xyz, basis, charge=0, multiplicity=1, conv_tol=1e-11,
-           conv_tol_grad=1e-8, max_iter=150, pe_options=None):
-    basissets = {
-        "sto3g": "sto-3g",
-        "def2tzvp": "def2-tzvp",
-        "ccpvdz": "cc-pvdz",
-    }
-
-    # needed for PE and PCM tests
-    psi4.core.clean_options()
-    mol = psi4.geometry(f"""
-        {charge} {multiplicity}
-        {xyz}
-        symmetry c1
-        units au
-        no_reorient
-        no_com
-    """)
-
-    psi4.core.be_quiet()
-    psi4.set_options({
-        'basis': basissets.get(basis, basis),
-        'scf_type': 'pk',
-        'e_convergence': conv_tol,
-        'd_convergence': conv_tol_grad,
-        'maxiter': max_iter,
-        'reference': "RHF",
-    })
-    if pe_options:
-        psi4.set_options({"pe": "true"})
-        psi4.set_module_options("pe", {"potfile": pe_options["potfile"]})
-
-    if multiplicity != 1:
-        psi4.set_options({
-            'reference': "UHF",
-            'maxiter': max_iter + 500,
-            'soscf': 'true'
-        })
-
-    _, wfn = psi4.energy('SCF', return_wfn=True, molecule=mol)
-    psi4.core.clean()
-    return wfn
