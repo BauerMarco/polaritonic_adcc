@@ -21,6 +21,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main'
       with:
+        run: pip install sphinx_rtd_theme
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: docs/_build/html
 
