@@ -70,7 +70,7 @@ Sounds interesting? Then check out the :ref:`installation` and
    usage
    theory
    troubleshooting
-
+   API
 
 * :ref:`genindex`
 

@@ -37,6 +37,7 @@ extensions = [
     # 'sphinx.ext.ifconfig',
     'sphinx.ext.napoleon',
     'sphinxcontrib.apidoc',
+    'sphinx.ext.autosummary',
 ]
 # extensions = ['sphinx_automodapi.automodapi']
 
