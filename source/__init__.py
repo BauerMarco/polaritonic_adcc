@@ -15,10 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-from adcc.opt_einsum_integration import register_with_opt_einsum
+# from adcc.opt_einsum_integration import register_with_opt_einsum
 # from workflow import run_qed_adc
 
 __license__ = "GPL v3"
 __email__ = "marcba1@web.de"
 
-register_with_opt_einsum()
+# register_with_opt_einsum()
