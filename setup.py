@@ -13,7 +13,5 @@ setup(
         'build_sphinx': {
             'version': ('setup.py', version),
             'source_dir': ('setup.py', 'docs')}},
-    extras_require={
-        "build_docs": ["sphinx=5", "sphinx-rtd-theme"]},
 )
 
