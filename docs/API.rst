@@ -1,14 +1,10 @@
 API
 ===
 
-# .. autosummary::
-#    :toctree: _autosummary
-#    :recursive:
-
-#    source
-
 .. autosummary::
-   :toctree: generated
+   :toctree: _autosummary
+   :recursive:
 
-   source.refstate
+   source
+
 
