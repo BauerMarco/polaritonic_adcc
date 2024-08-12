@@ -1,7 +1,0 @@
-source.full\_qed\_matrix module
-===============================
-
-.. automodule:: source.full_qed_matrix
-   :members:
-   :undoc-members:
-   :show-inheritance:

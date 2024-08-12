@@ -1,7 +1,0 @@
-source.backends.hilbert\_backend\_no\_inherit module
-====================================================
-
-.. automodule:: source.backends.hilbert_backend_no_inherit
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -1,7 +1,0 @@
-source.refstate module
-======================
-
-.. automodule:: source.refstate
-   :members:
-   :undoc-members:
-   :show-inheritance:

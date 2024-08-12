@@ -4,11 +4,21 @@ source.backends package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+source.backends.hilbert\_backend module
+---------------------------------------
 
-   source.backends.hilbert_backend
-   source.backends.hilbert_backend_no_inherit
+.. automodule:: source.backends.hilbert_backend
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+source.backends.hilbert\_backend\_no\_inherit module
+----------------------------------------------------
+
+.. automodule:: source.backends.hilbert_backend_no_inherit
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

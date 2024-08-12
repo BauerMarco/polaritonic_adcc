@@ -1,7 +1,0 @@
-source.qed\_matrix\_from\_diag\_adc module
-==========================================
-
-.. automodule:: source.qed_matrix_from_diag_adc
-   :members:
-   :undoc-members:
-   :show-inheritance:

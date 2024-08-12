@@ -1,7 +1,0 @@
-source.test\_methods module
-===========================
-
-.. automodule:: source.test_methods
-   :members:
-   :undoc-members:
-   :show-inheritance:

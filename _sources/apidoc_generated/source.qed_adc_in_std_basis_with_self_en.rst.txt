@@ -1,7 +1,0 @@
-source.qed\_adc\_in\_std\_basis\_with\_self\_en module
-======================================================
-
-.. automodule:: source.qed_adc_in_std_basis_with_self_en
-   :members:
-   :undoc-members:
-   :show-inheritance:

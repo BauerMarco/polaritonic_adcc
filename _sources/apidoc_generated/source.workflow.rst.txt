@@ -1,7 +1,0 @@
-source.workflow module
-======================
-
-.. automodule:: source.workflow
-   :members:
-   :undoc-members:
-   :show-inheritance:

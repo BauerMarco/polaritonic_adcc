@@ -1,7 +1,0 @@
-source.qed\_mp module
-=====================
-
-.. automodule:: source.qed_mp
-   :members:
-   :undoc-members:
-   :show-inheritance:
