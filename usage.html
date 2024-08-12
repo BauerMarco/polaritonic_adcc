@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage &mdash; Polaritonic_adcc 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom_theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Theory" href="theory.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Polaritonic_adcc
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#testing">Testing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#get-started">Get started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-usage">Advanced usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Polaritonic_adcc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage">
+<span id="id1"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
+<section id="get-started">
+<h2>Get started<a class="headerlink" href="#get-started" title="Permalink to this heading"></a></h2>
+<p>Polaritonic_adcc can has a main workflow function called run_qed_adc,
+which only takes an extended and not altered set of arguments as run_adc
+from the adcc. Hence, you should also get familiar on how to
+<a class="reference external" href="https://adc-connect.org/v0.15.13/calculations.html">run an adcc calculation</a> .</p>
+<p>Making use of the psi4 backend as a non-polaritonic SCF provider a calculation
+can be carried out as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>import<span class="w"> </span>psi4
+import<span class="w"> </span>adcc
+
+adcc.set_n_threads<span class="o">(</span><span class="m">4</span><span class="o">)</span>
+
+<span class="c1"># psi4 SCF calculation</span>
+<span class="nv">mol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>psi4.geometry<span class="o">(</span>f<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    0 1</span>
+<span class="s2">    O          0.00000        0.00000        0.11779</span>
+<span class="s2">    H          0.00000        0.75545       -0.47116</span>
+<span class="s2">    H          0.00000       -0.75545       -0.47116</span>
+<span class="s2">    units angstrom</span>
+<span class="s2">    symmetry c1</span>
+<span class="s2">    no_reorient</span>
+<span class="s2"> &quot;&quot;&quot;</span><span class="o">)</span>
+
+<span class="w"> </span><span class="c1"># set the number of cores equal to the auto-determined value from</span>
+<span class="w"> </span><span class="c1"># the adcc ThreadPool</span>
+<span class="w"> </span>psi4.set_num_threads<span class="o">(</span>adcc.get_n_threads<span class="o">())</span>
+<span class="w"> </span>psi4.core.be_quiet<span class="o">()</span>
+<span class="w"> </span>psi4.set_options<span class="o">({</span><span class="s1">&#39;basis&#39;</span>:<span class="w"> </span>basis,
+<span class="w">                   </span><span class="s1">&#39;d_convergence&#39;</span>:<span class="w"> </span>1e-10,
+<span class="w">                   </span><span class="s1">&#39;e_convergence&#39;</span>:<span class="w"> </span>1e-12<span class="o">})</span>
+<span class="w"> </span>scf_e,<span class="w"> </span><span class="nv">wfn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>psi4.energy<span class="o">(</span><span class="s1">&#39;hf&#39;</span>,<span class="w"> </span><span class="nv">return_wfn</span><span class="o">=</span>True<span class="o">)</span>
+
+<span class="c1"># polaritonic_adcc calculation</span>
+<span class="nv">exstates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>run_qed_adc<span class="o">(</span>wfn,<span class="w"> </span><span class="nv">method</span><span class="o">=</span><span class="s2">&quot;adc1&quot;</span>,<span class="w"> </span><span class="nv">coupl</span><span class="o">=[</span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.1<span class="o">]</span>,<span class="w"> </span><span class="nv">freq</span><span class="o">=[</span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.5<span class="o">]</span>,
+<span class="w">    </span><span class="nv">qed_hf</span><span class="o">=</span>False,<span class="w"> </span><span class="nv">qed_coupl_level</span><span class="o">=</span>False,<span class="w"> </span><span class="nv">n_singlets</span><span class="o">=</span><span class="m">5</span>,<span class="w"> </span><span class="nv">conv_tol</span><span class="o">=</span>1e-7
+<span class="o">)</span>
+<span class="c1"># since this calculates a full polaritonic matrix, the result is already</span>
+<span class="c1"># diagonalized and e.g. the energies can be obtained as follows</span>
+print<span class="o">(</span>exstates.excitation_energy<span class="o">)</span>
+</pre></div>
+</div>
+<p>Using hilbert as a polaritonic SCF provider currently requires using the psi4
+executable, due to a bug in hilbert, with which a calculation can be carried
+out as follows</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>import<span class="w"> </span>hilbert
+import<span class="w"> </span>adcc
+from<span class="w"> </span>scipy.linalg<span class="w"> </span>import<span class="w"> </span>eigh
+
+adcc.set_n_threads<span class="o">(</span><span class="m">4</span><span class="o">)</span>
+
+<span class="c1"># hilbert SCF calculation</span>
+molecule<span class="w"> </span>h2o<span class="w"> </span><span class="o">{</span>
+O<span class="w">          </span><span class="m">0</span>.00000<span class="w">        </span><span class="m">0</span>.00000<span class="w">        </span><span class="m">0</span>.11779
+H<span class="w">          </span><span class="m">0</span>.00000<span class="w">        </span><span class="m">0</span>.75545<span class="w">       </span>-0.47116
+H<span class="w">          </span><span class="m">0</span>.00000<span class="w">       </span>-0.75545<span class="w">       </span>-0.47116
+units<span class="w"> </span>angstrom
+symmetry<span class="w"> </span>c1
+no_reorient
+<span class="o">}</span>
+
+<span class="nb">set</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span>basis<span class="w"> </span>sto-3g
+<span class="w">  </span>scf_type<span class="w"> </span>df
+<span class="w">  </span>df_basis_scf<span class="w"> </span>cc-pv5z-jkfit
+<span class="w">  </span>e_convergence<span class="w"> </span>1e-12
+<span class="w">  </span>d_convergence<span class="w"> </span>1e-10
+<span class="o">}</span>
+
+<span class="nb">set</span><span class="w"> </span>hilbert<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span>n_photon_states<span class="w">          </span><span class="m">2</span>
+<span class="w">  </span>cavity_frequency<span class="w">         </span><span class="o">[</span><span class="m">0</span>.0,<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="m">0</span>.5<span class="o">]</span>
+<span class="w">  </span>cavity_coupling_strength<span class="w"> </span><span class="o">[</span><span class="m">0</span>.0,<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="m">0</span>.1<span class="o">]</span>
+<span class="o">}</span>
+
+scf_e,<span class="w"> </span><span class="nv">wfn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>psi4.energy<span class="o">(</span><span class="s1">&#39;polaritonic-uhf&#39;</span>,<span class="w"> </span><span class="nv">return_wfn</span><span class="o">=</span>True<span class="o">)</span>
+
+<span class="c1"># polaritonic_adcc calculation</span>
+<span class="nv">exstates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>run_qed_adc<span class="o">(</span>wfn,<span class="w"> </span><span class="nv">method</span><span class="o">=</span><span class="s2">&quot;adc2&quot;</span>,<span class="w"> </span><span class="nv">coupl</span><span class="o">=[</span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.1<span class="o">]</span>,<span class="w"> </span><span class="nv">freq</span><span class="o">=[</span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.5<span class="o">]</span>,
+<span class="w">    </span><span class="nv">qed_hf</span><span class="o">=</span>True,<span class="w"> </span><span class="nv">qed_coupl_level</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">n_singlets</span><span class="o">=</span><span class="m">5</span>,<span class="w"> </span><span class="nv">conv_tol</span><span class="o">=</span>1e-7
+<span class="o">)</span>
+<span class="c1"># This calculation builds the polaritonic matrix in the truncated state space</span>
+<span class="c1"># of the 5 singlets requested. Since this yields a compact matrix, the full</span>
+<span class="c1"># can be build and for maximum flexibility for the user is returned as such.</span>
+<span class="c1"># This is often helpful for dynamics models, where e.g. a simple 2x2 model is</span>
+<span class="c1"># desired, which can then be extracted from the returned matrix in numpy array</span>
+<span class="c1"># format. In case you only want the energies, you can simply diagonalize as</span>
+print<span class="o">(</span>eigh<span class="o">(</span>exstates.qed_matrix<span class="o">)[</span><span class="m">0</span><span class="o">])</span>
+<span class="c1"># The polaritonic MP ground state energy can be accessed via</span>
+print<span class="o">(</span>exstate.ground_state.energy<span class="o">())</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>As can be seen the polaritonic results need to be accessed in two different
+ways, depending on whether <code class="docutils literal notranslate"><span class="pre">qed_coupl_level</span></code> is set to False or an integer.
+To ensure maximum flexibility for the user, the <code class="docutils literal notranslate"><span class="pre">exstates.excitation_energy</span></code>
+attribute is also populated with <code class="docutils literal notranslate"><span class="pre">qed_coupl_level</span></code> set to an integer, but
+these refer to the state basis, from which the polaritonic matrix was build
+from.</p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Always double check how the SCF provider defines the coupling strength!!!
+Usually one out of two common definitions is used, which differ by a factor
+of two times the energy of the cavity photon. Currently polaritonic_adcc
+uses the same definition than the hilbert package, but e.g.
+<a class="reference external" href="https://github.com/psi4/psi4numpy/tree/master/Polaritonic-Quantum-Chemistry">psi4numpy</a>
+, which can also be used as a polaritonic SCF provider, uses the other definition,
+which needs to be accounted for, when setting the coupling parameter!</p>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading"></a></h2>
+<p>For a detailed description of the ranges allowed for the parameters in
+<code class="docutils literal notranslate"><span class="pre">run_qed_adc</span></code> check the <a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a>.</p>
+<p>In a recent study we showed that using the truncated state approach is
+usually sufficient up to first order for reasonable isolation from other
+states, which also couple to the cavity photon (unpublished results).
+This promotes the following recommendations:</p>
+<ol class="arabic simple">
+<li><p>Unless you want to simulate rather weak couplings, always use a polaritonic
+SCF reference.</p></li>
+<li><p>If the density of states and which also couple to the cavity is large,
+use the full matrix ansatz, but if not, use the first order coupling,
+which is the default, as it is much faster with similar accuracy.</p></li>
+<li><p>Use at least ADC(2) or ADC(3).</p></li>
+</ol>
+</section>
+<section id="advanced-usage">
+<h2>Advanced usage<a class="headerlink" href="#advanced-usage" title="Permalink to this heading"></a></h2>
+<p>The truncated ansatz can account for lossy cavities, by simply including
+the energetical damping as imaginary contribution to the cavity photon
+energy.</p>
+<p>Use tight convergence criteria, as small variations in energy can lead
+to large differences near the resonance region of the cavity photon.</p>
+<p>All polaritonic methods explicitly include up to double photon excitation,
+which means that the returned matrix from the truncated state space
+method has the dimension-size of three times the number of states requested
+plus the ground state with a singly and a doubly populated photonic contribution.
+With a non-polaritonic reference, the excited states are not orthogonal
+to the ground state in the photonic vacuum anymore, which is why it needs
+to be included into the matrix and therefore appends the size of each
+dimension by one.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Going to larger systems you might experience trouble with psi4 based
+SCF providers, as the export of the wfn object in psi4 is very slow.
+This can simply be circumvented using an other SCF provider and is
+not an issue of polaritonic_adcc!</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="theory.html" class="btn btn-neutral float-right" title="Theory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marco Bauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

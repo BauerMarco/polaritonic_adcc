@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; Polaritonic_adcc 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom_theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Usage" href="usage.html" />
+    <link rel="prev" title="Welcome to Polaritonic_adcc’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Polaritonic_adcc
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-adcc">Installing adcc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-an-scf-provider">Installing an SCF provider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-a-standard-scf-provider">Installing a standard SCF provider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-a-polaritonic-scf-provider">Installing a polaritonic SCF provider</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Polaritonic_adcc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<p>In order to run polaritonic_adcc, you first need to install the
+dependencies required, which consist of adcc and an SCF provider.</p>
+<section id="installing-adcc">
+<h2>Installing adcc<a class="headerlink" href="#installing-adcc" title="Permalink to this heading"></a></h2>
+<p>How to install adcc in general can be found
+<a class="reference external" href="https://adc-connect.org/v0.15.13/installation.html">here</a> ,
+but until a required pull request gets accepted, you have to setup
+adcc in a slightly different manner.</p>
+<p>After installing the required dependencies for adcc, clone the following
+adcc fork on the given branch</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/BauerMarco/adcc/tree/increase_inheritable_objects
+</pre></div>
+</div>
+<p>and then install by switching into the new directory and type</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>setup.py<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="installing-an-scf-provider">
+<h2>Installing an SCF provider<a class="headerlink" href="#installing-an-scf-provider" title="Permalink to this heading"></a></h2>
+<p>Many SCF providers are already supported, for instance VeloxChem, psi4 and pyscf.
+However, since you want to conduct a polaritonic electronic structure
+calculation, you probably also want to use a polaritonic SCF provider.
+More on this can be found in the <a class="reference internal" href="theory.html#theory"><span class="std std-ref">Theory</span></a> section, but just as a short
+answer you should know, that polaritonic_adcc supports usage of both
+standard (non-polaritonic) and polaritonic SCF providers, which do <strong>not</strong>
+yield the same result.</p>
+<section id="installing-a-standard-scf-provider">
+<h3>Installing a standard SCF provider<a class="headerlink" href="#installing-a-standard-scf-provider" title="Permalink to this heading"></a></h3>
+<p>How to install the standard SCF providers can
+be found <a class="reference external" href="https://adc-connect.org/v0.15.13/installation.html">here</a> ,
+and on the corresponding homepages of the program packages.</p>
+</section>
+<section id="installing-a-polaritonic-scf-provider">
+<h3>Installing a polaritonic SCF provider<a class="headerlink" href="#installing-a-polaritonic-scf-provider" title="Permalink to this heading"></a></h3>
+<p>For polaritonic SCF providers one out of two things can occur.</p>
+<ol class="arabic simple">
+<li><p>An extension to one of the supported SCF providers yields the same
+object a standard calculation would yield. In this case the
+polaritonic SCF result can be parsed from polaritonic_adcc out of
+the box.</p></li>
+<li><p>An extension to one of the supported SCF providers yields a different
+object than the standard calculation, or the SCF provider is not supported
+in the first place. In this case a new functionality needs to be integrated
+into adcc and/or polaritonic_adcc.</p></li>
+</ol>
+<p>Besides polaritonic SCF providers falling under the first category, the
+<a class="reference external" href="https://github.com/edeprince3/hilbert">hilbert package</a> is currently
+supported, which is based on the psi4 program package.</p>
+</section>
+</section>
+</section>
+<section id="testing">
+<span id="tests"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h1>
+<p>The implemented test routines are based on pytest and can be executed as follows</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest<span class="w">  </span><span class="c1"># if you don&#39;t want to run the full test routine, use the -k flag</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Note, that the current test routine requires psi4 as a dependency.</p>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Polaritonic_adcc’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marco Bauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

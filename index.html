@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Polaritonic_adcc’s documentation! &mdash; Polaritonic_adcc 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom_theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Polaritonic_adcc
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Polaritonic_adcc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to Polaritonic_adcc’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-polaritonic-adcc-s-documentation">
+<h1>Welcome to Polaritonic_adcc’s documentation!<a class="headerlink" href="#welcome-to-polaritonic-adcc-s-documentation" title="Permalink to this heading"></a></h1>
+<p>Polaritonic_adcc provides a wide variety of methodologies to determine
+the electronic structure of molecules and clusters, which are polaritonically
+coupled to a photon. A calculation can be carried out using an SCF provider,
+exporting the wfn object, and then executing polaritonic_adcc on top of that,
+as is done in the following example.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>import<span class="w"> </span>psi4
+import<span class="w"> </span>adcc
+
+adcc.set_n_threads<span class="o">(</span><span class="m">4</span><span class="o">)</span>
+
+<span class="c1"># psi4 SCF calculation</span>
+<span class="nv">mol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>psi4.geometry<span class="o">(</span>f<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    0 1</span>
+<span class="s2">    O          0.00000        0.00000        0.11779</span>
+<span class="s2">    H          0.00000        0.75545       -0.47116</span>
+<span class="s2">    H          0.00000       -0.75545       -0.47116</span>
+<span class="s2">    units angstrom</span>
+<span class="s2">    symmetry c1</span>
+<span class="s2">    no_reorient</span>
+<span class="s2"> &quot;&quot;&quot;</span><span class="o">)</span>
+
+<span class="w"> </span><span class="c1"># set the number of cores equal to the auto-determined value from</span>
+<span class="w"> </span><span class="c1"># the adcc ThreadPool</span>
+<span class="w"> </span>psi4.set_num_threads<span class="o">(</span>adcc.get_n_threads<span class="o">())</span>
+<span class="w"> </span>psi4.core.be_quiet<span class="o">()</span>
+<span class="w"> </span>psi4.set_options<span class="o">({</span><span class="s1">&#39;basis&#39;</span>:<span class="w"> </span>basis,
+<span class="w">                   </span><span class="s1">&#39;d_convergence&#39;</span>:<span class="w"> </span>1e-10,
+<span class="w">                   </span><span class="s1">&#39;e_convergence&#39;</span>:<span class="w"> </span>1e-12<span class="o">})</span>
+<span class="w"> </span>scf_e,<span class="w"> </span><span class="nv">wfn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>psi4.energy<span class="o">(</span><span class="s1">&#39;hf&#39;</span>,<span class="w"> </span><span class="nv">return_wfn</span><span class="o">=</span>True<span class="o">)</span>
+
+<span class="c1"># polaritonic_adcc calculation</span>
+<span class="nv">exstates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>run_qed_adc<span class="o">(</span>wfn,<span class="w"> </span><span class="nv">method</span><span class="o">=</span><span class="s2">&quot;adc1&quot;</span>,<span class="w"> </span><span class="nv">coupl</span><span class="o">=[</span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.1<span class="o">]</span>,<span class="w"> </span><span class="nv">freq</span><span class="o">=[</span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.,<span class="w"> </span><span class="m">0</span>.5<span class="o">]</span>,
+<span class="w">    </span><span class="nv">qed_hf</span><span class="o">=</span>False,<span class="w"> </span><span class="nv">qed_coupl_level</span><span class="o">=</span>False,<span class="w"> </span><span class="nv">n_singlets</span><span class="o">=</span><span class="m">5</span>,<span class="w"> </span><span class="nv">conv_tol</span><span class="o">=</span>1e-7
+<span class="o">)</span>
+<span class="c1"># since this calculates a full polaritonic matrix, the result is already</span>
+<span class="c1"># diagonalized and e.g. the energies can be obtained as follows</span>
+print<span class="o">(</span>exstates.excitation_energy<span class="o">)</span>
+</pre></div>
+</div>
+<p>As the name already suggests, this project is based on
+<a class="reference external" href="https://adc-connect.org/v0.15.13/index.html">adcc</a> and adapts its
+functionalities, so you can for instance freeze ortbials or request
+only certain spin configurations.</p>
+<p>Polaritonic_adcc is also very flexible with its in- and outputs. You can
+feed it a standard or a polaritonic SCF result, and request the states
+and energies of the full polaritonic matrix, or the whole matrix, if the
+matrix is build in a truncated space of states. The latter representation
+is also quasi-diabatic, making it a great tool for subsequent quantum dynamics
+simulations.</p>
+<p>Sounds interesting? Then check out the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> and
+<a class="reference internal" href="usage.html#usage"><span class="std std-ref">Usage</span></a> sections of this documentation or get in touch via
+<a class="reference external" href="https://github.com/BauerMarco/polaritonic_adcc">GitHub</a> .</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-adcc">Installing adcc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-an-scf-provider">Installing an SCF provider</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#get-started">Get started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#basic-usage">Basic usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#advanced-usage">Advanced usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marco Bauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
