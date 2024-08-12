@@ -1,0 +1,7 @@
+source.qed\_matrix\_working\_equations module
+=============================================
+
+.. automodule:: source.qed_matrix_working_equations
+   :members:
+   :undoc-members:
+   :show-inheritance:
