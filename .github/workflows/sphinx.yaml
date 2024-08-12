@@ -8,6 +8,9 @@ jobs:
     permissions:
       contents: write
     steps:
+    - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
     - uses: actions/checkout@v4
     - name: Build HTML
       run: |
