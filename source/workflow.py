@@ -120,7 +120,7 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True,
 
     environment : bool or list or dict, optional
         The keywords to specify how coupling to an environment model,
-        e.g. PE, is treated. For details see :ref:`environment`.
+        e.g. PE, is treated.
     
     coupl : list or tuple or numpy array of length 3, optional
         x, y, z coupling vector to the cavity photon. Use the definition

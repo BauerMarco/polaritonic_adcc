@@ -64,6 +64,10 @@ html_css_files = [
     'custom_theme.css',
 ]
 
+# html_theme_options = {
+#    "canonical_url": "https://polaritonic_adcc.org/"
+# }
+
 # Napoleon settings
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
