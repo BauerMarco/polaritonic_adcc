@@ -32,8 +32,8 @@ release = '0.1'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.imgmath',
-    'sphinx.ext.ifconfig',
+    # 'sphinx.ext.imgmath',
+    # 'sphinx.ext.ifconfig',
     'sphinx.ext.napoleon',
     'sphinxcontrib.apidoc',
 ]
@@ -80,8 +80,8 @@ autoclass_content = "init"
 
 numpydoc_show_class_members = False
 
-apidoc_module_dir = '../source'
+apidoc_module_dir = 'source'
 apidoc_output_dir = 'apidoc_generated'
 # apidoc_excluded_paths = ['tests']
-# apidoc_separate_modules = True
+apidoc_separate_modules = True
 
