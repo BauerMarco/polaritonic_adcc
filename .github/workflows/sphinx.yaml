@@ -10,11 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install dependencies
-      run: python -m pip install --user sphinx-rtd-theme sphinx-automodapi 
+      run: sudo apt-get install python3-sphinx python3-sphinx-rtd-theme
     - name: Build HTML
       uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "docs/"
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
