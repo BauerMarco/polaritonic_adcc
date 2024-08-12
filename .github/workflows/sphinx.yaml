@@ -14,8 +14,8 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        pip install sphinx_rtd_theme 
         name: html-docs
+        run: pip install sphinx_rtd_theme
         path: docs/_build/html/
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
