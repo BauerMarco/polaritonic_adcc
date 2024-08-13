@@ -14,7 +14,10 @@ jobs:
         python-version: 3.9
     - name: Build HTML
       run: |
+        sudo apt-get install libopenblas-base
         python -m pip install --user sphinx==5.0.2 sphinx-rtd-theme sphinxcontrib-apidoc
+        python -m pip install --user adcc psi4
+        python -m pip install -r docs/adcc_requirements.txt -v
         python setup.py build_sphinx
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
