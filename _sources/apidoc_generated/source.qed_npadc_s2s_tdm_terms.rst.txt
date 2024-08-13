@@ -1,0 +1,7 @@
+source.qed\_npadc\_s2s\_tdm\_terms module
+=========================================
+
+.. automodule:: source.qed_npadc_s2s_tdm_terms
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+source.qed\_npadc\_exstates module
+==================================
+
+.. automodule:: source.qed_npadc_exstates
+   :members:
+   :undoc-members:
+   :show-inheritance:
