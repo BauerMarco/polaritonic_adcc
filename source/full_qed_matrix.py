@@ -22,7 +22,7 @@ from qed_mp import qed_mp
 
 class qed_matrix_full(adcc.AdcMatrix):
     def __init__(self, method, hf_or_mp, block_orders=None, intermediates=None,
-                 diagonal_precomputed=None):
+        diagonal_precomputed=None):
         """
         Initialise an polaritonic ADC matrix.
         Parameters
@@ -32,8 +32,7 @@ class qed_matrix_full(adcc.AdcMatrix):
         hf_or_mp : polaritonic_adcc.qed_mp
             HF reference or QED MP ground state
         block_orders : optional
-            The order of perturbation theory to employ for each matrix block.
-            If not set, defaults according to the selected ADC method are chosen.
+            PT order for each matrix block. (if None, ADC default is chosen)
         intermediates : adcc.Intermediates or NoneType
             Allows to pass intermediates to re-use to this class.
         diagonal_precomputed: adcc.AmplitudeVector

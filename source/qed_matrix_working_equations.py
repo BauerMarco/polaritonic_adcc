@@ -39,8 +39,8 @@ def qed_block(ground_state, spaces, order, variant=None, intermediates=None):
 
     For QED-ADC (up to double photon dispersion) we build the matrix as follows:
     [[elec,              phot_couple,         phot_couple_edge ],
-     [elec_couple,       phot,                phot_couple_inner],
-     [elec_couple_edge,  elec_couple_inner,   phot2            ]]
+    [elec_couple,        phot,                phot_couple_inner],
+    [elec_couple_edge,   elec_couple_inner,   phot2            ]]
     where each block is a "standard" ADC matrix itself, including the groundstate
     and the groundstate couplings. However, the gs_ph and gs_gs blocks are merged
     into the ph_ph and ph_gs blocks, respectively, since we calculate matrix vector
