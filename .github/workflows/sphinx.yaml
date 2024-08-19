@@ -16,7 +16,6 @@ jobs:
       run: |
         sudo apt-get install libopenblas-base
         python -m pip install --user sphinx==5.0.2 sphinx-rtd-theme sphinxcontrib-apidoc
-        python -m pip install --user psi4
         python -m pip install -r docs/adcc_requirements.txt -v
         python -m pip install --user adcc
         python setup.py build_sphinx
