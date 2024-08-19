@@ -8,9 +8,3 @@ If you use this package for a scientific publication, please cite the above pape
 The documentation, including information on installation and usage, can be found
 under the following url: https://bauermarco.github.io/polaritonic_adcc/
 
-Due to errors with the remote setup of the API documentation, you still have
-to build it locally, if you are interested in that. In order to do so, pip
-install the packages listed in docs/requirements.txt and then execute "make html"
-from the docs directory. Now you can open the genindex.html (along with the
-remaining documentation) in the new build directory with any browser you like.
-
