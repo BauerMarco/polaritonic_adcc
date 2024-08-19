@@ -79,8 +79,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="source-qed-mp-module">
-<h1>source.qed_mp module<a class="headerlink" href="#source-qed-mp-module" title="Permalink to this heading"></a></h1>
+  <section id="module-source.qed_mp">
+<span id="source-qed-mp-module"></span><h1>source.qed_mp module<a class="headerlink" href="#module-source.qed_mp" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">source.qed_mp.</span></span><span class="sig-name descname"><span class="pre">qed_mp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qed_hf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LazyMp</span></code></p>
+<p>Lazily evaluated (non-)polaritonic MP object</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qed_hf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Lazily evaluated (non-)polaritonic MP object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp.qed_energy">
+<span class="sig-name descname"><span class="pre">qed_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp.qed_energy" title="Permalink to this definition"></a></dt>
+<dd><p>Obtain the total energy (SCF energy plus all corrections)
+at a particular level of perturbation theory for QED MP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp.qed_energy_correction">
+<span class="sig-name descname"><span class="pre">qed_energy_correction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp.qed_energy_correction" title="Permalink to this definition"></a></dt>
+<dd><p>Determines the polaritonic correction to the MP energy.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp.qed_t0">
+<span class="sig-name descname"><span class="pre">qed_t0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">space</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp.qed_t0" title="Permalink to this definition"></a></dt>
+<dd><p>Return second new electronic singly excited amplitude in the first
+order correction to the wavefunction for qed from the standard
+HF reference</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp.qed_t0_df">
+<span class="sig-name descname"><span class="pre">qed_t0_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">space</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp.qed_t0_df" title="Permalink to this definition"></a></dt>
+<dd><p>qed_t0 amplitude times df</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp.qed_t1">
+<span class="sig-name descname"><span class="pre">qed_t1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">space</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp.qed_t1" title="Permalink to this definition"></a></dt>
+<dd><p>Return new electronic singly excited amplitude in the first
+order correction to the wavefunction for qed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_mp.qed_mp.qed_t1_df">
+<span class="sig-name descname"><span class="pre">qed_t1_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">space</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_mp.qed_mp.qed_t1_df" title="Permalink to this definition"></a></dt>
+<dd><p>qed_t1 amplitude times (df+omega)</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

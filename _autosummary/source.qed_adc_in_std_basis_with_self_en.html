@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>source.qed_matrix_from_diag_adc module &mdash; Polaritonic_adcc 0.1 documentation</title>
+  <title>source.qed_adc_in_std_basis_with_self_en &mdash; Polaritonic_adcc 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom_theme.css" />
@@ -21,7 +21,9 @@
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="source.qed_matrix_from_diag_adc" href="source.qed_matrix_from_diag_adc.html" />
+    <link rel="prev" title="source" href="source.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,13 +48,22 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html#testing">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../API.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../API.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="source.html">source</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">source.qed_adc_in_std_basis_with_self_en</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_matrix_from_diag_adc.html">source.qed_matrix_from_diag_adc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_mp.html">source.qed_mp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_npadc_s2s_tdm_terms.html">source.qed_npadc_s2s_tdm_terms</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -69,9 +80,11 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">source.qed_matrix_from_diag_adc module</li>
+          <li class="breadcrumb-item"><a href="../API.html">API</a></li>
+          <li class="breadcrumb-item"><a href="source.html">source</a></li>
+      <li class="breadcrumb-item active">source.qed_adc_in_std_basis_with_self_en</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/apidoc_generated/source.qed_matrix_from_diag_adc.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_autosummary/source.qed_adc_in_std_basis_with_self_en.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -79,38 +92,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-source.qed_matrix_from_diag_adc">
-<span id="source-qed-matrix-from-diag-adc-module"></span><h1>source.qed_matrix_from_diag_adc module<a class="headerlink" href="#module-source.qed_matrix_from_diag_adc" title="Permalink to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">source.qed_matrix_from_diag_adc.</span></span><span class="sig-name descname"><span class="pre">qed_matrix_from_diag_adc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exstates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Build polaritonic matrix in a truncated state space on a polaritonic SCF.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc.first_order_coupling">
-<span class="sig-name descname"><span class="pre">first_order_coupling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc.first_order_coupling" title="Permalink to this definition"></a></dt>
-<dd><p>Return first order polaritonically coupled matrix.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc.loop_helper">
-<span class="sig-name descname"><span class="pre">loop_helper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s2s_tensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc.loop_helper" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc.second_order_coupling">
-<span class="sig-name descname"><span class="pre">second_order_coupling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_matrix_from_diag_adc.qed_matrix_from_diag_adc.second_order_coupling" title="Permalink to this definition"></a></dt>
-<dd><p>Return second order polaritonically coupled matrix.</p>
-</dd></dl>
-
-</dd></dl>
-
+  <section id="module-source.qed_adc_in_std_basis_with_self_en">
+<span id="source-qed-adc-in-std-basis-with-self-en"></span><h1>source.qed_adc_in_std_basis_with_self_en<a class="headerlink" href="#module-source.qed_adc_in_std_basis_with_self_en" title="Permalink to this heading"></a></h1>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_adc_in_std_basis_with_self_en.html#source.qed_adc_in_std_basis_with_self_en.first_order_qed_matrix" title="source.qed_adc_in_std_basis_with_self_en.first_order_qed_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">first_order_qed_matrix</span></code></a>(state, coupl, frequency)</p></td>
+<td><p>Build polaritonic matrix in a truncated state space on a standard SCF.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="source.html" class="btn btn-neutral float-left" title="source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source.qed_matrix_from_diag_adc.html" class="btn btn-neutral float-right" title="source.qed_matrix_from_diag_adc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

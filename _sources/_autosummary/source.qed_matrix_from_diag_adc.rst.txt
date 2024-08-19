@@ -1,0 +1,29 @@
+source.qed\_matrix\_from\_diag\_adc
+===================================
+
+.. automodule:: source.qed_matrix_from_diag_adc
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      qed_matrix_from_diag_adc
+   
+   
+
+   
+   
+   
+
+
+

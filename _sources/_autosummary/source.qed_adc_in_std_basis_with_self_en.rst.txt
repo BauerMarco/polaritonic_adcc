@@ -1,0 +1,29 @@
+source.qed\_adc\_in\_std\_basis\_with\_self\_en
+===============================================
+
+.. automodule:: source.qed_adc_in_std_basis_with_self_en
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      first_order_qed_matrix
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

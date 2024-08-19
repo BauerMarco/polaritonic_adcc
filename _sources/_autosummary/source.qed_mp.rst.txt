@@ -1,0 +1,29 @@
+source.qed\_mp
+==============
+
+.. automodule:: source.qed_mp
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      qed_mp
+   
+   
+
+   
+   
+   
+
+
+

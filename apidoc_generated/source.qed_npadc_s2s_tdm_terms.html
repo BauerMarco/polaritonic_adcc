@@ -79,8 +79,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="source-qed-npadc-s2s-tdm-terms-module">
-<h1>source.qed_npadc_s2s_tdm_terms module<a class="headerlink" href="#source-qed-npadc-s2s-tdm-terms-module" title="Permalink to this heading"></a></h1>
+  <section id="module-source.qed_npadc_s2s_tdm_terms">
+<span id="source-qed-npadc-s2s-tdm-terms-module"></span><h1>source.qed_npadc_s2s_tdm_terms module<a class="headerlink" href="#module-source.qed_npadc_s2s_tdm_terms" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="source.qed_npadc_s2s_tdm_terms.qed_npadc_s2s_tdm_terms">
+<span class="sig-prename descclassname"><span class="pre">source.qed_npadc_s2s_tdm_terms.</span></span><span class="sig-name descname"><span class="pre">qed_npadc_s2s_tdm_terms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ground_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_npadc_s2s_tdm_terms.qed_npadc_s2s_tdm_terms" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the state to state transition density matrix and related
+intermediates required for the QED matrix in the truncated state
+space in the MO basis using the intermediate-states representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>AdcMethod</em>) – The method to use for the computation (e.g. “adc2”)</p></li>
+<li><p><strong>ground_state</strong> (<em>LazyMp</em>) – The ground state upon which the excitation was based</p></li>
+<li><p><strong>amplitude_from</strong> (<em>AmplitudeVector</em>) – The amplitude vector of the state to start from</p></li>
+<li><p><strong>amplitude_to</strong> (<em>AmplitudeVector</em>) – The amplitude vector of the state to excite to</p></li>
+<li><p><strong>intermediates</strong> (<em>adcc.Intermediates</em>) – Intermediates from the ADC calculation to reuse</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="source.qed_npadc_s2s_tdm_terms.s2s_tdm_adc0">
+<span class="sig-prename descclassname"><span class="pre">source.qed_npadc_s2s_tdm_terms.</span></span><span class="sig-name descname"><span class="pre">s2s_tdm_adc0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_npadc_s2s_tdm_terms.s2s_tdm_adc0" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_diag_part">
+<span class="sig-prename descclassname"><span class="pre">source.qed_npadc_s2s_tdm_terms.</span></span><span class="sig-name descname"><span class="pre">s2s_tdm_qed_adc2_diag_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_diag_part" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_edge_part_couple">
+<span class="sig-prename descclassname"><span class="pre">source.qed_npadc_s2s_tdm_terms.</span></span><span class="sig-name descname"><span class="pre">s2s_tdm_qed_adc2_edge_part_couple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_edge_part_couple" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_edge_part_phot_couple">
+<span class="sig-prename descclassname"><span class="pre">source.qed_npadc_s2s_tdm_terms.</span></span><span class="sig-name descname"><span class="pre">s2s_tdm_qed_adc2_edge_part_phot_couple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_edge_part_phot_couple" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_ph_pphh_coupl_part">
+<span class="sig-prename descclassname"><span class="pre">source.qed_npadc_s2s_tdm_terms.</span></span><span class="sig-name descname"><span class="pre">s2s_tdm_qed_adc2_ph_pphh_coupl_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_ph_pphh_coupl_part" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_pphh_ph_phot_coupl_part">
+<span class="sig-prename descclassname"><span class="pre">source.qed_npadc_s2s_tdm_terms.</span></span><span class="sig-name descname"><span class="pre">s2s_tdm_qed_adc2_pphh_ph_phot_coupl_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude_r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_npadc_s2s_tdm_terms.s2s_tdm_qed_adc2_pphh_ph_phot_coupl_part" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
 
 

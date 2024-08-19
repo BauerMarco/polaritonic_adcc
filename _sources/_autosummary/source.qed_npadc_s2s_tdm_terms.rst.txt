@@ -1,0 +1,35 @@
+source.qed\_npadc\_s2s\_tdm\_terms
+==================================
+
+.. automodule:: source.qed_npadc_s2s_tdm_terms
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      qed_npadc_s2s_tdm_terms
+      s2s_tdm_adc0
+      s2s_tdm_qed_adc2_diag_part
+      s2s_tdm_qed_adc2_edge_part_couple
+      s2s_tdm_qed_adc2_edge_part_phot_couple
+      s2s_tdm_qed_adc2_ph_pphh_coupl_part
+      s2s_tdm_qed_adc2_pphh_ph_phot_coupl_part
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
