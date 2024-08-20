@@ -25,12 +25,13 @@ from qed_adc_in_std_basis_with_self_en import first_order_qed_matrix
 from refstate import refstate
 from qed_npadc_exstates import qed_npadc_exstates
 from qed_mp import qed_mp
+from qed_ucc import qed_ucc
 from full_qed_matrix import qed_matrix_full
 from libadcc import set_lt_scalar
 
 #__all__ = ["run_qed_adc"]
 
-def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True,
+def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True, gs="mp",
                 qed_coupl_level=1, n_states=None, kind="any", conv_tol=None,
                 eigensolver="davidson", guesses=None, n_guesses=None,
                 n_guesses_doubles=None, output=sys.stdout, core_orbitals=None,
@@ -132,6 +133,9 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True,
     qed_hf : bool, optional
         Specify, whether a standard or polaritonic SCF result is provided.
 
+    gs : str, optional
+        Which ground state reference to use
+
     qed_coupl_level : bool or int, optional
         Specify, whether to calculate the full matrix (False), or provide
         the perturbative level to which polaritonic coupling shall be included
@@ -191,7 +195,6 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True,
     ... state = run_qed_adc(mf, n_singlets=3, freq=[0., 0., 0.4], coupl=[0., 0., 0.1],
                             qed_coupl_level=False)
     """
-    print(type(data_or_matrix))
     # Validation of given parameters
     if method == "adc0":
         raise NotImplementedError("in zeroth order the system is decoupled from the cavity")
@@ -210,21 +213,36 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True,
     # e.g. the psi4numpy QED-RHF helper does not do that. Therefore, this
     # factor needs to be adjusted depending on the input.
     coupl_adapted = np.array(coupl) * np.sqrt(2 * np.linalg.norm(np.real(freq)))
-    print("coupling parameter in polaritonic_adcc was adapted as sqrt(2 * real(freq)), "
-          "because the definition for the coupling parameter here is "
-          r"$\lambda = \frac{\epsilon}{\epsilon_0 \epsilon_r V}$")
+    warnings.warn("coupling parameter in polaritonic_adcc was adapted as sqrt(2 * real(freq)), "
+                  "because the definition for the coupling parameter here is "
+                  r"$\lambda = \frac{\epsilon}{\epsilon_0 \epsilon_r V}$")
     # Determining the correct computation from the given input parameters
+    if gs == "mp":
+        ground_state = qed_mp
+    elif gs == "ucc":
+        if qed_hf == False and qed_coupl_level == False:
+            raise NotImplementedError("UCC is only implemented for a polaritonic HF reference."
+                                      "However, you can requested the truncated matrix built"
+                                      "with a standard HF reference.")
+        if qed_coupl_level != False:
+            warnings.warn("From a theoretical perspective using qed_ucc with the truncated"
+                          "matrix built is not quite correct, since the t2 and qed_t1"
+                          "amplitudes are coupled. Hence, it is recommended to use"
+                          "qed_mp for QED_npADC calculations.")
+        ground_state = qed_ucc
+    else:
+        raise NotImplementedError(f"ground state option {gs} unknown")
     #if qed_hf:
     if isinstance(data_or_matrix, refstate):
-        qed_groundstate = qed_mp(data_or_matrix, np.linalg.norm(np.real(freq)), qed_hf=qed_hf)
-    elif isinstance(data_or_matrix, qed_mp):
+        qed_groundstate = ground_state(data_or_matrix, np.linalg.norm(np.real(freq)), qed_hf=qed_hf)
+    elif isinstance(data_or_matrix, qed_mp):  # this check for gs type might cause problems
         qed_groundstate = data_or_matrix
     elif isinstance(data_or_matrix, qed_matrix_full):
         pass
     else:
         qed_refstate = refstate(data_or_matrix, qed_hf, coupl_adapted, core_orbitals=core_orbitals, frozen_core=frozen_core,
                         frozen_virtual=frozen_virtual)
-        qed_groundstate = qed_mp(qed_refstate, np.linalg.norm(np.real(freq)), qed_hf=qed_hf)
+        qed_groundstate = ground_state(qed_refstate, np.linalg.norm(np.real(freq)), qed_hf=qed_hf)
     if type(qed_coupl_level) == int and qed_hf:
         exstates = adcc.run_adc(qed_groundstate, n_states=n_states, kind=kind, conv_tol=conv_tol,
                 eigensolver=eigensolver, guesses=guesses, n_guesses=n_guesses,

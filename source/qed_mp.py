@@ -21,7 +21,7 @@ b = adcc.block
 einsum = adcc.functions.einsum
 
 class qed_mp(adcc.LazyMp):
-    def __init__(self, hf, omega, qed_hf=True):
+    def __init__(self, hf, omega, qed_hf=True, **kwargs):
         """Lazily evaluated (non-)polaritonic MP object"""
         super().__init__(hf)
         self.get_qed_total_dip = adcc.OneParticleOperator(self.mospaces, is_symmetric=True)  # noqa: E501

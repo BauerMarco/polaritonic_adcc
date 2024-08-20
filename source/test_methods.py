@@ -136,3 +136,29 @@ class qed_test_full_hf(unittest.TestCase):
         assert_allclose(eigvals, full_ref, atol=1e-6)
 
 
+@expand_test_templates(list(itertools.product(testcases, adc2)))
+class qed_test_qedhf_ucc(unittest.TestCase):
+    """Setup method testing with polaritonic SCF"""
+    def get_qed_adc(self, case, method):
+        wfn = get_psi4_wfn(case)  # for larger test suites this should be cached
+        if "pyrrole" in case:
+            freq = [0., 0., 0.3]
+        else:
+            freq = [0., 0., 0.5]
+        #if full:
+        #    level = False
+        #else:
+        #    level = int(method[-1])
+        return run_qed_adc(wfn, method=method, coupl=[0., 0., 0.1], freq=freq, gs="ucc",
+                             qed_hf=True, qed_coupl_level=False, n_singlets=5, conv_tol=1e-7)
+
+
+    def template_full_qedhf_ucc(self, case, method):
+        """Test full method with polaritonic SCF"""
+        full = self.get_qed_adc(case, method)
+        eigvals = full.excitation_energy
+
+        ref_name = f"{case}_{method}_full_qedhf_ucc"
+        full_ref = qed_energies_psi4[ref_name]
+
+        assert_allclose(eigvals, full_ref, atol=1e-6)
