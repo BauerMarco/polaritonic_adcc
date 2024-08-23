@@ -16,7 +16,7 @@ jobs:
       run: |
         sudo apt-get install libopenblas-base
         python -m pip install --user sphinx==5.0.2 sphinx-rtd-theme sphinxcontrib-apidoc
-        python -m pip install --user opt_einsum numpy scipy h5py tqdm
+        python -m pip install --user opt_einsum numpy scipy h5py tqdm pyyaml
         python -m pip install --user adcc
         python setup.py build_sphinx
     - name: Upload artifacts
