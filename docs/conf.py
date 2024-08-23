@@ -14,26 +14,26 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-source/full_qed_matrix.py
-source/functions.py
-source/__init__.py
-source/qed_adc_in_std_basis_with_self_en.py
-source/qed_amplitude_vec.py
-source/qed_matrix_from_diag_adc.py
-source/qed_matrix_working_equations.py
-source/qed_mp.py
-source/qed_npadc_exstates.py
-source/qed_npadc_s2s_tdm_terms.py
-source/qed_ucc.py
-source/refstate.py
-source/testdata
-source/test_methods.py
-source/workflow.py
-source/solver/davidson.py
-source/solver/diis.py
-source/solver/LanczosIterator.py
-source/solver/lanczos.py
-source/solver/orthogonaliser.py
+import source
+import source.full_qed_matrix
+import source.functions
+import source.__init__
+import source.qed_adc_in_std_basis_with_self_en
+import source.qed_amplitude_vec
+import source.qed_matrix_from_diag_adc
+import source.qed_matrix_working_equations
+import source.qed_mp
+import source.qed_npadc_exstates
+import source.qed_npadc_s2s_tdm_terms
+import source.qed_ucc
+import source.refstate
+import source.test_methods
+import source.workflow
+import source.solver.davidson
+import source.solver.diis
+import source.solver.LanczosIterator
+import source.solver.lanczos
+import source.solver.orthogonaliser
 
 # -- Project information -----------------------------------------------------
 
@@ -82,9 +82,9 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-html_css_files = [
-    'custom_theme.css',
-]
+#html_css_files = [
+#    'custom_theme.css',
+#]
 
 # html_theme_options = {
 #    "canonical_url": "https://polaritonic_adcc.org/"
