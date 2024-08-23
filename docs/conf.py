@@ -27,7 +27,6 @@ import source.qed_npadc_exstates
 import source.qed_npadc_s2s_tdm_terms
 import source.qed_ucc
 import source.refstate
-import source.test_methods
 import source.workflow
 import source.solver.davidson
 import source.solver.diis
@@ -103,6 +102,6 @@ numpydoc_show_class_members = False
 
 apidoc_module_dir = '../source'
 apidoc_output_dir = 'apidoc_generated'
-# apidoc_excluded_paths = ['tests']
+apidoc_excluded_paths = ['testdata', 'backends']
 apidoc_separate_modules = True
 

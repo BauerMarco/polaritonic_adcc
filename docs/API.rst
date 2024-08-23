@@ -8,3 +8,10 @@ API
    source
 
 
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
+
+   source.solver
+
+
