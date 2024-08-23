@@ -22,7 +22,6 @@
 # the hilbert plugin to psi4. The adapted imports are handled here.
 
 import adcc
-from .hilbert_backend_no_inherit import hilbert_scf_import
 
 #__all__ = ["import_qed_scf_result"]
 
@@ -34,6 +33,7 @@ def import_qed_scf_result(scf):
     hilbert = False
     try:
         import psi4
+        from .hilbert_backend_no_inherit import hilbert_scf_import
         if isinstance(scf, psi4.core.Wavefunction):
             return hilbert_scf_import(scf)
         else:
