@@ -21,13 +21,15 @@ from collections import namedtuple
 from adcc import block as b
 from adcc.functions import direct_sum, einsum, zeros_like
 from adcc.Intermediates import Intermediates, register_as_intermediate
-from adcc.AmplitudeVector import AmplitudeVector
-from libadcc import set_lt_scalar
+#from adcc.qed_amplitude_vec import qed_amplitude_vec
+#from libadcc import set_lt_scalar
+import numpy as np
+from qed_amplitude_vec import qed_amplitude_vec
 
 # Dispatch routine
 """
-`apply` is a function mapping an AmplitudeVector to the contribution of this
-block to the result of applying the ADC matrix. `diagonal` is an `AmplitudeVector`
+`apply` is a function mapping an qed_amplitude_vec to the contribution of this
+block to the result of applying the ADC matrix. `diagonal` is an `qed_amplitude_vec`
 containing the expression to the diagonal of the QED ADC matrix from this block.
 """
 AdcBlock = namedtuple("AdcBlock", ["apply", "diagonal"])
@@ -73,15 +75,15 @@ def block_ph_gs_0(hf, mp, intermediates):
 def block_ph_gs_0_phot(hf, mp, intermediates):
 
     def apply(ampl):
-        return AmplitudeVector(gs1=mp.omega * ampl.gs1)
-    return AdcBlock(apply, AmplitudeVector(gs1=set_lt_scalar(mp.omega)))
+        return qed_amplitude_vec(gs1=mp.omega * ampl.gs1)
+    return AdcBlock(apply, qed_amplitude_vec(gs1=np.array([mp.omega])))
 
 
 def block_ph_gs_0_phot2(hf, mp, intermediates):
 
     def apply(ampl):
-        return AmplitudeVector(gs2=2 * mp.omega * ampl.gs2)
-    return AdcBlock(apply, AmplitudeVector(gs2=set_lt_scalar(2 * mp.omega)))
+        return qed_amplitude_vec(gs2=2 * mp.omega * ampl.gs2)
+    return AdcBlock(apply, qed_amplitude_vec(gs2=np.array([2 * mp.omega])))
 
 
 block_ph_gs_0_couple = block_ph_gs_0_phot_couple =\
@@ -94,11 +96,11 @@ block_ph_gs_0_couple = block_ph_gs_0_phot_couple =\
 #
 
 def block_ph_ph_0(hf, mp, intermediates):
-    diagonal = AmplitudeVector(ph=direct_sum("a-i->ia", hf.fvv.diagonal(),
+    diagonal = qed_amplitude_vec(ph=direct_sum("a-i->ia", hf.fvv.diagonal(),
                                                 hf.foo.diagonal()))
 
     def apply(ampl):
-        return AmplitudeVector(ph=(
+        return qed_amplitude_vec(ph=(
             + einsum("ib,ab->ia", ampl.ph, hf.fvv)
             - einsum("IJ,Ja->Ia", hf.foo, ampl.ph)
         ))
@@ -116,11 +118,11 @@ block_ph_ph_0_phot_couple = block_ph_ph_0_phot_couple_edge =\
 
 
 def block_ph_ph_0_phot(hf, mp, intermediates):
-    diagonal = AmplitudeVector(ph1=direct_sum("a-i->ia", hf.fvv.diagonal(),
+    diagonal = qed_amplitude_vec(ph1=direct_sum("a-i->ia", hf.fvv.diagonal(),
                                                 hf.foo.diagonal()))
 
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             + einsum("ib,ab->ia", ampl.ph1, hf.fvv)
             - einsum("IJ,Ja->Ia", hf.foo, ampl.ph1)
         ))
@@ -128,11 +130,11 @@ def block_ph_ph_0_phot(hf, mp, intermediates):
 
 
 def block_ph_ph_0_phot2(hf, mp, intermediates):
-    diagonal = AmplitudeVector(ph2=direct_sum("a-i->ia", hf.fvv.diagonal(),
+    diagonal = qed_amplitude_vec(ph2=direct_sum("a-i->ia", hf.fvv.diagonal(),
                                               hf.foo.diagonal()))
 
     def apply(ampl):
-        return AmplitudeVector(ph2=(
+        return qed_amplitude_vec(ph2=(
             + einsum("ib,ab->ia", ampl.ph2, hf.fvv)
             - einsum("IJ,Ja->Ia", hf.foo, ampl.ph2)
         ))
@@ -149,11 +151,11 @@ def diagonal_pphh_pphh_0(hf, to_add):
 
 def block_pphh_pphh_0(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh=(
+        return qed_amplitude_vec(pphh=(
             + 2 * einsum("ijac,bc->ijab", ampl.pphh, hf.fvv).antisymmetrise(2, 3)
             - 2 * einsum("ik,kjab->ijab", hf.foo, ampl.pphh).antisymmetrise(0, 1)
         ))
-    return AdcBlock(apply, AmplitudeVector(pphh=diagonal_pphh_pphh_0(hf, 0)))
+    return AdcBlock(apply, qed_amplitude_vec(pphh=diagonal_pphh_pphh_0(hf, 0)))
 
 
 def block_pphh_pphh_0_couple(hf, mp, intermediates):
@@ -167,22 +169,22 @@ block_pphh_pphh_0_phot_couple = block_pphh_pphh_0_phot_couple_edge =\
 
 def block_pphh_pphh_0_phot(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh1=(
+        return qed_amplitude_vec(pphh1=(
             + 2 * einsum("ijac,bc->ijab", ampl.pphh1, hf.fvv).antisymmetrise(2, 3)
             - 2 * einsum("ik,kjab->ijab", hf.foo, ampl.pphh1).antisymmetrise(0, 1)
             + mp.omega * ampl.pphh1
         ))
-    return AdcBlock(apply, AmplitudeVector(pphh1=diagonal_pphh_pphh_0(hf, mp.omega)))
+    return AdcBlock(apply, qed_amplitude_vec(pphh1=diagonal_pphh_pphh_0(hf, mp.omega)))
 
 
 def block_pphh_pphh_0_phot2(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh2=(
+        return qed_amplitude_vec(pphh2=(
             + 2 * einsum("ijac,bc->ijab", ampl.pphh2, hf.fvv).antisymmetrise(2, 3)
             - 2 * einsum("ik,kjab->ijab", hf.foo, ampl.pphh2).antisymmetrise(0, 1)
             + 2 * mp.omega * ampl.pphh2
         ))
-    return AdcBlock(apply, AmplitudeVector(pphh2=diagonal_pphh_pphh_0(hf, 2 * mp.omega)))
+    return AdcBlock(apply, qed_amplitude_vec(pphh2=diagonal_pphh_pphh_0(hf, 2 * mp.omega)))
 
 
 #
@@ -223,7 +225,7 @@ block_ph_gs_1_phot_couple = block_ph_gs_1_phot_couple_edge =\
 
 def block_ph_gs_1_couple(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(gs1=(
+        return qed_amplitude_vec(gs1=(
             (-1) * sqrt(0.5 * mp.omega) * mp.qed_t1_df(b.ov).dot(ampl.ph)
         ))
     return AdcBlock(apply, 0)
@@ -231,7 +233,7 @@ def block_ph_gs_1_couple(hf, mp, intermediates):
 
 def block_ph_gs_1_couple_inner(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(gs2=(
+        return qed_amplitude_vec(gs2=(
             (-1) * sqrt(mp.omega) * mp.qed_t1_df(b.ov).dot(ampl.ph1)
         ))
     return AdcBlock(apply, 0)
@@ -243,7 +245,7 @@ def block_ph_gs_1_couple_inner(hf, mp, intermediates):
 
 def block_ph_ph_1(hf, mp, intermediates):
     if not hf.qed_hf:
-        diagonal = AmplitudeVector(ph=(
+        diagonal = qed_amplitude_vec(ph=(
             + direct_sum("a-i->ia", hf.fvv.diagonal(), hf.foo.diagonal())  # order 0
             - einsum("IaIa->Ia", hf.ovov)  # order 1
             + (1 / 2) * direct_sum("i-a->ia", einsum("ii->i", mp.qed_t0_df(b.oo)),
@@ -251,7 +253,7 @@ def block_ph_ph_1(hf, mp, intermediates):
         ))
 
         def apply(ampl):
-            return AmplitudeVector(ph=(                 # PT order
+            return qed_amplitude_vec(ph=(                 # PT order
                 + einsum("ib,ab->ia", ampl.ph, hf.fvv)  # 0
                 - einsum("IJ,Ja->Ia", hf.foo, ampl.ph)     # 0
                 - einsum("JaIb,Jb->Ia", hf.ovov, ampl.ph)  # 1
@@ -259,13 +261,13 @@ def block_ph_ph_1(hf, mp, intermediates):
                 - (1 / 2) * einsum("ib,ab->ia", ampl.ph, mp.qed_t0_df(b.vv))
             ))
     else:
-        diagonal = AmplitudeVector(ph=(
+        diagonal = qed_amplitude_vec(ph=(
             + direct_sum("a-i->ia", hf.fvv.diagonal(), hf.foo.diagonal())  # 0
             - einsum("IaIa->Ia", hf.ovov)  # 1
         ))
 
         def apply(ampl):
-            return AmplitudeVector(ph=(                 # PT order
+            return qed_amplitude_vec(ph=(                 # PT order
                 + einsum("ib,ab->ia", ampl.ph, hf.fvv)  # 0
                 - einsum("IJ,Ja->Ia", hf.foo, ampl.ph)     # 0
                 - einsum("JaIb,Jb->Ia", hf.ovov, ampl.ph)  # 1
@@ -279,7 +281,7 @@ block_cvs_ph_ph_1 = block_ph_ph_1
 def block_ph_ph_1_phot(hf, mp, intermediates):
     if not hf.qed_hf:
 
-        diagonal = AmplitudeVector(ph1=(
+        diagonal = qed_amplitude_vec(ph1=(
             + direct_sum("a-i->ia", hf.fvv.diagonal(), hf.foo.diagonal())  # order 0
             - einsum("IaIa->Ia", hf.ovov)  # order 1
             + (1 / 2) * direct_sum("i-a->ia", einsum("ii->i", mp.qed_t0_df(b.oo)),
@@ -288,7 +290,7 @@ def block_ph_ph_1_phot(hf, mp, intermediates):
         ))
 
         def apply(ampl):
-            return AmplitudeVector(ph1=(                 # PT order
+            return qed_amplitude_vec(ph1=(                 # PT order
                 + einsum("ib,ab->ia", ampl.ph1, hf.fvv)  # 0
                 - einsum("IJ,Ja->Ia", hf.foo, ampl.ph1)     # 0
                 - einsum("JaIb,Jb->Ia", hf.ovov, ampl.ph1)  # 1
@@ -297,14 +299,14 @@ def block_ph_ph_1_phot(hf, mp, intermediates):
                 + mp.omega * ampl.ph1
             ))
     else:
-        diagonal = AmplitudeVector(ph1=(
+        diagonal = qed_amplitude_vec(ph1=(
             + direct_sum("a-i->ia", hf.fvv.diagonal(), hf.foo.diagonal())  # 0
             - einsum("IaIa->Ia", hf.ovov)  # 1
             + intermediates.delta_ia_omega
         ))
 
         def apply(ampl):
-            return AmplitudeVector(ph1=(                  # PT order
+            return qed_amplitude_vec(ph1=(                  # PT order
                 + einsum("ib,ab->ia", ampl.ph1, hf.fvv)  # 0
                 - einsum("IJ,Ja->Ia", hf.foo, ampl.ph1)     # 0
                 - einsum("JaIb,Jb->Ia", hf.ovov, ampl.ph1)  # 1
@@ -315,7 +317,7 @@ def block_ph_ph_1_phot(hf, mp, intermediates):
 
 def block_ph_ph_1_couple(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             sqrt(mp.omega / 2) * (
                 - einsum("ib,ab->ia", ampl.ph, mp.qed_t1_df(b.vv))
                 + einsum("ij,ja->ia", mp.qed_t1_df(b.oo), ampl.ph))
@@ -325,11 +327,11 @@ def block_ph_ph_1_couple(hf, mp, intermediates):
 
 def block_ph_ph_1_phot_couple(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph=(
+        return qed_amplitude_vec(ph=(
             sqrt(mp.omega / 2) * (
                 - einsum("ib,ab->ia", ampl.ph1, mp.qed_t1_df(b.vv))
                 + einsum("ij,ja->ia", mp.qed_t1_df(b.oo), ampl.ph1)
-                - mp.qed_t1_df(b.ov) * ampl.gs1.to_ndarray())
+                - mp.qed_t1_df(b.ov) * ampl.gs1)
         ))
     return AdcBlock(apply, 0)
 
@@ -343,7 +345,7 @@ block_ph_ph_1_phot_couple_edge = block_ph_ph_1_couple_edge
 
 def block_ph_ph_1_couple_inner(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph2=(
+        return qed_amplitude_vec(ph2=(
             sqrt(mp.omega) * (- einsum("ib,ab->ia", ampl.ph1, mp.qed_t1_df(b.vv))
                             + einsum("ij,ja->ia", mp.qed_t1_df(b.oo), ampl.ph1))
         ))
@@ -352,10 +354,10 @@ def block_ph_ph_1_couple_inner(hf, mp, intermediates):
 
 def block_ph_ph_1_phot_couple_inner(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             sqrt(mp.omega) * (- einsum("ib,ab->ia", ampl.ph2, mp.qed_t1_df(b.vv))
                             + einsum("ij,ja->ia", mp.qed_t1_df(b.oo), ampl.ph2)
-                            - mp.qed_t1_df(b.ov) * ampl.gs2.to_ndarray())
+                            - mp.qed_t1_df(b.ov) * ampl.gs2)
         ))
     return AdcBlock(apply, 0)
 
@@ -363,7 +365,7 @@ def block_ph_ph_1_phot_couple_inner(hf, mp, intermediates):
 def block_ph_ph_1_phot2(hf, mp, intermediates):
     if not hf.qed_hf:
 
-        diagonal = AmplitudeVector(ph2=(
+        diagonal = qed_amplitude_vec(ph2=(
             + direct_sum("a-i->ia", hf.fvv.diagonal(), hf.foo.diagonal())  # order 0
             - einsum("IaIa->Ia", hf.ovov)  # order 1
             + (1 / 2) * direct_sum("i-a->ia", einsum("ii->i", mp.qed_t0_df(b.oo)),
@@ -372,7 +374,7 @@ def block_ph_ph_1_phot2(hf, mp, intermediates):
         ))
 
         def apply(ampl):
-            return AmplitudeVector(ph2=(                  # PT order
+            return qed_amplitude_vec(ph2=(                  # PT order
                 + einsum("ib,ab->ia", ampl.ph2, hf.fvv)  # 0
                 - einsum("IJ,Ja->Ia", hf.foo, ampl.ph2)     # 0
                 - einsum("JaIb,Jb->Ia", hf.ovov, ampl.ph2)  # 1
@@ -381,14 +383,14 @@ def block_ph_ph_1_phot2(hf, mp, intermediates):
                 + 2 * mp.omega * ampl.ph2
             ))
     else:
-        diagonal = AmplitudeVector(ph2=(
+        diagonal = qed_amplitude_vec(ph2=(
             + direct_sum("a-i->ia", hf.fvv.diagonal(), hf.foo.diagonal())  # 0
             - einsum("IaIa->Ia", hf.ovov)  # 1
             + intermediates.delta_ia_omega * 2
         ))
 
         def apply(ampl):
-            return AmplitudeVector(ph2=(                  # PT order
+            return qed_amplitude_vec(ph2=(                  # PT order
                 + einsum("ib,ab->ia", ampl.ph2, hf.fvv)  # 0
                 - einsum("IJ,Ja->Ia", hf.foo, ampl.ph2)     # 0
                 - einsum("JaIb,Jb->Ia", hf.ovov, ampl.ph2)  # 1
@@ -403,7 +405,7 @@ def block_ph_ph_1_phot2(hf, mp, intermediates):
 
 def block_ph_pphh_1(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph=(
+        return qed_amplitude_vec(ph=(
             + einsum("jkib,jkab->ia", hf.ooov, ampl.pphh)
             + einsum("ijbc,jabc->ia", ampl.pphh, hf.ovvv)
         ))
@@ -412,7 +414,7 @@ def block_ph_pphh_1(hf, mp, intermediates):
 
 def block_ph_pphh_1_phot(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             + einsum("jkib,jkab->ia", hf.ooov, ampl.pphh1)
             + einsum("ijbc,jabc->ia", ampl.pphh1, hf.ovvv)
         ))
@@ -421,7 +423,7 @@ def block_ph_pphh_1_phot(hf, mp, intermediates):
 
 def block_ph_pphh_1_phot2(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph2=(
+        return qed_amplitude_vec(ph2=(
             + einsum("jkib,jkab->ia", hf.ooov, ampl.pphh2)
             + einsum("ijbc,jabc->ia", ampl.pphh2, hf.ovvv)
         ))
@@ -430,7 +432,7 @@ def block_ph_pphh_1_phot2(hf, mp, intermediates):
 
 def block_cvs_ph_pphh_1(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph=(
+        return qed_amplitude_vec(ph=(
             + sqrt(2) * einsum("jKIb,jKab->Ia", hf.occv, ampl.pphh)
             - 1 / sqrt(2) * einsum("jIbc,jabc->Ia", ampl.pphh, hf.ovvv)
         ))
@@ -439,7 +441,7 @@ def block_cvs_ph_pphh_1(hf, mp, intermediates):
 
 def block_pphh_ph_1(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh=(
+        return qed_amplitude_vec(pphh=(
             + einsum("ic,jcab->ijab", ampl.ph, hf.ovvv).antisymmetrise(0, 1)
             - einsum("ijka,kb->ijab", hf.ooov, ampl.ph).antisymmetrise(2, 3)
         ))
@@ -448,7 +450,7 @@ def block_pphh_ph_1(hf, mp, intermediates):
 
 def block_pphh_ph_1_phot(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh1=(
+        return qed_amplitude_vec(pphh1=(
             + einsum("ic,jcab->ijab", ampl.ph1, hf.ovvv).antisymmetrise(0, 1)
             - einsum("ijka,kb->ijab", hf.ooov, ampl.ph1).antisymmetrise(2, 3)
         ))
@@ -457,7 +459,7 @@ def block_pphh_ph_1_phot(hf, mp, intermediates):
 
 def block_pphh_ph_1_phot2(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh2=(
+        return qed_amplitude_vec(pphh2=(
             + einsum("ic,jcab->ijab", ampl.ph2, hf.ovvv).antisymmetrise(0, 1)
             - einsum("ijka,kb->ijab", hf.ooov, ampl.ph2).antisymmetrise(2, 3)
         ))
@@ -466,7 +468,7 @@ def block_pphh_ph_1_phot2(hf, mp, intermediates):
 
 def block_cvs_pphh_ph_1(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh=(
+        return qed_amplitude_vec(pphh=(
             + sqrt(2) * einsum("jIKb,Ka->jIab",
                                hf.occv, ampl.ph).antisymmetrise(2, 3)
             - 1 / sqrt(2) * einsum("Ic,jcab->jIab", ampl.ph, hf.ovvv)
@@ -476,7 +478,7 @@ def block_cvs_pphh_ph_1(hf, mp, intermediates):
 
 def block_ph_pphh_1_couple(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             2 * sqrt(mp.omega / 2) * einsum("kc,ikac->ia", mp.qed_t1_df(b.ov), ampl.pphh)  # noqa: E501
         ))
     return AdcBlock(apply, 0)
@@ -484,7 +486,7 @@ def block_ph_pphh_1_couple(hf, mp, intermediates):
 
 def block_ph_pphh_1_couple_inner(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph2=(
+        return qed_amplitude_vec(ph2=(
             2 * sqrt(mp.omega) * einsum("kc,ikac->ia", mp.qed_t1_df(b.ov), ampl.pphh1)
         ))
     return AdcBlock(apply, 0)
@@ -501,7 +503,7 @@ block_ph_pphh_1_phot_couple = block_ph_pphh_1_phot_couple_inner =\
 
 def block_pphh_ph_1_phot_couple(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh=(
+        return qed_amplitude_vec(pphh=(
             2 * sqrt(mp.omega / 2) * einsum(
                 "jb,ia->ijab", mp.qed_t1_df(b.ov),
                 ampl.ph1).antisymmetrise(0, 1).antisymmetrise(2, 3)
@@ -511,7 +513,7 @@ def block_pphh_ph_1_phot_couple(hf, mp, intermediates):
 
 def block_pphh_ph_1_phot_couple_inner(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(pphh1=(
+        return qed_amplitude_vec(pphh1=(
             2 * sqrt(mp.omega) * einsum(
                 "jb,ia->ijab", mp.qed_t1_df(b.ov),
                 ampl.ph2).antisymmetrise(0, 1).antisymmetrise(2, 3)
@@ -530,7 +532,7 @@ block_ph_gs_2_phot_couple = block_ph_gs_2_phot_couple_edge =\
 
 def block_ph_gs_2_couple(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(gs1=(sqrt(mp.omega / 2) * einsum(
+        return qed_amplitude_vec(gs1=(sqrt(mp.omega / 2) * einsum(
             "jkbc,kc->jb", mp.t2oo, mp.qed_t1_df(b.ov)).dot(ampl.ph)
             - sqrt(0.5 * mp.omega) * mp.qed_t1_df(b.ov).dot(ampl.ph)))  # 1. order
     return AdcBlock(apply, 0)
@@ -542,7 +544,7 @@ block_ph_gs_2_phot2 = block_ph_gs_0_phot2
 
 def block_ph_gs_2_couple_inner(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(gs2=(sqrt(mp.omega) * einsum(
+        return qed_amplitude_vec(gs2=(sqrt(mp.omega) * einsum(
             "jkbc,kc->jb", mp.t2oo, mp.qed_t1_df(b.ov)).dot(ampl.ph1)
             - sqrt(mp.omega) * mp.qed_t1_df(b.ov).dot(ampl.ph1)))  # 1. order
     return AdcBlock(apply, 0)
@@ -560,7 +562,7 @@ def block_ph_ph_2(hf, mp, intermediates):
 
     qed_i1 = intermediates.adc2_qed_i1
     qed_i2 = intermediates.adc2_qed_i2
-    diagonal = AmplitudeVector(ph=(
+    diagonal = qed_amplitude_vec(ph=(
         + direct_sum("a-i->ia", i1.diagonal(), i2.diagonal())
         - einsum("IaIa->Ia", hf.ovov)
         - einsum("ikac,ikac->ia", mp.t2oo, hf.oovv)
@@ -573,7 +575,7 @@ def block_ph_ph_2(hf, mp, intermediates):
     ))
 
     def apply(ampl):
-        return AmplitudeVector(ph=(
+        return qed_amplitude_vec(ph=(
             + einsum("ib,ab->ia", ampl.ph, i1)
             - einsum("ij,ja->ia", i2, ampl.ph)
             - einsum("jaib,jb->ia", hf.ovov, ampl.ph)    # 1
@@ -595,7 +597,7 @@ def block_ph_ph_2_couple(hf, mp, intermediates):
     qed_i2 = intermediates.adc2_qed_couple_i2
 
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             + einsum("ib,ab->ia", ampl.ph, qed_i1)
             + einsum("ij,ja->ia", qed_i2, ampl.ph)
             + sqrt(mp.omega / 2) * (
@@ -614,17 +616,17 @@ def block_ph_ph_2_phot_couple(hf, mp, intermediates):
     qed_i2 = intermediates.adc2_qed_phot_couple_i2
 
     def apply(ampl):
-        return AmplitudeVector(ph=(
+        return qed_amplitude_vec(ph=(
             + einsum("ib,ab->ia", ampl.ph1, qed_i1)
             + einsum("ij,ja->ia", qed_i2, ampl.ph1)
             + sqrt(mp.omega / 2) * (
                 + einsum("kb,ikja,jb->ia", mp.qed_t1(b.ov), hf.ooov, ampl.ph1)
                 + einsum("jc,ibac,jb->ia", mp.qed_t1(b.ov), hf.ovvv, ampl.ph1))
-            + gs_part * ampl.gs1.to_ndarray()
+            + gs_part * ampl.gs1
             + sqrt(mp.omega / 2) * (
                 - einsum("ib,ab->ia", ampl.ph1, mp.qed_t1_df(b.vv))  # 1. order
                 + einsum("ij,ja->ia", mp.qed_t1_df(b.oo), ampl.ph1)  # 1. order
-                - mp.qed_t1_df(b.ov) * ampl.gs1.to_ndarray())        # 1. order
+                - mp.qed_t1_df(b.ov) * ampl.gs1)        # 1. order
         ))
     return AdcBlock(apply, 0)
 
@@ -638,7 +640,7 @@ def block_ph_ph_2_phot(hf, mp, intermediates):
     qed_i1 = intermediates.adc2_qed_i1
     qed_i2 = intermediates.adc2_qed_i2
 
-    diagonal = AmplitudeVector(ph1=(
+    diagonal = qed_amplitude_vec(ph1=(
         + direct_sum("a-i->ia", i1.diagonal(), i2.diagonal())
         - einsum("IaIa->Ia", hf.ovov)
         - einsum("ikac,ikac->ia", mp.t2oo, hf.oovv)
@@ -649,7 +651,7 @@ def block_ph_ph_2_phot(hf, mp, intermediates):
     ))
 
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             + einsum("ib,ab->ia", ampl.ph1, i1)
             - einsum("ij,ja->ia", i2, ampl.ph1)
             - einsum("jaib,jb->ia", hf.ovov, ampl.ph1)    # 1
@@ -673,7 +675,7 @@ def block_ph_ph_2_phot2(hf, mp, intermediates):
     qed_i1 = intermediates.adc2_qed_i1
     qed_i2 = intermediates.adc2_qed_i2
 
-    diagonal = AmplitudeVector(ph2=(
+    diagonal = qed_amplitude_vec(ph2=(
         + direct_sum("a-i->ia", i1.diagonal(), i2.diagonal())
         - einsum("IaIa->Ia", hf.ovov)
         - einsum("ikac,ikac->ia", mp.t2oo, hf.oovv)
@@ -684,7 +686,7 @@ def block_ph_ph_2_phot2(hf, mp, intermediates):
     ))
 
     def apply(ampl):
-        return AmplitudeVector(ph2=(
+        return qed_amplitude_vec(ph2=(
             + einsum("ib,ab->ia", ampl.ph2, i1)
             - einsum("ij,ja->ia", i2, ampl.ph2)
             - einsum("jaib,jb->ia", hf.ovov, ampl.ph2)    # 1
@@ -704,7 +706,7 @@ def block_ph_ph_2_couple_inner(hf, mp, intermediates):
     qed_i2 = intermediates.adc2_qed_couple_i2
 
     def apply(ampl):
-        return AmplitudeVector(ph2=(
+        return qed_amplitude_vec(ph2=(
             + sqrt(2) * einsum("ib,ab->ia", ampl.ph1, qed_i1)
             + sqrt(2) * einsum("ij,ja->ia", qed_i2, ampl.ph1)
             + sqrt(mp.omega) * (
@@ -723,24 +725,24 @@ def block_ph_ph_2_phot_couple_inner(hf, mp, intermediates):
     qed_i2 = intermediates.adc2_qed_phot_couple_i2
 
     def apply(ampl):
-        return AmplitudeVector(ph1=(
+        return qed_amplitude_vec(ph1=(
             + sqrt(2) * einsum("ib,ab->ia", ampl.ph2, qed_i1)
             + sqrt(2) * einsum("ij,ja->ia", qed_i2, ampl.ph2)
             + sqrt(mp.omega) * (
                 + einsum("kb,ikja,jb->ia", mp.qed_t1(b.ov), hf.ooov, ampl.ph2)
                 + einsum("jc,ibac,jb->ia", mp.qed_t1(b.ov), hf.ovvv, ampl.ph2))
-            + gs_part * ampl.gs2.to_ndarray()
+            + gs_part * ampl.gs2
             + sqrt(mp.omega) * (
                 - einsum("ib,ab->ia", ampl.ph2, mp.qed_t1_df(b.vv))  # 1. order
                 + einsum("ij,ja->ia", mp.qed_t1_df(b.oo), ampl.ph2)  # 1. order
-                - mp.qed_t1_df(b.ov) * ampl.gs2.to_ndarray())        # 1. order
+                - mp.qed_t1_df(b.ov) * ampl.gs2)        # 1. order
         ))
     return AdcBlock(apply, 0)
 
 
 def block_ph_ph_2_couple_edge(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph2=(- (mp.omega / 2) * sqrt(2) * (
+        return qed_amplitude_vec(ph2=(- (mp.omega / 2) * sqrt(2) * (
             einsum("kc,kc->", mp.qed_t1(b.ov), mp.qed_t1_df(b.ov)) * ampl.ph
             - einsum("ka,kb,ib->ia", mp.qed_t1(b.ov), mp.qed_t1_df(b.ov), ampl.ph)
             - einsum("ic,jc,ja->ia", mp.qed_t1(b.ov), mp.qed_t1_df(b.ov), ampl.ph)
@@ -750,7 +752,7 @@ def block_ph_ph_2_couple_edge(hf, mp, intermediates):
 
 def block_ph_ph_2_phot_couple_edge(hf, mp, intermediates):
     def apply(ampl):
-        return AmplitudeVector(ph=(- (mp.omega / 2) * sqrt(2) * (
+        return qed_amplitude_vec(ph=(- (mp.omega / 2) * sqrt(2) * (
             einsum("kc,kc->", mp.qed_t1(b.ov), mp.qed_t1_df(b.ov)) * ampl.ph2
             - einsum("kb,ka,ib->ia", mp.qed_t1(b.ov), mp.qed_t1_df(b.ov), ampl.ph2)
             - einsum("jc,ic,ja->ia", mp.qed_t1(b.ov), mp.qed_t1_df(b.ov), ampl.ph2)

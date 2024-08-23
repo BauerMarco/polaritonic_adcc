@@ -21,8 +21,7 @@ import numpy as np
 from qed_mp import qed_mp
 
 class qed_matrix_full(adcc.AdcMatrix):
-    def __init__(self, method, hf_or_mp, block_orders=None, intermediates=None,
-        diagonal_precomputed=None):
+    def __init__(self, method, hf_or_mp, block_orders=None, intermediates=None):
         """
         Initialise an polaritonic ADC matrix.
         Parameters
@@ -35,22 +34,12 @@ class qed_matrix_full(adcc.AdcMatrix):
             PT order for each matrix block. (if None, ADC default is chosen)
         intermediates : adcc.Intermediates or NoneType
             Allows to pass intermediates to re-use to this class.
-        diagonal_precomputed: adcc.AmplitudeVector
-            Allows to pass a pre-computed diagonal, for internal use only.
         """
         if not isinstance(hf_or_mp, qed_mp):
             raise TypeError("hf_or_mp is not a qed_mp object.")
 
         if not isinstance(method, adcc.AdcMethod):
             method = adcc.AdcMethod(method)
-
-        if diagonal_precomputed:
-            if not isinstance(diagonal_precomputed, adcc.AmplitudeVector):
-                raise TypeError("diagonal_precomputed needs to be"
-                                " an AmplitudeVector.")
-            if diagonal_precomputed.needs_evaluation:
-                raise ValueError("diagonal_precomputed must already"
-                                 " be evaluated.")
 
         self.timer = adcc.timings.Timer()
         self.method = method
@@ -124,12 +113,9 @@ class qed_matrix_full(adcc.AdcMatrix):
                 for key in self.qed_dispatch_dict
             }
 
-            if diagonal_precomputed:
-                self.__diagonal = diagonal_precomputed
-            else:
-                self.__diagonal = sum(bl.diagonal for bl in blocks.values()
-                                      if bl.diagonal)
-                self.__diagonal.evaluate()
+            self.__diagonal = sum(bl.diagonal for bl in blocks.values()
+                                    if bl.diagonal)
+            self.__diagonal.evaluate()
             self.__init_qed_space_data(self.__diagonal)
 
             self.blocks_ph = {bl: blocks[bl].apply for bl in blocks}

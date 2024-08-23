@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-
-import adcc
 import sys
 import numpy as np
 import warnings
@@ -27,7 +25,17 @@ from qed_npadc_exstates import qed_npadc_exstates
 from qed_mp import qed_mp
 from qed_ucc import qed_ucc
 from full_qed_matrix import qed_matrix_full
-from libadcc import set_lt_scalar
+from qed_amplitude_vec import qed_amplitude_vec
+from adcc import run_adc, ExcitedStates
+from adcc.exceptions import InputError
+from adcc.workflow import (validate_state_parameters, estimate_n_guesses,
+                           setup_solver_printing, obtain_guesses_by_inspection)
+from solver.lanczos import lanczos
+from adcc.solver.lanczos import default_print as lanczos_print
+from solver.davidson import jacobi_davidson
+from adcc.solver.davidson import default_print as davidson_print
+from adcc.solver.explicit_symmetrisation import (IndexSpinSymmetrisation,
+                                             IndexSymmetrisation)
 
 #__all__ = ["run_qed_adc"]
 
@@ -232,7 +240,7 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True, gs="mp",
         ground_state = qed_ucc
     else:
         raise NotImplementedError(f"ground state option {gs} unknown")
-    #if qed_hf:
+
     if isinstance(data_or_matrix, refstate):
         qed_groundstate = ground_state(data_or_matrix, np.linalg.norm(np.real(freq)), qed_hf=qed_hf)
     elif isinstance(data_or_matrix, qed_mp):  # this check for gs type might cause problems
@@ -244,7 +252,7 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True, gs="mp",
                         frozen_virtual=frozen_virtual)
         qed_groundstate = ground_state(qed_refstate, np.linalg.norm(np.real(freq)), qed_hf=qed_hf)
     if type(qed_coupl_level) == int and qed_hf:
-        exstates = adcc.run_adc(qed_groundstate, n_states=n_states, kind=kind, conv_tol=conv_tol,
+        exstates = run_adc(qed_groundstate, n_states=n_states, kind=kind, conv_tol=conv_tol,
                 eigensolver=eigensolver, guesses=guesses, n_guesses=n_guesses,
                 n_guesses_doubles=n_guesses_doubles, output=output, core_orbitals=core_orbitals,
                 frozen_core=frozen_core, frozen_virtual=frozen_virtual, method=method,
@@ -252,7 +260,7 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True, gs="mp",
                 environment=environment, **solverargs)
         qed_exstates = qed_npadc_exstates(exstates, qed_coupl_level)
         qed_matrix_class = qed_matrix_from_diag_adc(qed_exstates, coupl_adapted, freq)
-    if not qed_coupl_level:# and qed_hf:
+    if not qed_coupl_level:
         # full qed at given adc level
         if (method not in ["adc1", "adc2"] and qed_hf) or (method != "adc1" and not qed_hf):
             raise NotImplementedError("full polaritonic ADC is only implemented"
@@ -262,11 +270,9 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True, gs="mp",
         if any(np.iscomplex(freq)):
             raise NotImplementedError("full polaritonic ADC is not implemented for lossy cavities")
         if isinstance(data_or_matrix, qed_matrix_full):
-            #diag = diagonalizer(data_or_matrix)
             qed_mat_full = data_or_matrix
         elif not isinstance(data_or_matrix, qed_matrix_full) and isinstance(qed_groundstate, qed_mp):
             qed_mat_full = qed_matrix_full(method, qed_groundstate)
-            #diag = diagonalizer(qed_mat_full)
         else:
             raise TypeError("full qed adc matrix either needs to be provided or "
                             "build from a qed_mp instance here, which is valid with "
@@ -277,7 +283,7 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True, gs="mp",
         eigensolver=eigensolver, n_triplets=n_triplets, n_singlets=n_singlets,
         n_spin_flip=n_spin_flip, **solverargs)
 
-        exstates = adcc.ExcitedStates(diag)
+        exstates = ExcitedStates(diag)
     elif qed_coupl_level == 1 and qed_hf:
         # adc at given level with adapted ERIs and 1st order qed coupling
         qed_matrix = qed_matrix_class.first_order_coupling()
@@ -289,10 +295,9 @@ def run_qed_adc(data_or_matrix, coupl=None, freq=None, qed_hf=True, gs="mp",
         qed_matrix = qed_matrix_class.second_order_coupling()
         exstates.qed_matrix = qed_matrix
     elif qed_coupl_level == 1 and not qed_hf:
-        #print(type(data_or_matrix))
         # adc at given level without adapted ERIs and 1st order qed coupling
         # this is the equivalent to using field free states
-        exstates = adcc.run_adc(data_or_matrix, n_states=n_states, kind=kind, conv_tol=conv_tol,
+        exstates = run_adc(data_or_matrix, n_states=n_states, kind=kind, conv_tol=conv_tol,
                 eigensolver=eigensolver, guesses=guesses, n_guesses=n_guesses,
                 n_guesses_doubles=n_guesses_doubles, output=output, core_orbitals=core_orbitals,
                 frozen_core=frozen_core, frozen_virtual=frozen_virtual, method=method,
@@ -314,26 +319,59 @@ def diagonalizer(matrix, n_states, kind, guesses=None, n_guesses=None,
         n_spin_flip=None, **solverargs):
     """Diagonalize the provided full polaritonic matrix."""
     
-    n_states, kind = adcc.validate_state_parameters(
+    if conv_tol is None:
+        conv_tol = max(10 * matrix.reference_state.conv_tol, 1e-6)
+    if matrix.reference_state.conv_tol > conv_tol:
+        raise InputError(
+            "Convergence tolerance of SCF results "
+            f"(== {matrix.reference_state.conv_tol}) needs to be lower than ADC "
+            f"convergence tolerance parameter conv_tol (== {conv_tol})."
+        )
+    
+    explicit_symmetrisation = IndexSymmetrisation
+    if kind in ["singlet", "triplet"]:
+        explicit_symmetrisation = IndexSpinSymmetrisation(
+            matrix, enforce_spin_kind=kind
+        )
+
+    n_states, kind = validate_state_parameters(
         matrix.reference_state, n_states=n_states, n_singlets=n_singlets,
         n_triplets=n_triplets, n_spin_flip=n_spin_flip, kind=kind)
     
     if eigensolver == "davidson":
         n_guesses_per_state = 2
+        callback = setup_solver_printing(
+            "Jacobi-Davidson", matrix, kind, davidson_print,
+            output=output)
+        run_eigensolver = jacobi_davidson
     elif eigensolver == "lanczos":
         n_guesses_per_state = 1
+        callback = setup_solver_printing(
+            "Lanczos", matrix, kind, lanczos_print,
+            output=output)
+        run_eigensolver = lanczos
     else:
         raise NotImplementedError(f"eigensolver {eigensolver} is unknown")
     
-    n_guesses = adcc.estimate_n_guesses(matrix, n_states, n_guesses_per_state=n_guesses_per_state)
+    n_guesses = estimate_n_guesses(matrix, n_states, n_guesses_per_state=n_guesses_per_state)
 
     guesses = obtain_guesses_by_inspection_qed(matrix, n_guesses, kind, n_guesses_doubles=n_guesses_doubles)
 
-    diag_result = adcc.diagonalise_adcmatrix(matrix, n_states, kind, eigensolver=eigensolver,
-                          guesses=guesses, n_guesses=n_guesses, n_guesses_doubles=n_guesses_doubles,
-                          conv_tol=conv_tol, output=output, **solverargs)
-    return diag_result
+    solverargs.setdefault("which", "SA")
 
+    # the following could be used, if one could set up a libtensor scalar,
+    # i.e. that the entire functions file, as well as all solver functionalities
+    # regarding davidson and lanczos could be left out, but the new function
+    # for libtensor won't be accepted, since it's not a core functionality
+    # of the adcc package itself.
+    #diag_result = adcc.diagonalise_adcmatrix(matrix, n_states, kind, eigensolver=eigensolver,
+    #                      guesses=guesses, n_guesses=n_guesses, n_guesses_doubles=n_guesses_doubles,
+    #                      conv_tol=conv_tol, output=output, **solverargs)
+    #return diag_result
+    return run_eigensolver(matrix, guesses, n_ep=n_states, conv_tol=conv_tol,
+                           callback=callback,
+                           explicit_symmetrisation=explicit_symmetrisation,
+                           **solverargs)
 
 
 
@@ -345,13 +383,13 @@ def obtain_guesses_by_inspection_qed(matrix, n_guesses, kind, n_guesses_doubles=
     # It seems like qed_adc converges better with all three guesses
     # originating from the purely electronic diagonal. If the actual
     # diagonals are desired, do something like the commented out hacks.
-    guesses_elec = adcc.obtain_guesses_by_inspection(
+    guesses_elec = obtain_guesses_by_inspection(
         matrix, n_guesses, kind, n_guesses_doubles)
     #matrix.return_diag_as = "phot"  # hack for the guess setup
-    guesses_phot = adcc.obtain_guesses_by_inspection(
+    guesses_phot = obtain_guesses_by_inspection(
         matrix, n_guesses, kind, n_guesses_doubles)
     #matrix.return_diag_as = "phot2"  # hack for the guess setup
-    guesses_phot2 = adcc.obtain_guesses_by_inspection(
+    guesses_phot2 = obtain_guesses_by_inspection(
         matrix, n_guesses, kind, n_guesses_doubles)
     #matrix.return_diag_as = "full"  # resets the hacks from above
 
@@ -365,14 +403,14 @@ def obtain_guesses_by_inspection_qed(matrix, n_guesses, kind, n_guesses_doubles=
         guesses_phot[i] *= 0.02
         guesses_phot2[i] *= 0.001
     if n_guesses != len(guesses_phot):
-        raise adcc.exceptions.InputError("amount of guesses for electronic and photonic must be "
+        raise InputError("amount of guesses for electronic and photonic must be "
                          "equal, but are {} electronic and {} photonic "
                          "guesses".format(len(guesses_elec), len(guesses_phot)))
 
-    zero = set_lt_scalar(0.0)
+    zero = np.array([0.0])
 
     if hasattr(guesses_elec[0], "pphh"):
-        final_guesses = [adcc.AmplitudeVector(**{
+        final_guesses = [qed_amplitude_vec(**{
             "ph": guesses_elec[guess_index].ph,
             "pphh": guesses_elec[guess_index].pphh,
             "gs1": zero.copy(), "ph1": guesses_phot[guess_index].ph,
@@ -381,7 +419,7 @@ def obtain_guesses_by_inspection_qed(matrix, n_guesses, kind, n_guesses_doubles=
             "pphh2": guesses_phot2[guess_index].pphh
         }) for guess_index in np.arange(n_guesses)]
     else:
-        final_guesses = [adcc.AmplitudeVector(**{
+        final_guesses = [qed_amplitude_vec(**{
             "ph": guesses_elec[guess_index].ph,
             "gs1": zero.copy(), "ph1": guesses_phot[guess_index].ph,
             "gs2": zero.copy(), "ph2": guesses_phot2[guess_index].ph
@@ -394,8 +432,8 @@ def obtain_guesses_by_inspection_qed(matrix, n_guesses, kind, n_guesses_doubles=
     # requests, adjusting these values can increase the
     # convergence rate
     # for stronger coupling e.g. 2
-    final_guesses[n_guesses - 2].gs1.set_from_ndarray(np.array([5]))
+    final_guesses[n_guesses - 2].gs1 = np.array([5])
     # for stronger coupling e.g. 5
-    final_guesses[n_guesses - 1].gs2.set_from_ndarray(np.array([20]))
+    final_guesses[n_guesses - 1].gs2 = np.array([20])
 
     return [vec / np.sqrt(vec @ vec) for vec in final_guesses]
