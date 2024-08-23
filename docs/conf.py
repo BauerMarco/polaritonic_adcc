@@ -14,7 +14,26 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-import source
+source/full_qed_matrix.py
+source/functions.py
+source/__init__.py
+source/qed_adc_in_std_basis_with_self_en.py
+source/qed_amplitude_vec.py
+source/qed_matrix_from_diag_adc.py
+source/qed_matrix_working_equations.py
+source/qed_mp.py
+source/qed_npadc_exstates.py
+source/qed_npadc_s2s_tdm_terms.py
+source/qed_ucc.py
+source/refstate.py
+source/testdata
+source/test_methods.py
+source/workflow.py
+source/solver/davidson.py
+source/solver/diis.py
+source/solver/LanczosIterator.py
+source/solver/lanczos.py
+source/solver/orthogonaliser.py
 
 # -- Project information -----------------------------------------------------
 
