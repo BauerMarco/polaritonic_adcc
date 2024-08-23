@@ -1,0 +1,7 @@
+source.qed\_amplitude\_vec module
+=================================
+
+.. automodule:: source.qed_amplitude_vec
+   :members:
+   :undoc-members:
+   :show-inheritance:

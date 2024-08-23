@@ -1,0 +1,35 @@
+﻿source.solver
+=============
+
+.. automodule:: source.solver
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   source.solver.LanczosIterator
+   source.solver.davidson
+   source.solver.diis
+   source.solver.lanczos
+   source.solver.orthogonaliser
+

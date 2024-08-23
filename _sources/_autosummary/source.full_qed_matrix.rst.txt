@@ -1,0 +1,29 @@
+source.full\_qed\_matrix
+========================
+
+.. automodule:: source.full_qed_matrix
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      qed_matrix_full
+   
+   
+
+   
+   
+   
+
+
+

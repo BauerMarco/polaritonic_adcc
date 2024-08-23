@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>source.qed_matrix_working_equations &mdash; Polaritonic_adcc 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="source.qed_mp" href="source.qed_mp.html" />
+    <link rel="prev" title="source.qed_matrix_from_diag_adc" href="source.qed_matrix_from_diag_adc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Polaritonic_adcc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../API.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="source.html">source</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="source.backends.html">source.backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.full_qed_matrix.html">source.full_qed_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.functions.html">source.functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_adc_in_std_basis_with_self_en.html">source.qed_adc_in_std_basis_with_self_en</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_amplitude_vec.html">source.qed_amplitude_vec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_matrix_from_diag_adc.html">source.qed_matrix_from_diag_adc</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">source.qed_matrix_working_equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_mp.html">source.qed_mp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_npadc_exstates.html">source.qed_npadc_exstates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_npadc_s2s_tdm_terms.html">source.qed_npadc_s2s_tdm_terms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.qed_ucc.html">source.qed_ucc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.refstate.html">source.refstate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.workflow.html">source.workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source.solver.html">source.solver</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polaritonic_adcc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../API.html">API</a></li>
+          <li class="breadcrumb-item"><a href="source.html">source</a></li>
+      <li class="breadcrumb-item active">source.qed_matrix_working_equations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/source.qed_matrix_working_equations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-source.qed_matrix_working_equations">
+<span id="source-qed-matrix-working-equations"></span><h1>source.qed_matrix_working_equations<a class="headerlink" href="#module-source.qed_matrix_working_equations" title="Permalink to this heading"></a></h1>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_i1" title="source.qed_matrix_working_equations.adc2_i1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_i1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_i2" title="source.qed_matrix_working_equations.adc2_i2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_i2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_couple_i1" title="source.qed_matrix_working_equations.adc2_qed_couple_i1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_couple_i1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_couple_i2" title="source.qed_matrix_working_equations.adc2_qed_couple_i2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_couple_i2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_i1" title="source.qed_matrix_working_equations.adc2_qed_i1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_i1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_i2" title="source.qed_matrix_working_equations.adc2_qed_i2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_i2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_ph_ph_2_phot_couple_gs_part" title="source.qed_matrix_working_equations.adc2_qed_ph_ph_2_phot_couple_gs_part"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_ph_ph_2_phot_couple_gs_part</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_ph_ph_2_phot_couple_inner_gs_part" title="source.qed_matrix_working_equations.adc2_qed_ph_ph_2_phot_couple_inner_gs_part"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_ph_ph_2_phot_couple_inner_gs_part</span></code></a>(hf, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_phot_couple_i1" title="source.qed_matrix_working_equations.adc2_qed_phot_couple_i1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_phot_couple_i1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.adc2_qed_phot_couple_i2" title="source.qed_matrix_working_equations.adc2_qed_phot_couple_i2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adc2_qed_phot_couple_i2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_cvs_ph_ph_1" title="source.qed_matrix_working_equations.block_cvs_ph_ph_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_cvs_ph_ph_1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_cvs_ph_pphh_1" title="source.qed_matrix_working_equations.block_cvs_ph_pphh_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_cvs_ph_pphh_1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_cvs_pphh_ph_1" title="source.qed_matrix_working_equations.block_cvs_pphh_ph_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_cvs_pphh_ph_1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0" title="source.qed_matrix_working_equations.block_ph_gs_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_couple" title="source.qed_matrix_working_equations.block_ph_gs_0_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_couple_edge" title="source.qed_matrix_working_equations.block_ph_gs_0_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_couple_edge</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_couple_inner" title="source.qed_matrix_working_equations.block_ph_gs_0_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_couple_inner</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_phot" title="source.qed_matrix_working_equations.block_ph_gs_0_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_phot2" title="source.qed_matrix_working_equations.block_ph_gs_0_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_phot_couple" title="source.qed_matrix_working_equations.block_ph_gs_0_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_phot_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_gs_0_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_0_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_gs_0_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_0_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1" title="source.qed_matrix_working_equations.block_ph_gs_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_couple" title="source.qed_matrix_working_equations.block_ph_gs_1_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_couple_edge" title="source.qed_matrix_working_equations.block_ph_gs_1_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_couple_edge</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_couple_inner" title="source.qed_matrix_working_equations.block_ph_gs_1_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_couple_inner</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_phot" title="source.qed_matrix_working_equations.block_ph_gs_1_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_phot2" title="source.qed_matrix_working_equations.block_ph_gs_1_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_phot_couple" title="source.qed_matrix_working_equations.block_ph_gs_1_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_phot_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_gs_1_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_1_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_gs_1_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_1_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2" title="source.qed_matrix_working_equations.block_ph_gs_2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_couple" title="source.qed_matrix_working_equations.block_ph_gs_2_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_couple_edge" title="source.qed_matrix_working_equations.block_ph_gs_2_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_couple_edge</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_couple_inner" title="source.qed_matrix_working_equations.block_ph_gs_2_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_couple_inner</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_phot" title="source.qed_matrix_working_equations.block_ph_gs_2_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_phot2" title="source.qed_matrix_working_equations.block_ph_gs_2_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_phot_couple" title="source.qed_matrix_working_equations.block_ph_gs_2_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_phot_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_gs_2_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_gs_2_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_gs_2_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_gs_2_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0" title="source.qed_matrix_working_equations.block_ph_ph_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_couple" title="source.qed_matrix_working_equations.block_ph_ph_0_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_couple_edge" title="source.qed_matrix_working_equations.block_ph_ph_0_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_couple_edge</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_couple_inner" title="source.qed_matrix_working_equations.block_ph_ph_0_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_couple_inner</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_phot" title="source.qed_matrix_working_equations.block_ph_ph_0_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_phot2" title="source.qed_matrix_working_equations.block_ph_ph_0_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_phot_couple" title="source.qed_matrix_working_equations.block_ph_ph_0_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_phot_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_ph_0_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_0_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_ph_0_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_0_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1" title="source.qed_matrix_working_equations.block_ph_ph_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_couple" title="source.qed_matrix_working_equations.block_ph_ph_1_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_couple_edge" title="source.qed_matrix_working_equations.block_ph_ph_1_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_couple_edge</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_couple_inner" title="source.qed_matrix_working_equations.block_ph_ph_1_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_couple_inner</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_phot" title="source.qed_matrix_working_equations.block_ph_ph_1_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_phot2" title="source.qed_matrix_working_equations.block_ph_ph_1_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_phot_couple" title="source.qed_matrix_working_equations.block_ph_ph_1_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_phot_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_ph_1_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_1_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_ph_1_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_1_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2" title="source.qed_matrix_working_equations.block_ph_ph_2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_couple" title="source.qed_matrix_working_equations.block_ph_ph_2_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_couple_edge" title="source.qed_matrix_working_equations.block_ph_ph_2_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_couple_edge</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_couple_inner" title="source.qed_matrix_working_equations.block_ph_ph_2_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_couple_inner</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_phot" title="source.qed_matrix_working_equations.block_ph_ph_2_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_phot2" title="source.qed_matrix_working_equations.block_ph_ph_2_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_phot_couple" title="source.qed_matrix_working_equations.block_ph_ph_2_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_phot_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_ph_2_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_ph_2_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_ph_2_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_ph_2_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0" title="source.qed_matrix_working_equations.block_ph_pphh_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_couple" title="source.qed_matrix_working_equations.block_ph_pphh_0_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_couple_edge" title="source.qed_matrix_working_equations.block_ph_pphh_0_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_couple_inner" title="source.qed_matrix_working_equations.block_ph_pphh_0_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_phot" title="source.qed_matrix_working_equations.block_ph_pphh_0_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_phot2" title="source.qed_matrix_working_equations.block_ph_pphh_0_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_phot_couple" title="source.qed_matrix_working_equations.block_ph_pphh_0_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_phot_couple</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_pphh_0_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_0_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_pphh_0_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_0_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1" title="source.qed_matrix_working_equations.block_ph_pphh_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_couple" title="source.qed_matrix_working_equations.block_ph_pphh_1_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_couple_edge" title="source.qed_matrix_working_equations.block_ph_pphh_1_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_couple_inner" title="source.qed_matrix_working_equations.block_ph_pphh_1_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_phot" title="source.qed_matrix_working_equations.block_ph_pphh_1_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_phot2" title="source.qed_matrix_working_equations.block_ph_pphh_1_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_phot_couple" title="source.qed_matrix_working_equations.block_ph_pphh_1_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_phot_couple</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_phot_couple_edge" title="source.qed_matrix_working_equations.block_ph_pphh_1_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_ph_pphh_1_phot_couple_inner" title="source.qed_matrix_working_equations.block_ph_pphh_1_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_ph_pphh_1_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0" title="source.qed_matrix_working_equations.block_pphh_ph_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_couple" title="source.qed_matrix_working_equations.block_pphh_ph_0_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_couple_edge" title="source.qed_matrix_working_equations.block_pphh_ph_0_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_couple_inner" title="source.qed_matrix_working_equations.block_pphh_ph_0_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_phot" title="source.qed_matrix_working_equations.block_pphh_ph_0_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_phot2" title="source.qed_matrix_working_equations.block_pphh_ph_0_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_phot_couple" title="source.qed_matrix_working_equations.block_pphh_ph_0_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_phot_couple</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_phot_couple_edge" title="source.qed_matrix_working_equations.block_pphh_ph_0_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_0_phot_couple_inner" title="source.qed_matrix_working_equations.block_pphh_ph_0_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_0_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1" title="source.qed_matrix_working_equations.block_pphh_ph_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_couple" title="source.qed_matrix_working_equations.block_pphh_ph_1_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_couple_edge" title="source.qed_matrix_working_equations.block_pphh_ph_1_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_couple_inner" title="source.qed_matrix_working_equations.block_pphh_ph_1_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_phot" title="source.qed_matrix_working_equations.block_pphh_ph_1_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_phot2" title="source.qed_matrix_working_equations.block_pphh_ph_1_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_phot_couple" title="source.qed_matrix_working_equations.block_pphh_ph_1_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_phot_couple</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_phot_couple_edge" title="source.qed_matrix_working_equations.block_pphh_ph_1_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_ph_1_phot_couple_inner" title="source.qed_matrix_working_equations.block_pphh_ph_1_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_ph_1_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0" title="source.qed_matrix_working_equations.block_pphh_pphh_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_couple" title="source.qed_matrix_working_equations.block_pphh_pphh_0_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_couple</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_couple_edge" title="source.qed_matrix_working_equations.block_pphh_pphh_0_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_couple_inner" title="source.qed_matrix_working_equations.block_pphh_pphh_0_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_phot" title="source.qed_matrix_working_equations.block_pphh_pphh_0_phot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_phot</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_phot2" title="source.qed_matrix_working_equations.block_pphh_pphh_0_phot2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_phot2</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_phot_couple" title="source.qed_matrix_working_equations.block_pphh_pphh_0_phot_couple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_phot_couple</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_phot_couple_edge" title="source.qed_matrix_working_equations.block_pphh_pphh_0_phot_couple_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_phot_couple_edge</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.block_pphh_pphh_0_phot_couple_inner" title="source.qed_matrix_working_equations.block_pphh_pphh_0_phot_couple_inner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_pphh_pphh_0_phot_couple_inner</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.delta_ia_omega" title="source.qed_matrix_working_equations.delta_ia_omega"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delta_ia_omega</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.diagonal_pphh_pphh_0" title="source.qed_matrix_working_equations.diagonal_pphh_pphh_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">diagonal_pphh_pphh_0</span></code></a>(hf, to_add)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.qed_adc2_ph_gs_intermediate" title="source.qed_matrix_working_equations.qed_adc2_ph_gs_intermediate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qed_adc2_ph_gs_intermediate</span></code></a>(hf, mp, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.qed_block" title="source.qed_matrix_working_equations.qed_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qed_block</span></code></a>(ground_state, spaces, order[, ...])</p></td>
+<td><p>Dispatcher for the individual QED ADC matrix subblocks.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.term_t2_eri" title="source.qed_matrix_working_equations.term_t2_eri"><code class="xref py py-obj docutils literal notranslate"><span class="pre">term_t2_eri</span></code></a>(hf, mp, intermediates)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../apidoc_generated/source.qed_matrix_working_equations.html#source.qed_matrix_working_equations.AdcBlock" title="source.qed_matrix_working_equations.AdcBlock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdcBlock</span></code></a>(apply, diagonal)</p></td>
+<td><p>Create new instance of AdcBlock(apply, diagonal)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="source.qed_matrix_from_diag_adc.html" class="btn btn-neutral float-left" title="source.qed_matrix_from_diag_adc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source.qed_mp.html" class="btn btn-neutral float-right" title="source.qed_mp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marco Bauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -11,22 +11,7 @@ Installing adcc
 ---------------
 
 How to install adcc in general can be found 
-`here <https://adc-connect.org/v0.15.13/installation.html>`_ ,
-but until a required pull request gets accepted, you have to setup
-adcc in a slightly different manner. 
-
-After installing the required dependencies for adcc, clone the following
-adcc fork on the given branch
-
-.. code-block:: shell
-
-   git clone https://github.com/BauerMarco/adcc/tree/increase_inheritable_objects
-
-and then install by switching into the new directory and type
-
-.. code-block:: shell
-
-   python setup.py install
+`here <https://adc-connect.org/v0.15.13/installation.html>`_ .
 
 
 Installing an SCF provider

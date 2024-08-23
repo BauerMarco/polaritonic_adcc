@@ -1,0 +1,30 @@
+source.solver.LanczosIterator
+=============================
+
+.. automodule:: source.solver.LanczosIterator
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      LanczosIterator
+      LanczosSubspace
+   
+   
+
+   
+   
+   
+
+
+

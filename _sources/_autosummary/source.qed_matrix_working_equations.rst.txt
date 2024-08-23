@@ -1,0 +1,151 @@
+source.qed\_matrix\_working\_equations
+======================================
+
+.. automodule:: source.qed_matrix_working_equations
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      adc2_i1
+      adc2_i2
+      adc2_qed_couple_i1
+      adc2_qed_couple_i2
+      adc2_qed_i1
+      adc2_qed_i2
+      adc2_qed_ph_ph_2_phot_couple_gs_part
+      adc2_qed_ph_ph_2_phot_couple_inner_gs_part
+      adc2_qed_phot_couple_i1
+      adc2_qed_phot_couple_i2
+      block_cvs_ph_ph_1
+      block_cvs_ph_pphh_1
+      block_cvs_pphh_ph_1
+      block_ph_gs_0
+      block_ph_gs_0_couple
+      block_ph_gs_0_couple_edge
+      block_ph_gs_0_couple_inner
+      block_ph_gs_0_phot
+      block_ph_gs_0_phot2
+      block_ph_gs_0_phot_couple
+      block_ph_gs_0_phot_couple_edge
+      block_ph_gs_0_phot_couple_inner
+      block_ph_gs_1
+      block_ph_gs_1_couple
+      block_ph_gs_1_couple_edge
+      block_ph_gs_1_couple_inner
+      block_ph_gs_1_phot
+      block_ph_gs_1_phot2
+      block_ph_gs_1_phot_couple
+      block_ph_gs_1_phot_couple_edge
+      block_ph_gs_1_phot_couple_inner
+      block_ph_gs_2
+      block_ph_gs_2_couple
+      block_ph_gs_2_couple_edge
+      block_ph_gs_2_couple_inner
+      block_ph_gs_2_phot
+      block_ph_gs_2_phot2
+      block_ph_gs_2_phot_couple
+      block_ph_gs_2_phot_couple_edge
+      block_ph_gs_2_phot_couple_inner
+      block_ph_ph_0
+      block_ph_ph_0_couple
+      block_ph_ph_0_couple_edge
+      block_ph_ph_0_couple_inner
+      block_ph_ph_0_phot
+      block_ph_ph_0_phot2
+      block_ph_ph_0_phot_couple
+      block_ph_ph_0_phot_couple_edge
+      block_ph_ph_0_phot_couple_inner
+      block_ph_ph_1
+      block_ph_ph_1_couple
+      block_ph_ph_1_couple_edge
+      block_ph_ph_1_couple_inner
+      block_ph_ph_1_phot
+      block_ph_ph_1_phot2
+      block_ph_ph_1_phot_couple
+      block_ph_ph_1_phot_couple_edge
+      block_ph_ph_1_phot_couple_inner
+      block_ph_ph_2
+      block_ph_ph_2_couple
+      block_ph_ph_2_couple_edge
+      block_ph_ph_2_couple_inner
+      block_ph_ph_2_phot
+      block_ph_ph_2_phot2
+      block_ph_ph_2_phot_couple
+      block_ph_ph_2_phot_couple_edge
+      block_ph_ph_2_phot_couple_inner
+      block_ph_pphh_0
+      block_ph_pphh_0_couple
+      block_ph_pphh_0_couple_edge
+      block_ph_pphh_0_couple_inner
+      block_ph_pphh_0_phot
+      block_ph_pphh_0_phot2
+      block_ph_pphh_0_phot_couple
+      block_ph_pphh_0_phot_couple_edge
+      block_ph_pphh_0_phot_couple_inner
+      block_ph_pphh_1
+      block_ph_pphh_1_couple
+      block_ph_pphh_1_couple_edge
+      block_ph_pphh_1_couple_inner
+      block_ph_pphh_1_phot
+      block_ph_pphh_1_phot2
+      block_ph_pphh_1_phot_couple
+      block_ph_pphh_1_phot_couple_edge
+      block_ph_pphh_1_phot_couple_inner
+      block_pphh_ph_0
+      block_pphh_ph_0_couple
+      block_pphh_ph_0_couple_edge
+      block_pphh_ph_0_couple_inner
+      block_pphh_ph_0_phot
+      block_pphh_ph_0_phot2
+      block_pphh_ph_0_phot_couple
+      block_pphh_ph_0_phot_couple_edge
+      block_pphh_ph_0_phot_couple_inner
+      block_pphh_ph_1
+      block_pphh_ph_1_couple
+      block_pphh_ph_1_couple_edge
+      block_pphh_ph_1_couple_inner
+      block_pphh_ph_1_phot
+      block_pphh_ph_1_phot2
+      block_pphh_ph_1_phot_couple
+      block_pphh_ph_1_phot_couple_edge
+      block_pphh_ph_1_phot_couple_inner
+      block_pphh_pphh_0
+      block_pphh_pphh_0_couple
+      block_pphh_pphh_0_couple_edge
+      block_pphh_pphh_0_couple_inner
+      block_pphh_pphh_0_phot
+      block_pphh_pphh_0_phot2
+      block_pphh_pphh_0_phot_couple
+      block_pphh_pphh_0_phot_couple_edge
+      block_pphh_pphh_0_phot_couple_inner
+      delta_ia_omega
+      diagonal_pphh_pphh_0
+      qed_adc2_ph_gs_intermediate
+      qed_block
+      term_t2_eri
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AdcBlock
+   
+   
+
+   
+   
+   
+
+
+

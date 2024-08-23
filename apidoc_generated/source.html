@@ -4,10 +4,9 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>source package &mdash; Polaritonic_adcc 0.1.1 documentation</title>
+  <title>source package &mdash; Polaritonic_adcc 0.1.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom_theme.css" />
 
   
   <!--[if lt IE 9]>
@@ -78,33 +77,20 @@
              
   <section id="source-package">
 <h1>source package<a class="headerlink" href="#source-package" title="Permalink to this heading"></a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="source.backends.html">source.backends package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="source.backends.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="source.backends.hilbert_backend.html">source.backends.hilbert_backend module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source.backends.hilbert_backend_no_inherit.html">source.backends.hilbert_backend_no_inherit module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="source.backends.html#module-contents">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="source.full_qed_matrix.html">source.full_qed_matrix module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.functions.html">source.functions module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.qed_adc_in_std_basis_with_self_en.html">source.qed_adc_in_std_basis_with_self_en module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.qed_amplitude_vec.html">source.qed_amplitude_vec module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.qed_matrix_from_diag_adc.html">source.qed_matrix_from_diag_adc module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.qed_matrix_working_equations.html">source.qed_matrix_working_equations module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.qed_mp.html">source.qed_mp module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.qed_npadc_exstates.html">source.qed_npadc_exstates module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.qed_npadc_s2s_tdm_terms.html">source.qed_npadc_s2s_tdm_terms module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.qed_ucc.html">source.qed_ucc module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.refstate.html">source.refstate module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.test_methods.html">source.test_methods module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source.workflow.html">source.workflow module</a></li>
@@ -113,6 +99,134 @@
 </section>
 <section id="module-source">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-source" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="source.run_qed_adc">
+<span class="sig-prename descclassname"><span class="pre">source.</span></span><span class="sig-name descname"><span class="pre">run_qed_adc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_or_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupl=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qed_hf=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gs='mp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qed_coupl_level=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_states=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind='any'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_tol=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eigensolver='davidson'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">guesses=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_guesses=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_guesses_doubles=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output=&lt;_io.TextIOWrapper</span> <span class="pre">name='&lt;stdout&gt;'</span> <span class="pre">mode='w'</span> <span class="pre">encoding='utf-8'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">core_orbitals=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_core=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_virtual=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_singlets=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_triplets=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_spin_flip=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**solverargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.run_qed_adc" title="Permalink to this definition"></a></dt>
+<dd><p>Run an ADC calculation.</p>
+<p>Main entry point to run an ADC calculation. The reference to build the ADC
+calculation upon is supplied using the <cite>data_or_matrix</cite> argument.
+<cite>adcc</cite> is pretty flexible here. Possible options include:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Hartree-Fock data from a host program, e.g. a molsturm SCF
+state, a pyscf SCF object or any class implementing the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">adcc.HartreeFockProvider</span></code> interface. From this data all
+objects mentioned in (b) to (d) will be implicitly created and will
+become available in the returned state.</p></li>
+<li><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">polaritonic_adcc.refstate</span></code> object</p></li>
+<li><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">polaritonic_adcc.qed_mp</span></code> object</p></li>
+<li><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">polaritonic_adcc.qed_matrix_full</span></code> object</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_or_matrix</strong> – Data containing the SCF reference</p></li>
+<li><p><strong>n_states</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>kind</strong> (<em>str</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>n_singlets</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>n_triplets</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>n_spin_flip</strong> (<em>int</em><em>, </em><em>optional</em>) – Specify the number and kind of states to be computed. Possible values
+for kind are “singlet”, “triplet”, “spin_flip” and “any”, which is
+the default. For unrestricted references clamping spin-pure
+singlets/triplets is currently not possible and kind has to remain as
+“any”. For restricted references <cite>kind=”singlets”</cite> or <cite>kind=”triplets”</cite>
+may be employed to enforce a particular excited states manifold.
+Specifying <cite>n_singlets</cite> is equivalent to setting <cite>kind=”singlet”</cite> and
+<cite>n_states=5</cite>. Similarly for <cite>n_triplets</cite> and <cite>n_spin_flip</cite>.
+<cite>n_spin_flip</cite> is only valid for unrestricted references.</p></li>
+<li><p><strong>conv_tol</strong> (<em>float</em><em>, </em><em>optional</em>) – Convergence tolerance to employ in the iterative solver for obtaining
+the ADC vectors (default: <cite>1e-6</cite> or 10 * SCF tolerance,
+whatever is larger)</p></li>
+<li><p><strong>eigensolver</strong> (<em>str</em><em>, </em><em>optional</em>) – The eigensolver algorithm to use.</p></li>
+<li><p><strong>n_guesses</strong> (<em>int</em><em>, </em><em>optional</em>) – Total number of guesses to compute. By default only guesses derived from
+the singles block of the ADC matrix are employed. See
+<cite>n_guesses_doubles</cite> for alternatives. If no number is given here
+<cite>n_guesses = min(4, 2 * number of excited states to compute)</cite>
+or a smaller number if the number of excitation is estimated to be less
+than the outcome of above formula.</p></li>
+<li><p><strong>n_guesses_doubles</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of guesses to derive from the doubles block. By default none
+unless n_guesses as explicitly given or automatically determined is
+larger than the number of singles guesses, which can be possibly found.</p></li>
+<li><p><strong>guesses</strong> (<em>list</em><em>, </em><em>optional</em>) – Provide the guess vectors to be employed for the ADC run. Takes
+preference over <cite>n_guesses</cite> and <cite>n_guesses_doubles</cite>, such that these
+parameters are ignored.</p></li>
+<li><p><strong>output</strong> (<em>stream</em><em>, </em><em>optional</em>) – Python stream to which output will be written. If <cite>None</cite> all output
+is disabled.</p></li>
+<li><p><strong>core_orbitals</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to be put into the core-occupied space. For ways to
+define the core orbitals see the description in
+<code class="xref py py-class docutils literal notranslate"><span class="pre">adcc.ReferenceState</span></code>.
+Required if core-valence separation is applied and the input data is
+given as data from the host program (i.e. option (a) discussed above)</p></li>
+<li><p><strong>frozen_core</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to select as frozen core orbitals (i.e. inactive occupied
+orbitals for both the MP and ADC methods performed). For ways to define
+these see the description in <code class="xref py py-class docutils literal notranslate"><span class="pre">adcc.ReferenceState</span></code>.</p></li>
+<li><p><strong>frozen_virtual</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to select as frozen virtual orbitals (i.e. inactive
+virtuals for both the MP and ADC methods performed). For ways to define
+these see the description in <code class="xref py py-class docutils literal notranslate"><span class="pre">adcc.ReferenceState</span></code>.</p></li>
+<li><p><strong>environment</strong> (<em>bool</em><em> or </em><em>list</em><em> or </em><em>dict</em><em>, </em><em>optional</em>) – The keywords to specify how coupling to an environment model,
+e.g. PE, is treated.</p></li>
+<li><p><strong>coupl</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy array of length 3</em><em>, </em><em>optional</em>) – x, y, z coupling vector to the cavity photon. Use the definition
+1 / sqrt(2 * freq * eps_0 * eps_r * V)!</p></li>
+<li><p><strong>freq</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy array</em><em> or </em><em>int</em><em>, </em><em>optional</em>) – Energy of the cavity photon.</p></li>
+<li><p><strong>qed_hf</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specify, whether a standard or polaritonic SCF result is provided.</p></li>
+<li><p><strong>gs</strong> (<em>str</em><em>, </em><em>optional</em>) – Which ground state reference to use</p></li>
+<li><p><strong>qed_coupl_level</strong> (<em>bool</em><em> or </em><em>int</em><em>, </em><em>optional</em>) – Specify, whether to calculate the full matrix (False), or provide
+the perturbative level to which polaritonic coupling shall be included
+into a truncated state space approach (1 or 2).</p></li>
+<li><p><strong>max_subspace</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximal subspace size</p></li>
+<li><p><strong>max_iter</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximal number of iterations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">adcc.ExcitedStates</span></code> object or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">polaritonic_adcc.qed_npadc_exstates</span></code> object, which inherits
+from the previous object, containing the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">polaritonic_adcc.full_qed_matrix</span></code>, the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">polaritonic_adcc.qed_mp</span></code> ground state and the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">polaritonic_adcc.refstate</span></code> as well as computed eigenpairs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ExcitedStates</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Run an ADC(3) calculation on top of a non-polaritonic <cite>pyscf</cite>
+RHF reference of hydrogen flouride, building the qed matrix
+in a truncated state basis.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyscf</span> <span class="kn">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">scf</span>
+<span class="gp">... </span><span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">mole</span><span class="o">.</span><span class="n">M</span><span class="p">(</span><span class="n">atom</span><span class="o">=</span><span class="s2">&quot;H 0 0 0; F 0 0 1.1&quot;</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s2">&quot;sto-3g&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">mf</span><span class="o">.</span><span class="n">conv_tol_grad</span> <span class="o">=</span> <span class="mf">1e-8</span>
+<span class="gp">... </span><span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="n">state</span> <span class="o">=</span> <span class="n">run_qed_adc</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;adc3&quot;</span><span class="p">,</span> <span class="n">n_singlets</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+<span class="go">                        coupl=[0., 0., 0.1], qed_hf=True)</span>
+</pre></div>
+</div>
+<p>Run an ADC(2) calculation of O2 with a polaritonic <cite>psi4</cite> reference,
+building the full polaritonic matrix.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hilbert</span>
+<span class="gp">... </span><span class="n">mol</span> <span class="o">=</span> <span class="n">psi4</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s1">    0 1</span>
+<span class="gp">... </span><span class="s1">    O 0.0 0.0 0.0</span>
+<span class="gp">... </span><span class="s1">    O 0.0 0.0 1.2</span>
+<span class="gp">... </span><span class="s1">    units angstrom</span>
+<span class="gp">... </span><span class="s1">    symmtery c1</span>
+<span class="gp">... </span><span class="s1">    no_reorient</span>
+<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">psi4</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">be_quiet</span><span class="p">()</span>
+<span class="gp">... </span><span class="n">psi4</span><span class="o">.</span><span class="n">set_options</span><span class="p">({</span><span class="s1">&#39;basis&#39;</span><span class="p">:</span> <span class="s1">&#39;sto-3g&#39;</span><span class="p">,</span> <span class="s1">&#39;scf_type&#39;</span><span class="p">:</span> <span class="s1">&#39;df&#39;</span><span class="p">,</span>
+<span class="go">                      &#39;e_convergence&#39;: 1e-10})</span>
+<span class="go">... psi4.set_module_options(&#39;hilbert&#39;: {&#39;cavity_frequency&#39;: [0.0, 0.0, 0.4],</span>
+<span class="go">                                        &#39;cavity_coupling_strength&#39;: [0.0, 0.0, 0.1]})</span>
+<span class="go">... scf_e, wfn = psi4.energy(&#39;scf&#39;, return_wfn=True)</span>
+<span class="go">... state = run_qed_adc(mf, n_singlets=3, freq=[0., 0., 0.4], coupl=[0., 0., 0.1],</span>
+<span class="go">                        qed_coupl_level=False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 </section>
 

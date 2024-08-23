@@ -1,0 +1,30 @@
+source.functions
+================
+
+.. automodule:: source.functions
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      evaluate
+      lincomb
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

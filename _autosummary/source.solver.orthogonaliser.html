@@ -4,10 +4,9 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>source.backends package &mdash; Polaritonic_adcc 0.1.1 documentation</title>
+  <title>source.solver.orthogonaliser &mdash; Polaritonic_adcc 0.1.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom_theme.css" />
 
   
   <!--[if lt IE 9]>
@@ -21,7 +20,8 @@
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="source.solver.lanczos" href="source.solver.lanczos.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,13 +43,24 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html#testing">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../API.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../API.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="source.html">source</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="source.solver.html">source.solver</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="source.solver.LanczosIterator.html">source.solver.LanczosIterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.solver.davidson.html">source.solver.davidson</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.solver.diis.html">source.solver.diis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.solver.lanczos.html">source.solver.lanczos</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">source.solver.orthogonaliser</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -66,9 +77,11 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">source.backends package</li>
+          <li class="breadcrumb-item"><a href="../API.html">API</a></li>
+          <li class="breadcrumb-item"><a href="source.solver.html">source.solver</a></li>
+      <li class="breadcrumb-item active">source.solver.orthogonaliser</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/apidoc_generated/source.backends.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_autosummary/source.solver.orthogonaliser.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -76,26 +89,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="source-backends-package">
-<h1>source.backends package<a class="headerlink" href="#source-backends-package" title="Permalink to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="source.backends.hilbert_backend.html">source.backends.hilbert_backend module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="source.backends.hilbert_backend_no_inherit.html">source.backends.hilbert_backend_no_inherit module</a></li>
-</ul>
-</div>
-</section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
-</section>
+  <section id="module-source.solver.orthogonaliser">
+<span id="source-solver-orthogonaliser"></span><h1>source.solver.orthogonaliser<a class="headerlink" href="#module-source.solver.orthogonaliser" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GramSchmidtOrthogonaliser</span></code>([...])</p></td>
+<td><p>Initialise the GramSchmidtOrthogonaliser</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="source.solver.lanczos.html" class="btn btn-neutral float-left" title="source.solver.lanczos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

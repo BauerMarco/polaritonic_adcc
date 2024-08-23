@@ -4,10 +4,9 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>source.refstate module &mdash; Polaritonic_adcc 0.1.1 documentation</title>
+  <title>source.refstate module &mdash; Polaritonic_adcc 0.1.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom_theme.css" />
 
   
   <!--[if lt IE 9]>
@@ -76,8 +75,224 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="source-refstate-module">
-<h1>source.refstate module<a class="headerlink" href="#source-refstate-module" title="Permalink to this heading"></a></h1>
+  <section id="module-source.refstate">
+<span id="source-refstate-module"></span><h1>source.refstate module<a class="headerlink" href="#module-source.refstate" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="source.refstate.refstate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">source.refstate.</span></span><span class="sig-name descname"><span class="pre">refstate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hfdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qed_hf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">core_orbitals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_core</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_virtual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetry_check_on_import</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_all_below_n_orbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.refstate.refstate" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ReferenceState</span></code></p>
+<p>Lazily evaluated (non-)polaritonic HF object</p>
+<p>Orbital subspace selection: In order to specify <cite>frozen_core</cite>,
+<cite>core_orbitals</cite> and <cite>frozen_virtual</cite>, adcc allows a range of
+specifications including</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>A number: Just put this number of alpha orbitals and this
+number of beta orbitals into the respective space. For frozen
+core and core orbitals these are counted from below, for
+frozen virtual orbitals, these are counted from above. If both
+frozen core and core orbitals are specified like this, the
+lowest-energy, occupied orbitals will be put into frozen core.</p></li>
+<li><p>A range: The orbital indices given by this range will be put
+into the orbital subspace.</p></li>
+<li><p>An explicit list of orbital indices to be placed into the
+subspace.</p></li>
+<li><p>A pair of (a) to (c): If the orbital selection for alpha and
+beta orbitals should differ, a pair of ranges, or a pair of
+index lists or a pair of numbers can be specified.</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hfdata</strong> – Object with Hartree-Fock data (e.g. a molsturm scf state, a pyscf
+SCF object or any class implementing the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">adcc.HartreeFockProvider</span></code> interface or in fact any python
+object representing a pointer to a C++ object derived off
+the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">adcc::HartreeFockSolution_i</span></code>.</p></li>
+<li><p><strong>qed_hf</strong> (<em>bool</em>) – Specify, whether the hfdata object is a polaritonic or standard
+SCF reference.</p></li>
+<li><p><strong>coupl</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy array of length 3</em>) – x, y, z vector containing the coupling strengths to the cavity photon.</p></li>
+<li><p><strong>core_orbitals</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to be put into the core-occupied space. For ways to
+define the core orbitals see the description above. Note, that you
+don’t want to make use of them for a polaritonic calculation,
+as they are usually connected to core-valence separated calculations,
+which break the dipole approximation! It you want to read more on this
+see the paper linked in the polaritonic_adcc documentation.</p></li>
+<li><p><strong>frozen_core</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to be put into the frozen core space. For ways to
+define the core orbitals see the description above. For an automatic
+selection of the frozen core space one may also specify
+<code class="docutils literal notranslate"><span class="pre">frozen_core=True</span></code>.</p></li>
+<li><p><strong>frozen_virtuals</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to be put into the frozen virtual space. For ways to
+define the core orbitals see the description above.</p></li>
+<li><p><strong>symmetry_check_on_import</strong> (<em>bool</em><em>, </em><em>optional</em>) – Should symmetry of the imported objects be checked explicitly during
+the import process. This massively slows down the import and has a
+dramatic impact on memory usage. Thus one should enable this only
+for debugging (e.g. for testing import routines from the host
+programs). Do not enable this unless you know what you are doing.</p></li>
+<li><p><strong>import_all_below_n_orbs</strong> (<em>int</em><em>, </em><em>optional</em>) – For small problem sizes lazy make less sense, since the memory
+requirement for storing the ERI tensor is neglibile and thus the
+flexiblity gained by having the full tensor in memory is
+advantageous. Below the number of orbitals specified by this
+parameter, the class will thus automatically import all ERI tensor
+and Fock matrix blocks.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>To start a calculation with the 2 lowest alpha and beta orbitals
+in the core occupied space, construct the class as</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>There is no restriction to choose the core occupied orbitals
+from the bottom end of the occupied orbitals. For example
+to select the 2nd and 3rd orbital setup the class as</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>If different orbitals should be placed in the alpha and
+beta orbitals, this can be achievd like so</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>which would place the 2nd and 3rd alpha and the 1st and second
+beta orbital into the core space.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="source.refstate.refstate.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hfdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qed_hf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">core_orbitals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_core</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_virtual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetry_check_on_import</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_all_below_n_orbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.refstate.refstate.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Lazily evaluated (non-)polaritonic HF object</p>
+<p>Orbital subspace selection: In order to specify <cite>frozen_core</cite>,
+<cite>core_orbitals</cite> and <cite>frozen_virtual</cite>, adcc allows a range of
+specifications including</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>A number: Just put this number of alpha orbitals and this
+number of beta orbitals into the respective space. For frozen
+core and core orbitals these are counted from below, for
+frozen virtual orbitals, these are counted from above. If both
+frozen core and core orbitals are specified like this, the
+lowest-energy, occupied orbitals will be put into frozen core.</p></li>
+<li><p>A range: The orbital indices given by this range will be put
+into the orbital subspace.</p></li>
+<li><p>An explicit list of orbital indices to be placed into the
+subspace.</p></li>
+<li><p>A pair of (a) to (c): If the orbital selection for alpha and
+beta orbitals should differ, a pair of ranges, or a pair of
+index lists or a pair of numbers can be specified.</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hfdata</strong> – Object with Hartree-Fock data (e.g. a molsturm scf state, a pyscf
+SCF object or any class implementing the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">adcc.HartreeFockProvider</span></code> interface or in fact any python
+object representing a pointer to a C++ object derived off
+the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">adcc::HartreeFockSolution_i</span></code>.</p></li>
+<li><p><strong>qed_hf</strong> (<em>bool</em>) – Specify, whether the hfdata object is a polaritonic or standard
+SCF reference.</p></li>
+<li><p><strong>coupl</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy array of length 3</em>) – x, y, z vector containing the coupling strengths to the cavity photon.</p></li>
+<li><p><strong>core_orbitals</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to be put into the core-occupied space. For ways to
+define the core orbitals see the description above. Note, that you
+don’t want to make use of them for a polaritonic calculation,
+as they are usually connected to core-valence separated calculations,
+which break the dipole approximation! It you want to read more on this
+see the paper linked in the polaritonic_adcc documentation.</p></li>
+<li><p><strong>frozen_core</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to be put into the frozen core space. For ways to
+define the core orbitals see the description above. For an automatic
+selection of the frozen core space one may also specify
+<code class="docutils literal notranslate"><span class="pre">frozen_core=True</span></code>.</p></li>
+<li><p><strong>frozen_virtuals</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – The orbitals to be put into the frozen virtual space. For ways to
+define the core orbitals see the description above.</p></li>
+<li><p><strong>symmetry_check_on_import</strong> (<em>bool</em><em>, </em><em>optional</em>) – Should symmetry of the imported objects be checked explicitly during
+the import process. This massively slows down the import and has a
+dramatic impact on memory usage. Thus one should enable this only
+for debugging (e.g. for testing import routines from the host
+programs). Do not enable this unless you know what you are doing.</p></li>
+<li><p><strong>import_all_below_n_orbs</strong> (<em>int</em><em>, </em><em>optional</em>) – For small problem sizes lazy make less sense, since the memory
+requirement for storing the ERI tensor is neglibile and thus the
+flexiblity gained by having the full tensor in memory is
+advantageous. Below the number of orbitals specified by this
+parameter, the class will thus automatically import all ERI tensor
+and Fock matrix blocks.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>To start a calculation with the 2 lowest alpha and beta orbitals
+in the core occupied space, construct the class as</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>There is no restriction to choose the core occupied orbitals
+from the bottom end of the occupied orbitals. For example
+to select the 2nd and 3rd orbital setup the class as</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>If different orbitals should be placed in the alpha and
+beta orbitals, this can be achievd like so</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ReferenceState</span><span class="p">(</span><span class="n">hfdata</span><span class="p">,</span> <span class="n">core_orbitals</span><span class="o">=</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>which would place the 2nd and 3rd alpha and the 1st and second
+beta orbital into the core space.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.refstate.refstate.eri">
+<span class="sig-name descname"><span class="pre">eri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.refstate.refstate.eri" title="Permalink to this definition"></a></dt>
+<dd><p>Return the electron repulsion integrals, to which the polaritonic
+two partilce correction is added, which obeys the same symmetry.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.refstate.refstate.get_qed_total_dip">
+<span class="sig-name descname"><span class="pre">get_qed_total_dip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.refstate.refstate.get_qed_total_dip" title="Permalink to this definition"></a></dt>
+<dd><p>Return the scalar product between coupl and the dipole operator</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.refstate.refstate.qed_D_object">
+<span class="sig-name descname"><span class="pre">qed_D_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.refstate.refstate.qed_D_object" title="Permalink to this definition"></a></dt>
+<dd><p>Return the object, which is added to the ERIs in a PT QED calculation</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

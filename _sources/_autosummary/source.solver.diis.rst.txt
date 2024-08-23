@@ -1,0 +1,29 @@
+source.solver.diis
+==================
+
+.. automodule:: source.solver.diis
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      diis
+   
+   
+
+   
+   
+   
+
+
+

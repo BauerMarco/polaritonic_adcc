@@ -1,0 +1,29 @@
+source.qed\_amplitude\_vec
+==========================
+
+.. automodule:: source.qed_amplitude_vec
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      qed_amplitude_vec
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,36 @@
+source.qed\_ucc
+===============
+
+.. automodule:: source.qed_ucc
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      update_qed_t1_amplitude
+      update_t2_amplitude
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      qed_ucc
+   
+   
+
+   
+   
+   
+
+
+

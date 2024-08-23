@@ -1,0 +1,32 @@
+source.solver.davidson
+======================
+
+.. automodule:: source.solver.davidson
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      davidson
+      davidson_iterations
+      eigsh
+      jacobi_davidson
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

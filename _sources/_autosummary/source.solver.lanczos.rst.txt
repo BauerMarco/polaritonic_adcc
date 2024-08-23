@@ -1,0 +1,32 @@
+source.solver.lanczos
+=====================
+
+.. automodule:: source.solver.lanczos
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      amend_true_residuals
+      compute_true_residuals
+      lanczos
+      lanczos_iterations
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

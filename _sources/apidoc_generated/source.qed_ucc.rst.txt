@@ -1,0 +1,7 @@
+source.qed\_ucc module
+======================
+
+.. automodule:: source.qed_ucc
+   :members:
+   :undoc-members:
+   :show-inheritance:

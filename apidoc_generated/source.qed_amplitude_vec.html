@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>source.qed_amplitude_vec module &mdash; Polaritonic_adcc 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Polaritonic_adcc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API.html">API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polaritonic_adcc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">source.qed_amplitude_vec module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/apidoc_generated/source.qed_amplitude_vec.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-source.qed_amplitude_vec">
+<span id="source-qed-amplitude-vec-module"></span><h1>source.qed_amplitude_vec module<a class="headerlink" href="#module-source.qed_amplitude_vec" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="source.qed_amplitude_vec.qed_amplitude_vec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">source.qed_amplitude_vec.</span></span><span class="sig-name descname"><span class="pre">qed_amplitude_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_amplitude_vec.qed_amplitude_vec" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AmplitudeVector</span></code></p>
+<p>Construct a polaritonic amplitude vector. Typical use cases are
+<code class="docutils literal notranslate"><span class="pre">AmplitudeVector(ph=single_ex_phot_vac,</span> <span class="pre">gs1=gs_phot_1,</span> <span class="pre">ph1=single_ex_phot_1)</span></code>.
+The provided tensor objects should be libtensors for ph, pphh, etc.
+and numpy.ndarrays for gs1, gs2, etc.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_amplitude_vec.qed_amplitude_vec.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_amplitude_vec.qed_amplitude_vec.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Construct a polaritonic amplitude vector. Typical use cases are
+<code class="docutils literal notranslate"><span class="pre">AmplitudeVector(ph=single_ex_phot_vac,</span> <span class="pre">gs1=gs_phot_1,</span> <span class="pre">ph1=single_ex_phot_1)</span></code>.
+The provided tensor objects should be libtensors for ph, pphh, etc.
+and numpy.ndarrays for gs1, gs2, etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_amplitude_vec.qed_amplitude_vec.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_amplitude_vec.qed_amplitude_vec.copy" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy of the AmplitudeVector</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_amplitude_vec.qed_amplitude_vec.dot">
+<span class="sig-name descname"><span class="pre">dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_amplitude_vec.qed_amplitude_vec.dot" title="Permalink to this definition"></a></dt>
+<dd><p>Return the dot product with another AmplitudeVector
+or the dot products with a list of AmplitudeVectors.
+In the latter case a np.ndarray is returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="source.qed_amplitude_vec.qed_amplitude_vec.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#source.qed_amplitude_vec.qed_amplitude_vec.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="source.qed_amplitude_vec.qed_amplitude_vec.needs_evaluation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">needs_evaluation</span></span><a class="headerlink" href="#source.qed_amplitude_vec.qed_amplitude_vec.needs_evaluation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marco Bauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

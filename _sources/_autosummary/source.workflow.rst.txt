@@ -1,0 +1,31 @@
+source.workflow
+===============
+
+.. automodule:: source.workflow
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      diagonalizer
+      obtain_guesses_by_inspection_qed
+      run_qed_adc
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

@@ -29,12 +29,15 @@
 
    source.backends
    source.full_qed_matrix
+   source.functions
    source.qed_adc_in_std_basis_with_self_en
+   source.qed_amplitude_vec
    source.qed_matrix_from_diag_adc
    source.qed_matrix_working_equations
    source.qed_mp
    source.qed_npadc_exstates
    source.qed_npadc_s2s_tdm_terms
+   source.qed_ucc
    source.refstate
    source.test_methods
    source.workflow
