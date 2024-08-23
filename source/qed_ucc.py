@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-from qed_mp import qed_mp
+from .qed_mp import qed_mp
 import numpy as np
 from adcc.misc import cached_property
 from adcc.functions import einsum, direct_sum
 import adcc.block as b
-from solver.diis import diis
+from .solver.diis import diis
 import warnings
 
 

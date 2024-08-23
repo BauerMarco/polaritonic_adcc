@@ -17,9 +17,7 @@
 #
 from adcc import block as b
 from adcc.LazyMp import LazyMp
-#from adcc.AdcMethod import AdcMethod
 from adcc.functions import einsum
-#from adcc.Intermediates import Intermediates
 from adcc.AmplitudeVector import AmplitudeVector
 from adcc.OneParticleOperator import OneParticleOperator
 

@@ -16,7 +16,7 @@
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
 import numpy as np
-from functions import evaluate, lincomb
+from ..functions import evaluate, lincomb
 
 """
 This function is mostly copied from adcc, because the evaluate and licomb

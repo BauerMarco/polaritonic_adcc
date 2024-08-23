@@ -15,16 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
+from adcc import block as b
+from adcc.functions import einsum
+from adcc.misc import cached_member_function
+from adcc import LazyMp, OneParticleOperator
 
-import adcc
-b = adcc.block
-einsum = adcc.functions.einsum
-
-class qed_mp(adcc.LazyMp):
+class qed_mp(LazyMp):
     def __init__(self, hf, omega, qed_hf=True, **kwargs):
         """Lazily evaluated (non-)polaritonic MP object"""
         super().__init__(hf)
-        self.get_qed_total_dip = adcc.OneParticleOperator(self.mospaces, is_symmetric=True)  # noqa: E501
+        self.get_qed_total_dip = OneParticleOperator(self.mospaces, is_symmetric=True)  # noqa: E501
         self.get_qed_total_dip.oo = hf.get_qed_total_dip(b.oo)
         self.get_qed_total_dip.ov = hf.get_qed_total_dip(b.ov)
         self.get_qed_total_dip.vv = hf.get_qed_total_dip(b.vv)
@@ -32,12 +32,12 @@ class qed_mp(adcc.LazyMp):
         self.qed_hf = qed_hf
 
 
-    @adcc.misc.cached_member_function
+    @cached_member_function
     def qed_t1_df(self, space):
         """
         qed_t1 amplitude times (df+omega)
         """
-        total_dip = adcc.OneParticleOperator(self.mospaces, is_symmetric=True)
+        total_dip = OneParticleOperator(self.mospaces, is_symmetric=True)
         if space == b.oo:
             total_dip.oo = self.get_qed_total_dip.oo
             return total_dip.oo
@@ -48,7 +48,7 @@ class qed_mp(adcc.LazyMp):
             total_dip.vv = self.get_qed_total_dip.vv
             return total_dip.vv
 
-    @adcc.misc.cached_member_function
+    @cached_member_function
     def qed_t1(self, space):
         """
         Return new electronic singly excited amplitude in the first
@@ -60,12 +60,12 @@ class qed_mp(adcc.LazyMp):
         #omega = self.omega
         return self.qed_t1_df(b.ov) / (self.df(b.ov) + self.omega)
 
-    @adcc.misc.cached_member_function
+    @cached_member_function
     def qed_t0_df(self, space):
         """
         qed_t0 amplitude times df
         """
-        total_dip = adcc.OneParticleOperator(self.mospaces, is_symmetric=True)
+        total_dip = OneParticleOperator(self.mospaces, is_symmetric=True)
         total_dip.oo = self.get_qed_total_dip.oo
         total_dip.ov = self.get_qed_total_dip.ov
         total_dip.vv = self.get_qed_total_dip.vv
@@ -80,7 +80,7 @@ class qed_mp(adcc.LazyMp):
             virt_sum = einsum("ac,bc->ab", total_dip.vv, total_dip.vv)
         return occ_sum - virt_sum
 
-    @adcc.misc.cached_member_function
+    @cached_member_function
     def qed_t0(self, space):
         """
         Return second new electronic singly excited amplitude in the first
@@ -107,7 +107,7 @@ class qed_mp(adcc.LazyMp):
             else:
                 return 0
         if level == 2:
-            total_dip = adcc.OneParticleOperator(self.mospaces, is_symmetric=True)
+            total_dip = OneParticleOperator(self.mospaces, is_symmetric=True)
             omega = self.omega #ReferenceState.get_qed_omega(hf)
             total_dip.ov = self.get_qed_total_dip.ov
             qed_terms = [(omega / 2, total_dip.ov, self.qed_t1(b.ov))]

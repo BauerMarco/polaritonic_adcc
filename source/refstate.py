@@ -17,7 +17,7 @@
 #
 import adcc
 import libadcc
-from backends import import_qed_scf_result
+from .backends import import_qed_scf_result
 
 #__all__ = ["refstate"]
 

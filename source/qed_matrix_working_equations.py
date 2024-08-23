@@ -22,7 +22,7 @@ from adcc import block as b
 from adcc.functions import direct_sum, einsum, zeros_like
 from adcc.Intermediates import Intermediates, register_as_intermediate
 import numpy as np
-from qed_amplitude_vec import qed_amplitude_vec
+from .qed_amplitude_vec import qed_amplitude_vec
 
 # Dispatch routine
 """

@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-import warnings
 from adcc.AmplitudeVector import AmplitudeVector
 import numpy as np
 

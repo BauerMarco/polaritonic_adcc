@@ -17,7 +17,7 @@
 #
 import libadcc
 
-from qed_amplitude_vec import qed_amplitude_vec
+from .qed_amplitude_vec import qed_amplitude_vec
 import numpy as np
 
 """

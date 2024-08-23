@@ -15,12 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-import sys
 import warnings
 import numpy as np
 import scipy.linalg as la
 
-from functions import lincomb
+from ..functions import lincomb
 
 from adcc.solver.common import select_eigenpairs
 from .LanczosIterator import LanczosIterator

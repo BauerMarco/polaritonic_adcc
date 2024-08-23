@@ -16,9 +16,9 @@
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
 import adcc
-from qed_matrix_working_equations import qed_block
+from .qed_matrix_working_equations import qed_block
 import numpy as np
-from qed_mp import qed_mp
+from .qed_mp import qed_mp
 
 class qed_matrix_full(adcc.AdcMatrix):
     def __init__(self, method, hf_or_mp, block_orders=None, intermediates=None):

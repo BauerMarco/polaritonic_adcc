@@ -18,21 +18,21 @@
 import sys
 import numpy as np
 import warnings
-from qed_matrix_from_diag_adc import qed_matrix_from_diag_adc
-from qed_adc_in_std_basis_with_self_en import first_order_qed_matrix
-from refstate import refstate
-from qed_npadc_exstates import qed_npadc_exstates
-from qed_mp import qed_mp
-from qed_ucc import qed_ucc
-from full_qed_matrix import qed_matrix_full
-from qed_amplitude_vec import qed_amplitude_vec
+from .qed_matrix_from_diag_adc import qed_matrix_from_diag_adc
+from .qed_adc_in_std_basis_with_self_en import first_order_qed_matrix
+from .refstate import refstate
+from .qed_npadc_exstates import qed_npadc_exstates
+from .qed_mp import qed_mp
+from .qed_ucc import qed_ucc
+from .full_qed_matrix import qed_matrix_full
+from .qed_amplitude_vec import qed_amplitude_vec
 from adcc import run_adc, ExcitedStates
 from adcc.exceptions import InputError
 from adcc.workflow import (validate_state_parameters, estimate_n_guesses,
                            setup_solver_printing, obtain_guesses_by_inspection)
-from solver.lanczos import lanczos
+from .solver.lanczos import lanczos
 from adcc.solver.lanczos import default_print as lanczos_print
-from solver.davidson import jacobi_davidson
+from .solver.davidson import jacobi_davidson
 from adcc.solver.davidson import default_print as davidson_print
 from adcc.solver.explicit_symmetrisation import (IndexSpinSymmetrisation,
                                              IndexSymmetrisation)

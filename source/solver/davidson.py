@@ -15,15 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
-import sys
 import warnings
 import numpy as np
 import scipy.linalg as la
 import scipy.sparse.linalg as sla
 
-from functions import evaluate, lincomb
+from ..functions import evaluate, lincomb
 from adcc.AdcMatrix import AdcMatrixlike
-from qed_amplitude_vec import qed_amplitude_vec
+from ..qed_amplitude_vec import qed_amplitude_vec
 
 from adcc.solver.common import select_eigenpairs
 from adcc.solver.preconditioner import JacobiPreconditioner

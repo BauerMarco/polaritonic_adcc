@@ -19,9 +19,9 @@ import warnings
 import numpy as np
 import scipy.linalg as la
 
-from functions import evaluate, lincomb
+from ..functions import evaluate, lincomb
 from adcc.timings import Timer
-from qed_amplitude_vec import qed_amplitude_vec
+from ..qed_amplitude_vec import qed_amplitude_vec
 
 from .orthogonaliser import GramSchmidtOrthogonaliser
 

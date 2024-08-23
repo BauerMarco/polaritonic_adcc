@@ -16,7 +16,7 @@
 # along with polaritonic_adcc. If not, see <http://www.gnu.org/licenses/>.
 #
 import numpy as np
-from qed_npadc_s2s_tdm_terms import qed_npadc_s2s_tdm_terms
+from .qed_npadc_s2s_tdm_terms import qed_npadc_s2s_tdm_terms
 from adcc.timings import timed_member_call
 from adcc.adc_pp import transition_dm
 from adcc.OneParticleOperator import product_trace
