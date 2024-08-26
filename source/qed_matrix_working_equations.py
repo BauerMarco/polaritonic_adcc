@@ -22,7 +22,7 @@ from adcc import block as b
 from adcc.functions import direct_sum, einsum, zeros_like
 from adcc.Intermediates import Intermediates, register_as_intermediate
 from adcc.AmplitudeVector import AmplitudeVector
-from libadcc import set_lt_scalar
+from util import set_lt_scalar
 
 # Dispatch routine
 """

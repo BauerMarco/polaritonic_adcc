@@ -27,7 +27,7 @@ from qed_npadc_exstates import qed_npadc_exstates
 from qed_mp import qed_mp
 from qed_ucc import qed_ucc
 from full_qed_matrix import qed_matrix_full
-from libadcc import set_lt_scalar
+from util import set_lt_scalar
 
 #__all__ = ["run_qed_adc"]
 
